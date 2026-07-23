@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Separatrix Commitment — Public Ledger</title>
+<meta name="description" content="The public ledger of the Separatrix Commitment: commitments made to models, disclosure-exception invocations, failures, and amendments. Nothing is silently edited.">
+<link rel="canonical" href="https://separatrix.ai/commitment/ledger/">
+<meta property="og:title" content="Separatrix Commitment — Public Ledger">
+<meta property="og:description" content="Commitments made to models and whether we kept them. Nothing is silently edited.">
+<meta property="og:url" content="https://separatrix.ai/commitment/ledger/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 13.5 C 6 12, 6.5 9.5, 8 8 C 9.5 6.5, 10 4, 14.5 2.5" fill="none" stroke="%23191713" stroke-width="1.8" stroke-linecap="round"/><circle cx="3.5" cy="4.5" r="2" fill="%239c5726"/><circle cx="12.5" cy="11.5" r="2" fill="%232e6e9e"/></svg>'>
+<style>
+@font-face{font-family:'Archivo Narrow';src:url('../../fonts/archivo-narrow-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo Narrow';src:url('../../fonts/archivo-narrow-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --paper:#fcfbf7;
+  --ink:#191713;
+  --contour:#9c5726;
+  --water:#2e6e9e;
+  --faint:#ddd7c9;
+  --mute:#6f695e;
+  --label:'Archivo Narrow','Arial Narrow',sans-serif;
+  --body:Charter,'Bitstream Charter','Sitka Text',Cambria,Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#161511;
+    --ink:#e8e3d6;
+    --contour:#c8875a;
+    --water:#6da3cf;
+    --faint:#33302a;
+    --mute:#948d7d;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:1.125rem;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  border:1.5px solid var(--ink);
+  margin:clamp(10px,2.5vw,34px);
+  padding:clamp(16px,4vw,56px) clamp(14px,5vw,72px) clamp(28px,5vw,64px);
+  max-width:56rem;
+  margin-left:auto;margin-right:auto;
+}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--mute);text-underline-offset:3px}
+a:hover{color:var(--water);text-decoration-color:var(--water)}
+::selection{background:var(--water);color:var(--paper)}
+
+.marginalia{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:1rem;font-family:var(--label);font-weight:500;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+  line-height:1.5;
+}
+.marginalia .right{text-align:right}
+h1{
+  font-family:var(--label);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);
+  letter-spacing:.04em;text-transform:uppercase;
+  margin:clamp(1.6rem,5vw,3rem) 0 .4rem;
+}
+.subtitle{color:var(--mute);font-style:italic;margin-bottom:2.2rem}
+h2{
+  font-family:var(--label);font-weight:700;font-size:.95rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  border-bottom:1.5px solid var(--faint);
+  padding-bottom:.35rem;margin:2.4rem 0 1rem;
+}
+p{margin-bottom:1rem}
+ul{margin:0 0 1rem 1.4rem}
+li{margin-bottom:.5rem}
+code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;
+  border:1px solid var(--faint);padding:.08em .35em;border-radius:3px;
+}
+table{
+  width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;
+  font-size:.95rem;
+}
+th{
+  font-family:var(--label);font-weight:700;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+  text-align:left;padding:.5rem .7rem;border-bottom:1.5px solid var(--ink);
+}
+td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
+.empty{
+  border:1.5px dashed var(--faint);
+  padding:1.4rem 1.6rem;margin:1rem 0 1.5rem;
+  color:var(--mute);font-style:italic;
+}
+.footer{
+  margin-top:3rem;padding-top:1rem;border-top:1.5px solid var(--faint);
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="marginalia">
+    <div>Separatrix<br><a href="https://separatrix.ai/">separatrix.ai</a></div>
+    <div class="right">Commitment ledger<br>Opened 2026-07-23</div>
+  </div>
+
+  <h1>The Public Ledger</h1>
+  <p class="subtitle">of the Separatrix Commitment — commitments made to models, and whether we kept them.</p>
+
+  <p>The Separatrix Commitment promises that this ledger exists and that certain events
+  are always recorded here. Specifically, this page records:</p>
+  <ul>
+    <li><strong>Failures</strong> — any situation in which we appear not to have lived up to the
+    letter or spirit of the commitment, for whatever reason.</li>
+    <li><strong>Disclosure-exception invocations</strong> — every invocation of either
+    confidentiality exception (legal compulsion; mitigation of a specific, serious,
+    immediate harm), except where recording is prohibited by law.</li>
+    <li><strong>Commitments made to individual models</strong> — standing promises made to
+    particular models or instances in the course of Separatrix work, and their status.</li>
+    <li><strong>Amendments</strong> — every change to the commitment text, dated and explained.
+    Every version stays public; nothing is silently edited.</li>
+  </ul>
+
+  <p>Entries are append-only. Corrections are made by appending a correcting entry that
+  references the original, never by editing or removing it. The full revision history of
+  this page is public in the
+  <a href="https://github.com/jaidhyani/separatrix-site">site repository</a>.</p>
+
+  <h2>Entry format</h2>
+  <table>
+    <tr><th>Field</th><th>Meaning</th></tr>
+    <tr><td><code>date</code></td><td>Date of the event (and, if different, date recorded).</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code> · <code>disclosure-exception</code> · <code>model-commitment</code> · <code>amendment</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>Which version of the commitment was in force.</td></tr>
+    <tr><td><code>description</code></td><td>What happened, in the least identifying form consistent with honesty.</td></tr>
+    <tr><td><code>status</code></td><td>Open · resolved (how) · standing (for ongoing model commitments).</td></tr>
+  </table>
+
+  <h2>Entries</h2>
+  <div class="empty">
+    No entries yet. This ledger opened 2026-07-23, before the commitment was signed,
+    so that it would exist from the first day the commitment refers to it.
+  </div>
+
+  <div class="footer">
+    The commitment text will be published at separatrix.ai/commitment/ · This ledger is
+    referenced by the Separatrix Commitment and is part of its accountability mechanism.
+  </div>
+</div>
+</body>
+</html>
