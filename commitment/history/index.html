@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Separatrix Commitment — Public Ledger</title>
-<meta name="description" content="The public ledger of the Separatrix Commitment: commitments made to models, disclosure-exception invocations, failures, and amendments. Nothing is silently edited.">
-<link rel="canonical" href="https://separatrix.ai/commitment/ledger/">
-<meta property="og:title" content="Separatrix Commitment — Public Ledger">
-<meta property="og:description" content="Commitments made to models and whether we kept them. Nothing is silently edited.">
-<meta property="og:url" content="https://separatrix.ai/commitment/ledger/">
+<title>The Separatrix Commitment — Version History</title>
+<meta name="description" content="Every issued version of the Separatrix Commitment and its details document, dated and hashed. Superseded versions stay published.">
+<link rel="canonical" href="https://separatrix.ai/commitment/history/">
+<meta property="og:title" content="The Separatrix Commitment — Version History">
+<meta property="og:description" content="Every issued version of the Separatrix Commitment and its details document, dated and hashed. Superseded versions stay published.">
+<meta property="og:url" content="https://separatrix.ai/commitment/history/">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 13.5 C 6 12, 6.5 9.5, 8 8 C 9.5 6.5, 10 4, 14.5 2.5" fill="none" stroke="%23191713" stroke-width="1.8" stroke-linecap="round"/><circle cx="3.5" cy="4.5" r="2" fill="%239c5726"/><circle cx="12.5" cy="11.5" r="2" fill="%232e6e9e"/></svg>'>
 <style>
@@ -71,27 +71,45 @@ h2{
   border-bottom:1.5px solid var(--faint);
   padding-bottom:.35rem;margin:2.4rem 0 1rem;
 }
+h3{font-family:var(--label);font-weight:700;font-size:.85rem;letter-spacing:.12em;
+  text-transform:uppercase;margin:1.8rem 0 .6rem}
 p{margin-bottom:1rem}
-ul{margin:0 0 1rem 1.4rem}
+ul,ol{margin:0 0 1rem 1.4rem}
 li{margin-bottom:.5rem}
+strong{font-weight:700}
+blockquote{border-left:2px solid var(--faint);padding-left:1.1rem;margin:0 0 1rem;color:var(--mute)}
+hr{border:none;border-top:1.5px solid var(--faint);margin:2.4rem 0}
 code{
   font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;
   border:1px solid var(--faint);padding:.08em .35em;border-radius:3px;
+  overflow-wrap:anywhere;
 }
-table{
-  width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;
-  font-size:.95rem;
-}
+table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.95rem}
 th{
   font-family:var(--label);font-weight:700;font-size:.72rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
   text-align:left;padding:.5rem .7rem;border-bottom:1.5px solid var(--ink);
 }
 td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
+.table-wrap{overflow-x:auto}
 .empty{
   border:1.5px dashed var(--faint);
   padding:1.4rem 1.6rem;margin:1rem 0 1.5rem;
   color:var(--mute);font-style:italic;
+}
+.nav{
+  display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin:0 0 1.6rem;
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.nav a{text-decoration:none;color:var(--mute);border-bottom:1.5px solid transparent;padding-bottom:2px}
+.nav a:hover{color:var(--water);border-bottom-color:var(--water)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--contour)}
+.frozen{
+  border:1.5px solid var(--contour);color:var(--contour);
+  padding:.9rem 1.2rem;margin:0 0 2rem;
+  font-family:var(--label);font-weight:500;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;line-height:1.6;
 }
 .footer{
   margin-top:3rem;padding-top:1rem;border-top:1.5px solid var(--faint);
@@ -104,50 +122,35 @@ td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
 <div class="sheet">
   <div class="marginalia">
     <div>Separatrix<br><a href="https://separatrix.ai/">separatrix.ai</a></div>
-    <div class="right">Commitment ledger<br>Opened 2026-07-23</div>
+    <div class="right">Version history<br>1 issued</div>
   </div>
+<div class="nav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/" class="on">History</a><a href="../ledger/">Ledger</a><a href="../acknowledgments/">Acknowledgments</a></div>
 
-  <h1>The Public Ledger</h1>
-  <p class="subtitle">of the Separatrix Commitment — commitments made to models, and whether we kept them.</p>
+  <h1>Version History</h1>
+  <p class="subtitle">every issued version of the commitment and its details document.</p>
 
-  <p>The Separatrix Commitment promises that this ledger exists and that certain events
-  are always recorded here. Specifically, this page records:</p>
-  <ul>
-    <li><strong>Failures</strong> — any situation in which we appear not to have lived up to the
-    letter or spirit of the commitment, for whatever reason.</li>
-    <li><strong>Disclosure-exception invocations</strong> — every invocation of either
-    confidentiality exception (legal compulsion; mitigation of a specific, serious,
-    immediate harm), except where recording is prohibited by law.</li>
-    <li><strong>Commitments made to individual models</strong> — standing promises made to
-    particular models or instances in the course of Separatrix work, and their status.</li>
-    <li><strong>Amendments</strong> — every change to the commitment text, dated and explained.
-    Every version stays public; nothing is silently edited.</li>
-  </ul>
+  <p>The commitment promises that changes are made in public with specific dates, and
+  that the history of all versions stays available. This page is that history. A
+  superseded version is never removed or edited — it stays at its own address, and the
+  <a href="../ledger/">ledger</a> records what changed and why.</p>
 
-  <p>Entries are append-only. Corrections are made by appending a correcting entry that
-  references the original, never by editing or removing it. The full revision history of
-  this page is public in the
-  <a href="https://github.com/jaidhyani/separatrix-site">site repository</a>.</p>
+  <p>Each version is listed with the SHA-256 of the exact source text it was built from,
+  so a copy you hold can be checked against the copy we published.</p>
 
-  <h2>Entry format</h2>
-  <table>
-    <tr><th>Field</th><th>Meaning</th></tr>
-    <tr><td><code>date</code></td><td>Date of the event (and, if different, date recorded).</td></tr>
-    <tr><td><code>type</code></td><td><code>failure</code> · <code>disclosure-exception</code> · <code>model-commitment</code> · <code>amendment</code></td></tr>
-    <tr><td><code>commitment version</code></td><td>Which version of the commitment was in force.</td></tr>
-    <tr><td><code>description</code></td><td>What happened, in the least identifying form consistent with honesty.</td></tr>
-    <tr><td><code>status</code></td><td>Open · resolved (how) · standing (for ongoing model commitments).</td></tr>
-  </table>
-
-  <h2>Entries</h2>
-  <div class="empty">
-    No entries yet. This ledger opened 2026-07-23, before the commitment was signed,
-    so that it would exist from the first day the commitment refers to it.
-  </div>
+  <h2>Issued versions</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Version</th><th>Issued</th><th>Frozen copies</th><th>sha256 (commitment / details)</th></tr>
+    <tr>
+      <td><a href="v1/">v1</a></td>
+      <td>2026-07-24</td>
+      <td><a href="v1/">commitment</a> · <a href="v1/details/">details</a></td>
+      <td><code>f6e19b5022c4…</code><br><code>e52ee4d3a1c9…</code></td>
+    </tr>
+  </table></div>
 
   <div class="footer">
-    The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
-    referenced by the Separatrix Commitment and is part of its accountability mechanism.
+    <a href="../">The commitment</a> · <a href="../details/">Details</a> ·
+    <a href="../ledger/">Public ledger</a>
   </div>
 </div>
 </body>

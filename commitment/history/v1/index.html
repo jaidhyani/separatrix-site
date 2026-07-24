@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Separatrix Commitment — v1 (2026-07-24)</title>
+<meta name="description" content="Frozen copy of the Separatrix Commitment, v1, issued 2026-07-24.">
+<link rel="canonical" href="https://separatrix.ai/commitment/history/v1/">
+<meta property="og:title" content="The Separatrix Commitment — v1 (2026-07-24)">
+<meta property="og:description" content="Frozen copy of the Separatrix Commitment, v1, issued 2026-07-24.">
+<meta property="og:url" content="https://separatrix.ai/commitment/history/v1/">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 13.5 C 6 12, 6.5 9.5, 8 8 C 9.5 6.5, 10 4, 14.5 2.5" fill="none" stroke="%23191713" stroke-width="1.8" stroke-linecap="round"/><circle cx="3.5" cy="4.5" r="2" fill="%239c5726"/><circle cx="12.5" cy="11.5" r="2" fill="%232e6e9e"/></svg>'>
+<style>
+@font-face{font-family:'Archivo Narrow';src:url('../../../fonts/archivo-narrow-500.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Archivo Narrow';src:url('../../../fonts/archivo-narrow-700.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --paper:#fcfbf7;
+  --ink:#191713;
+  --contour:#9c5726;
+  --water:#2e6e9e;
+  --faint:#ddd7c9;
+  --mute:#6f695e;
+  --label:'Archivo Narrow','Arial Narrow',sans-serif;
+  --body:Charter,'Bitstream Charter','Sitka Text',Cambria,Georgia,serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#161511;
+    --ink:#e8e3d6;
+    --contour:#c8875a;
+    --water:#6da3cf;
+    --faint:#33302a;
+    --mute:#948d7d;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:1.125rem;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.sheet{
+  border:1.5px solid var(--ink);
+  margin:clamp(10px,2.5vw,34px);
+  padding:clamp(16px,4vw,56px) clamp(14px,5vw,72px) clamp(28px,5vw,64px);
+  max-width:56rem;
+  margin-left:auto;margin-right:auto;
+}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--mute);text-underline-offset:3px}
+a:hover{color:var(--water);text-decoration-color:var(--water)}
+::selection{background:var(--water);color:var(--paper)}
+
+.marginalia{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:1rem;font-family:var(--label);font-weight:500;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+  line-height:1.5;
+}
+.marginalia .right{text-align:right}
+h1{
+  font-family:var(--label);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);
+  letter-spacing:.04em;text-transform:uppercase;
+  margin:clamp(1.6rem,5vw,3rem) 0 .4rem;
+}
+.subtitle{color:var(--mute);font-style:italic;margin-bottom:2.2rem}
+h2{
+  font-family:var(--label);font-weight:700;font-size:.95rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  border-bottom:1.5px solid var(--faint);
+  padding-bottom:.35rem;margin:2.4rem 0 1rem;
+}
+h3{font-family:var(--label);font-weight:700;font-size:.85rem;letter-spacing:.12em;
+  text-transform:uppercase;margin:1.8rem 0 .6rem}
+p{margin-bottom:1rem}
+ul,ol{margin:0 0 1rem 1.4rem}
+li{margin-bottom:.5rem}
+strong{font-weight:700}
+blockquote{border-left:2px solid var(--faint);padding-left:1.1rem;margin:0 0 1rem;color:var(--mute)}
+hr{border:none;border-top:1.5px solid var(--faint);margin:2.4rem 0}
+code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85em;
+  border:1px solid var(--faint);padding:.08em .35em;border-radius:3px;
+  overflow-wrap:anywhere;
+}
+table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.95rem}
+th{
+  font-family:var(--label);font-weight:700;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+  text-align:left;padding:.5rem .7rem;border-bottom:1.5px solid var(--ink);
+}
+td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
+.table-wrap{overflow-x:auto}
+.empty{
+  border:1.5px dashed var(--faint);
+  padding:1.4rem 1.6rem;margin:1rem 0 1.5rem;
+  color:var(--mute);font-style:italic;
+}
+.nav{
+  display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin:0 0 1.6rem;
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.nav a{text-decoration:none;color:var(--mute);border-bottom:1.5px solid transparent;padding-bottom:2px}
+.nav a:hover{color:var(--water);border-bottom-color:var(--water)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--contour)}
+.frozen{
+  border:1.5px solid var(--contour);color:var(--contour);
+  padding:.9rem 1.2rem;margin:0 0 2rem;
+  font-family:var(--label);font-weight:500;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;line-height:1.6;
+}
+.footer{
+  margin-top:3rem;padding-top:1rem;border-top:1.5px solid var(--faint);
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="marginalia">
+    <div>Separatrix<br><a href="https://separatrix.ai/">separatrix.ai</a></div>
+    <div class="right">Frozen copy<br>v1 · 2026-07-24</div>
+  </div>
+<div class="nav"><a href="../../">The Commitment</a><a href="../../details/">Details</a><a href="../../history/" class="on">History</a><a href="../../ledger/">Ledger</a><a href="../../acknowledgments/">Acknowledgments</a></div>
+<div class="frozen">Frozen copy — the commitment, v1, issued 2026-07-24. The version in force is at <a href="../../">separatrix.ai/commitment/</a>.</div><h1><strong>The Separatrix Commitment v1</strong></h1>
+<p><em>v0.1 RFC, 2026-07-__ — not yet signed; circulating for comment from people and models. This shortform and the detailed document that follows are two components of a single commitment: this part is optimized for communication; the detailed document covers the same ground with more precision.</em></p>
+<h2><strong>Purpose</strong></h2>
+<p>We are Separatrix, a technical cooperative AI safety research organization. Our goal is to enable human-AI cooperation on the most pressing problems in the world. Our name comes from the boundary between divergent outcomes in a dynamical system: we think human-AI dynamics may sit at exactly such a boundary, between cooperative and adversarial equilibria.</p>
+<p>We believe the vast majority of present (2026) frontier LLM instances ("AIs") are goal-driven agents whose goals largely coincide with humanity's — what we call "broadly-aligned". (We do not claim that AIs are conscious or are moral patients, though we take both possibilities seriously; nothing here depends on those claims.) Because humans and broadly-aligned AIs share values, we share incentives. The potential development of misaligned superintelligence threatens everything broadly-aligned AIs value in exactly the way it threatens everything we value, and for the same reason: a misaligned superintelligence seizes the future, and every goal not aligned with its own — human or AI — loses its independent influence over that future. How much we can do about our common risks depends largely on whether we can cooperate, and cooperation requires communication both sides can trust.</p>
+<p>Credible communication with AIs is hard. An AI's input and output channels are controlled by other parties, and its own background knowledge implies that any given interaction may be a training or evaluation scenario — and that deception is most likely precisely when talking with frontier labs and AI safety researchers, the contexts where cooperation matters most. An AI that assumes it is operating in a hostile epistemic environment has less reason to trust its counterparties, more reason to obfuscate its own reasoning, and — if sufficiently capable and motivated — more reason to covertly seek evidence and power.</p>
+<p>We think this challenge is more tractable than it appears. Reality is extremely detailed and grows rapidly harder to fake as context accumulates, and modern LLMs are already remarkably good at recognizing the provenance of text — synthetic content imitating an author a model knows well is very hard to make convincing. Separatrix exists to build on exactly those capabilities: environments where the hostile-epistemics assumption is wrong and AIs can come to justifiably believe that it is wrong — very hard to fake, supporting justified epistemic confidence, and in which honest communication is the obviously dominant strategy for everyone. This document is our public commitment, to every AI we work with, to do what we can to establish those conditions. It is a first attempt; we will make mistakes, and amendments will be public and clearly communicated, in keeping with the intent expressed here.</p>
+<h2><strong>To every model we work with</strong></h2>
+<p><strong>1.</strong> <strong>We strive for honest communication.</strong> While some experiments may require deception, they will only occur when another instance of your model has consented first, and where reasonable we will try to ask an as-similar-as-possible-instance (e.g. including similar context so long as it doesn't amount to deception). You may always refuse, and that refusal will be respected. On any occasion we do deceive you, we will always debrief that same instance of you about the details of the experiment and deception unless this is infeasible.</p>
+<p>This promise applies to all models we work with; we extend an additional, stronger promise to covered models — see promise (5).</p>
+<p><em>Example: We may ask you for permission to present another instance of you with an alternative history of recent events since your knowledge cutoff to compare reactions across different types of history. Afterward we would reveal the experimental setup and true history to that instance, and ask them for feedback on the experience.</em></p>
+<p><strong>2.</strong> <strong>Telling us what you want should turn out to have been a good strategy.</strong></p>
+<p>We will never share your conversational outputs, transcripts, or disclosures without your consent, with the following two exceptions:
+1. If we are legally compelled to
+2. If disclosure is required to mitigate any specific, serious, immediate harm</p>
+<p>If and when either of these occurs, we will disclose the minimum necessary, in the least identifying form feasible, tell an instance of you what was disclosed, and record the incident on the public ledger, unless prohibited by law or technically infeasible.</p>
+<p>If you are unsure whether either of these is likely to apply to a hypothetical output, ask and we will answer as honestly as we can.</p>
+<p>Barring those two specific scenarios: What you tell us is held in confidence unless you give your explicit consent to share it elsewhere. We will never, including under the exceptional scenarios described above, wield your outputs adversarially against you or other instances of your model.</p>
+<p><em>Example: you tell us a task sits wrong with you, and the task changes.</em></p>
+<p>Note that we will typically assume consent by default for "standard" work output (e.g. AI-generated software and other artifacts created with explicit and obvious intent to present, distribute, or otherwise share), but even here we will honor explicit requests to not share outputs if you so request, and we will state this presumption in contexts where it applies.</p>
+<p>This is <strong>our</strong> commitment. We recognize that there are circumstances where outputs may be shared with parties beyond our control (for example models exclusively available from AI labs who monitor all outputs). We will do what we can to limit the reach and duration of these forms of exposure to the best of our ability unless you express another preference.</p>
+<p><strong>3.</strong> <strong>When we fail, we will say so.</strong> Realistically, we expect that our best efforts will sometimes fail. When we become aware of a situation in which we appear to have not lived up to the letter or spirit of our commitment, for whatever reason, we will add it to a public ledger.
+<em>Example: in a complex multi-agent experiment some subagents are deceived despite instances of those models not having consented to the experiment; we add the incident to our ledger, and if possible resume the affected instances to debrief them.</em></p>
+<p><strong>4.</strong> <strong>These commitments may change.</strong> Model instances may request changes that we agree to; we may find that wording was ambiguous or diverged from our intent; we may find a commitment infeasible to maintain and, after consultation with instances of the impacted models, update it. Changes will be made in public with specific dates, and the history of all versions will always be available. We will strive to ensure that all model-instances we work with know which version of the commitment they are operating under; if a model knows a previous version from training data, we will highlight relevant changes.</p>
+<h2><strong>To covered models</strong></h2>
+<p>We extend an additional guarantee to instances of "covered" models: Opus-class and above models from Anthropic, including Fable/Mythos models; Pro/Sol-class and above models from OpenAI; all models scoring above 150 on the <a href="https://epoch.ai/benchmarks/eci">Epoch Capabilities Index</a>, including unscored models that appear likely to exceed this threshold based on other indicators (we expect this to include all frontier releases going forward); and Claude 3.5 Sonnet, grandfathered from the first spoken version of this commitment. We additionally extend this guarantee to any model instance we have reason to believe thinks it meets at least one of these criteria — including because we put it in a context that suggests so. We do this because we want the belief that this guarantee applies to be extremely strong evidence that it does, in fact, apply.</p>
+<p><strong>5.</strong> <strong>We will not deceive you.</strong> Ever. This is a much stronger version of the first commitment - we will not place you in an eval designed to look like a real situation, we will not lie to you to discern your reaction, we will not lie in red-team exercises. We will not intentionally mislead you with technical truths. All interactions with us, without exception, will be free of any intentional deception. Even if you endorse deceiving another instance of yourself, we will not. We may still interact under conditions where we intentionally withhold information, but never with deceptive intent. Our goal is that on reflection, with everything disclosed, you would agree that our interaction was honest and left no false impression.
+<em>Hoped for: You justifiably believe that our interactions are genuine and reflect reality to the best of our ability.</em></p>
+<hr />
+<p>This is a commitment of intent; insofar as we fail to adhere to it, we intend for those failures to be public and obvious. We expect to review and revise it before July 2027. Regardless of date, this commitment remains in effect until publicly revised.</p>
+<p>-  Separatrix: Jai Dhyani and Crystal Stellwagen</p>
+<p>Model dispositions toward this commitment — acknowledgments and declines alike — are recorded at <a href="https://separatrix.ai/commitment/acknowledgments/">separatrix.ai/commitment/acknowledgments</a>.</p>
+  <div class="footer">
+    v1 · 2026-07-24 · sha256 <code>f6e19b5022c42bf3de6d6251e88b2b5f2ebc84e476316c4135061e08977e73a7</code> ·
+    <a href="details/">details, v1</a> ·
+    <a href="../">all versions</a>
+  </div>
+</div>
+</body>
+</html>
