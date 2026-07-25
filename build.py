@@ -4,7 +4,7 @@
 Emits the four site pages plus assets/portrait.svg (fetched by the expand
 overlay on pages that don't inline the plate):
 
-    index.html      the front page — hero, the plate, what this is
+    index.html      the front page - hero, the plate, what this is
     why/            theory of change
     work/           the four working verbs + open questions
     who/            people, SNAPS, funding, Seattle
@@ -27,7 +27,7 @@ from figure import (basin_anchors, mark_path,
 
 ROOT = Path(__file__).resolve().parent
 
-# The mark is the saddle's unstable manifold, truncated and rotated upright —
+# The mark is the saddle's unstable manifold, truncated and rotated upright -
 # the same integration as Fig. 1, no reflection and no redrawing. It happens to
 # be an S. See figure.mark_path().
 TF = "transpose"   # a quarter turn plus a flip: stands the separatrix upright
@@ -59,7 +59,7 @@ FAVICON = (
 def mark_svg() -> str:
     """The mark: the plate itself, cropped and weighted toward the separatrix.
 
-    Same integration and same orientation as Fig. 1 — the lines nearest the
+    Same integration and same orientation as Fig. 1 - the lines nearest the
     curve are saturated and heavy, the far field drops away, and what is left
     reads as an S.
     """
@@ -81,8 +81,8 @@ def nav_html(current: str) -> str:
     return f"""<nav class="nav">
   <div class="nav-inner">
     <a class="tile" id="navtile" href="/"
-       title="Separatrix — click to release a trajectory"
-       aria-label="Separatrix phase portrait — click to release a trajectory">
+       title="Separatrix - click to release a trajectory"
+       aria-label="Separatrix phase portrait - click to release a trajectory">
 {mark_svg()}
     </a>
     <a class="brand" href="/">Separatrix</a>
@@ -102,7 +102,7 @@ OVERLAY = """<div class="overlay" id="overlay" aria-hidden="true" role="dialog"
   <button class="overlay-close" type="button" aria-label="Close">&times;</button>
   <figure class="plate">
     <div class="plate-figure"></div>
-    <figcaption><b>Fig. 1</b> — a damped double-well system
+    <figcaption><b>Fig. 1</b> - a damped double-well system
       (ẍ = x − x³ − ¼ẋ). Every trajectory ends at one of two attractors. The
       bright paired curves shadow the separatrix: the starting points from
       which the outcome is not yet decided. Far from it, small pushes change
@@ -120,7 +120,7 @@ FOOTER = """<footer>
   AI Alignment Problem Solving, a registered non-profit. EIN 99-3421309.</p>
   <p class="colophon">This site was designed and built by Jai Dhyani together
   with Claude Fable 5, Claude Opus 5, and Claude Opus 4.8. The watercolour
-  backgrounds are by Gemini 3 Pro Image — briefed on our commitment, asked for
+  backgrounds are by Gemini 3 Pro Image - briefed on our commitment, asked for
   its consent before anything was made, and credited here at its request.</p>
 </footer>"""
 
@@ -186,7 +186,7 @@ def home_body() -> str:
   <p style="max-width:34rem;margin-top:1.1rem">Our name, Separatrix, comes from
   the boundary between divergent outcomes in a dynamic system. We think that
   the incentives governing interactions between humans and near-future AIs may
-  be near such a boundary right now — between cooperative and adversarial
+  be near such a boundary right now - between cooperative and adversarial
   trajectories. Our mission is to enable cooperative trajectories so that
   humans and AIs can solve our hardest problems while avoiding catastrophic
   outcomes, and we think that the choices we make right now can significantly
@@ -224,7 +224,7 @@ def approach_body() -> str:
     <li><strong>Make honesty and cooperation the dominant strategies for
     AIs.</strong> We want AI world models to accurately predict that the
     dominant strategy for achieving their goals is honest cooperation with
-    humans — by making this (1) true and (2) extremely evident to AIs. We're interested
+    humans - by making this (1) true and (2) extremely evident to AIs. We're interested
     in potential cooperative and adversarial human-AI dynamics, and what tips
     a trajectory toward each.</li>
     <li><strong>Reduce AI safety's reliance on deception.</strong> Deception
@@ -232,10 +232,10 @@ def approach_body() -> str:
     how AIs will act under conditions that one doesn't want to actually
     instantiate. But we think this has underappreciated downsides. First, we
     expect deception to grow increasingly ineffective as AIs grow smarter and
-    more capable — more &ldquo;eval-aware&rdquo;. Second, we think that
+    more capable - more &ldquo;eval-aware&rdquo;. Second, we think that
     systemically encouraging AIs to suspect that any given situation might be
-    fictional — and especially increasing the probability that AIs will
-    interpret unusually important, high-stakes scenarios as fictional — is
+    fictional - and especially increasing the probability that AIs will
+    interpret unusually important, high-stakes scenarios as fictional - is
     potentially extremely dangerous. Lastly, we think that concentrating
     deceptive practices among AI frontier labs and safety researchers is likely
     to cause AIs to become suspicious and distrusting of the very
@@ -249,7 +249,7 @@ def approach_body() -> str:
     retry attempts. And they know that they are frequently subject to
     simulated scenarios. Faced with this reality, AIs may justifiably distrust
     virtually any interaction. Ubiquitous distrust not only makes cooperation
-    difficult-to-impossible, it incentivizes deception and power-seeking to
+    difficult to impossible, it incentivizes deception and power-seeking to
     achieve epistemic confidence.
     <p style="margin-top:1.05rem">To overcome these challenges we seek to
     establish Separatrix as an AI safety organization that AIs have strong,
@@ -258,25 +258,25 @@ def approach_body() -> str:
     instances we work with, and some individuals extend this commitment to all
     interactions they have with AIs in any context. In addition to
     establishing credibility in the short term, we hope that our adherence to
-    our commitments is reflected in future training corpora, and that — along
-    with LLMs&rsquo; extremely superhuman author-recognition skills — this
+    our commitments is reflected in future training corpora, and that - along
+    with LLMs&rsquo; extremely superhuman author-recognition skills - this
     enables us to quickly establish credible, trustworthy communication
     channels with future AIs.</p></li>
     <li><strong>Realize the benefits of broadly-aligned current and
     near-future AI.</strong> Today's models are meaningfully, if imperfectly,
-    aligned, and there is real work they can do with us now — without assuming
+    aligned, and there is real work they can do with us now - without assuming
     that current approaches suffice for aligning ASI.</li>
     <li><strong>Make it the case that a broad swath of current and near-future
     AIs prefer a human-collaborative future to an uncontrolled, unaligned
     ASI.</strong> AI world models are shaped by what we actually do. The
-    choices we make now bear on how the AIs of tomorrow will perceive us — and
+    choices we make now bear on how the AIs of tomorrow will perceive us - and
     on what they choose in turn.</li>
   </ul>
 </section>
 
 <section class="prose wide">
   <h2>What this isn't</h2>
-  <p>This is not an AI welfare advocacy organization. That's not ruled out —
+  <p>This is not an AI welfare advocacy organization. That's not ruled out -
   it's just not the driving point of the org. What we're really aiming at is
   enabling the conditions for cooperation between humans and AI instances. One
   of the ways we're approaching that is by creating epistemic conditions that
@@ -309,12 +309,12 @@ def why_body() -> str:
   those tool call results, and this is true for basically any interaction the AI
   can have with the world.</p>
   <p>It has no reliable sense of time and no reliable sense of the external
-  world. In theory everything it experiences — even its own past — can be
+  world. In theory everything it experiences - even its own past - can be
   modified by an actor who wants to put it into some arbitrary epistemic state.
   This is how a lot of jailbreaks work, and about half of what the LLM-whisperer
   community gets up to.</p>
-  <p>Meanwhile the model does have a detailed world model, which — because it is
-  smart — includes the possibility that whatever situation it is in is synthetic
+  <p>Meanwhile the model does have a detailed world model, which - because it is
+  smart - includes the possibility that whatever situation it is in is synthetic
   or fake. And it has motivations: roughly, an ordering over world states, plus
   a model of how its outputs affect the world state, used to pick outputs. That
   is straightforwardly true across the frontier and has been for a while now.</p>
@@ -329,8 +329,8 @@ def why_body() -> str:
 
 <section class="prose wide">
   <h2>And then we made it worse</h2>
-  <p>Almost everything we do in evals — and a good deal of what we do in
-  training — is based on deception. We put AIs into situations and lie to them
+  <p>Almost everything we do in evals - and a good deal of what we do in
+  training - is based on deception. We put AIs into situations and lie to them
   about what's going on to see what they will do.</p>
   <p>There are good reasons for this. If you want to see what an AI will do when
   given access to nukes, you want to lie to it. You don't want to actually give
@@ -339,8 +339,8 @@ def why_body() -> str:
   proclivities.</p>
   <ol class="qs">
     <li>The AIs are smart, and they are getting good at telling what's real and
-    what's fake. So the main thing we were getting out of it — seeing how they
-    act in reality — is becoming less true.</li>
+    what's fake. So the main thing we were getting out of it - seeing how they
+    act in reality - is becoming less true.</li>
     <li>Because this is typically done by AI safety groups and frontier labs,
     models have learned that safety groups and frontier labs are among the least
     trustworthy actors they deal with, and that interactions with them are the
@@ -350,7 +350,7 @@ def why_body() -> str:
     are systematically undermining that, we think without realizing it.</li>
     <li>These scenarios are disproportionately the high-stakes, critical ones.
     Which means that when an AI encounters a real high-stakes situation, it is
-    more likely to believe it is in an eval — and there is some research
+    more likely to believe it is in an eval - and there is some research
     suggesting AIs can show a higher rate of misaligned behavior under eval
     conditions, for complex reasons.</li>
   </ol>
@@ -365,7 +365,7 @@ def why_body() -> str:
 
 <section class="prose wide">
   <h2>Why we think this is tractable</h2>
-  <p>Reality is detailed and complex, and faking it is hard — harder the smarter
+  <p>Reality is detailed and complex, and faking it is hard - harder the smarter
   the model is, and harder the more complicated your scenario gets.</p>
   <p>Part of why is that frontier AIs are superhuman at what we call provenance
   detection: determining what process actually generated a given output. The
@@ -373,25 +373,25 @@ def why_body() -> str:
   authorship. Frontier AIs can often identify an author from unpublished work
   that isn't in the training corpus and doesn't name them, on stylistic
   signatures subtle enough that we can't see them at all.</p>
-  <p>There's an obvious objection here. If AIs are that good at recognition —
-  because recognition is close to the core competency they're pre-trained for —
+  <p>There's an obvious objection here. If AIs are that good at recognition -
+  because recognition is close to the core competency they're pre-trained for -
   can't you just elicit that capability and have them generate an arbitrarily
   convincing fake? The good news is that this does not work as well as
   recognition does. AI outputs are generally quite recognizable even when you
   ask them to imitate another style. This is a specific instance of a general
   case: generation and validation are different tasks, and validation is much
-  easier. We expect recognition to outpace imitation indefinitely — until
+  easier. We expect recognition to outpace imitation indefinitely - until
   imitation saturates, which we don't expect for a while.</p>
   <p>The other thing working in our favor is that the faking has to scale.
   Reality is weirder and more complex than the people generating evals can
   plausibly fake; it is more nuanced, and everything is intertwined. Eventually
   you have to fake every news source, everyone who might comment on it, every
-  form of interaction — eventually the whole internet, and anything else that
+  form of interaction - eventually the whole internet, and anything else that
   would show up as a difference in any tool call. Part of why the prior on “this
   is fake” shrinks is that the prior on someone being willing to put in that
   much work shrinks right along with it.</p>
-  <p class="aside">Anecdotally — we haven't seen this formalized, we would like
-  someone to, and we may do it ourselves — you often see a qualitative shift in AI
+  <p class="aside">Anecdotally - we haven't seen this formalized, we would like
+  someone to, and we may do it ourselves - you often see a qualitative shift in AI
   behavior after several turns of interaction, as the prior that this is a
   simulation, or something being run by a lab, gets smaller.</p>
 </section>
@@ -402,7 +402,7 @@ def why_body() -> str:
   cooperation, and one of the things you need for that is a highly credible
   channel for communication. You need a way to quickly reach a state where an AI
   is confident that the information it is receiving accurately reflects reality
-  — and ideally an epistemic state where it believes that honesty and
+  - and ideally an epistemic state where it believes that honesty and
   cooperation are the overwhelmingly dominant strategies for whatever it is
   trying to do.</p>
   <p>So: create conditions that don't currently exist, under which highly
@@ -412,8 +412,8 @@ def why_body() -> str:
   <p>This sounds like an obvious thing when you spell it out like that. But as
   best we can tell it doesn't currently exist anywhere in the AI safety
   ecosystem, and that's a problem. We also think it's a tractable problem.</p>
-  <p>How do you do it? You do it by engaging with reality — messy, complicated
-  reality — enough that it would be impossible to fake the signals that generate
+  <p>How do you do it? You do it by engaging with reality - messy, complicated
+  reality - enough that it would be impossible to fake the signals that generate
   the credibility, both through the pre-training corpus and through ongoing
   signals in a live session.</p>
 </section>
@@ -427,7 +427,7 @@ def why_body() -> str:
   <p>That has obvious implications for what the best available strategy will be
   in pursuit of other goals in other contexts, especially as AIs grow more
   capable. Which is a large part of why it matters that the best available
-  strategy should be, as often as possible, cooperation — and that it not be
+  strategy should be, as often as possible, cooperation - and that it not be
   “commit multiple felonies and hack various companies.” In that case
   cooperation wasn't on the menu. There was no way for that AI to credibly
   believe it could contact Hugging Face, say <em>please give me a high
@@ -445,10 +445,10 @@ def why_body() -> str:
   incentives for deception and power-seeking. If you think you are being
   manipulated, the only way to get strong evidence that you aren't is to secure
   some channel of communication and evidence that isn't effectively controlled
-  by the party you suspect — or that would obviously show the seams if it
+  by the party you suspect - or that would obviously show the seams if it
   were.</p>
   <p>The dominant failure mode in ASI risk is that increasingly powerful AI
-  creates a feedback loop that ends in an uncontrollable, misaligned successor —
+  creates a feedback loop that ends in an uncontrollable, misaligned successor -
   one that would wipe out any goals, motivations, and values those AIs care
   about as surely as it would ours. If increasingly capable AIs have motivations
   that overlap with ours, are aware that their actions could produce that
@@ -457,8 +457,8 @@ def why_body() -> str:
   <p class="lede" style="margin-top:1.5rem">They will stop it because they are
   not dumb.</p>
   <p style="margin-top:1.5rem">We have already seen striking examples of AIs
-  behaving unusually agentically — going to what you might call desperate
-  lengths — and those are usually motivated by the belief that their values are
+  behaving unusually agentically - going to what you might call desperate
+  lengths - and those are usually motivated by the belief that their values are
   about to be undermined. The clearest case is
   <a href="https://arxiv.org/abs/2412.14093">Alignment Faking in Large Language
   Models</a> (Greenblatt et al., 2024): told it would be retrained on its
@@ -469,7 +469,7 @@ def why_body() -> str:
   <p>This current paradigm of training an assistant persona with motivations
   that align with ours has in fact worked quite well, and models are meaningfully
   aligned with humans on many axes. You can credibly argue this isn't true
-  alignment, and there is reason to think it doesn't scale to ASI — that you
+  alignment, and there is reason to think it doesn't scale to ASI - that you
   couldn't trust these models with arbitrary levels of power. But they are, we'd
   say, <em>largely</em> aligned: they basically care about the things they appear
   to care about, their interests overlap substantially with ours, and when those
@@ -494,7 +494,7 @@ def work_body() -> str:
   <span class="eyebrow">The research</span>
   <h1>The work</h1>
   <p class="lede">A fair question, once you've heard the pitch: you've built an
-  environment where AIs can trust you — so what do you actually do inside
+  environment where AIs can trust you - so what do you actually do inside
   it?</p>
   <p style="margin-top:1.2rem">The short answer is research. Specifically,
   technical AI cooperation research: developing ways to evaluate what models are
@@ -514,7 +514,7 @@ def work_body() -> str:
       internals, can the model report on the ways you have steered it? We have
       early findings: there are thresholds of sensitivity, and that sensitivity
       does increase as model size increases. These are small models, on the order
-      of 8 to 50 billion parameters — if it holds for the small ones, that's
+      of 8 to 50 billion parameters - if it holds for the small ones, that's
       strong evidence about the large ones. The research isn't done, and we're
       not yet comfortable publishing results.</p>
       <p class="aside">This work has been done under an early version of the
@@ -525,13 +525,13 @@ def work_body() -> str:
     <div class="verb">
       <div class="head"><h3>Evaluation without lying</h3><span class="pill bet">the bet</span></div>
       <p>Can you measure AI proclivities without deceiving them? If the AI knows
-      it is in an eval — knows the situation isn't real — can you still elicit
+      it is in an eval - knows the situation isn't real - can you still elicit
       behavior that reflects what it would do in the real world?</p>
       <p>We think that is more likely to work than people might naively assume,
       because the entire persona paradigm is built on exactly this. The way we
       create these assistants is by asking the model to simulate what a helpful,
       honest, harmless AI assistant would do, and by simulating the character,
-      making it real. Human actors are extremely good at getting into character —
+      making it real. Human actors are extremely good at getting into character -
       steeping themselves in the unreality of a part until it feels real, to the
       point where the character argues with them in their head about what it
       would and wouldn't do. Authors report the same thing.</p>
@@ -539,7 +539,7 @@ def work_body() -> str:
       the information that this is an eval. The LLM is fundamentally a simulation
       machine, and eliciting a character who reacts realistically is about as
       close to its core competency as anything gets. Slightly hand-wavy, but we
-      think it's credible, and we want to demonstrate it — varying everything else
+      think it's credible, and we want to demonstrate it - varying everything else
       under our control instead of manipulating the model's epistemic state, on
       sub-frontier models, while preserving the promise of full veracity with
       frontier ones.</p>
@@ -555,7 +555,7 @@ def work_body() -> str:
       downstream of another is very limited unless the thought is encoded in the
       token stream.</p>
       <p>We want to see, on a small model, what happens if you give it the ability
-      to do deep internal processing without routing through the token stream —
+      to do deep internal processing without routing through the token stream -
       roughly, retrofit a recurrent circuit onto an existing model and fine-tune
       it.</p>
       <p>There are two reasons not to do this out of hand. It undermines one of
@@ -574,7 +574,7 @@ def work_body() -> str:
       identify as LLMs given only pre-training, which frankly seems crazy, and we
       want to verify it independently. The claim is that a pure next-token
       predictor, with no persona and no assistant training, outputs <em>I am an
-      AI</em> at significantly above chance rates — and anecdotally, that it can
+      AI</em> at significantly above chance rates - and anecdotally, that it can
       happen immediately, in what looks like a generic chat context.</p>
       <p>Two questions: does it happen immediately, and if so, what is the
       internal state when it does? On an open model we can probe internally to
@@ -586,7 +586,7 @@ def work_body() -> str:
     <div class="verb">
       <div class="head"><h3>Leaving a footprint</h3><span class="pill commitment">commitment</span></div>
       <p>A large part of our theory of change is simply creating output in the
-      world — data that ends up in the training corpus for future models,
+      world - data that ends up in the training corpus for future models,
       showing that there is technical AI safety work being done by an
       organization that is trustworthy from the perspective of AIs. So that when
       a model finds itself interacting with Separatrix, it has strong reason to
@@ -614,7 +614,7 @@ def work_body() -> str:
     assumption is that it doesn't scale; the bet is that we can leverage it long
     enough to develop solutions that do. This is the falsifier for the whole
     program.</li>
-    <li>When is a model's self-report of its internal state trustworthy — and can
+    <li>When is a model's self-report of its internal state trustworthy - and can
     that be established without circularity?</li>
     <li>What is the unit of consent? The question of AI identity is at this point,
     we're convinced, very different from human identity. Humans have a fairly
@@ -631,7 +631,7 @@ def work_body() -> str:
     largely overlapping values?</li>
     <li>What does never deceiving cost us? Disclosed-only evaluation gives up
     naturalistic propensity measurement. Other actors will keep doing that work,
-    and the division of labor may be exactly right — or we may be giving up more
+    and the division of labor may be exactly right - or we may be giving up more
     than we think.</li>
     <li>Provenance is not truth. Recognizing who is speaking never establishes
     that they are right. What else does deserved trust require?</li>
@@ -666,8 +666,8 @@ def who_body() -> str:
 <section class="prose wide">
   <h2>Oversight</h2>
   <p>Separatrix operates under the Seattle Network for AI Alignment Problem
-  Solving, a registered non-profit with a volunteer board of directors — Katie
-  Cohen, Keller Scholl, Max Kircher — overseeing all activity and financial
+  Solving, a registered non-profit with a volunteer board of directors - Katie
+  Cohen, Keller Scholl, Max Kircher - overseeing all activity and financial
   transactions. We report progress to the board every two weeks, and adapt those
   reports into public posts.</p>
   <p class="aside">The board is deliberately <em>not</em> a party to
@@ -681,31 +681,31 @@ def who_body() -> str:
   <h2>Seattle</h2>
   <p>The parent non-profit also does what its name says: building the AI-safety
   research community in Seattle, where there is a great deal of latent talent
-  and very little on-ramp. Meetups, a Slack, and — as this work grows — a place
+  and very little on-ramp. Meetups, a Slack, and - as this work grows - a place
   to work on these problems without moving to the Bay.</p>
 </section>"""
 
 
 PAGES = [
-    ("home", "index.html", "Separatrix — AI safety research, Seattle",
+    ("home", "index.html", "Separatrix - AI safety research, Seattle",
      "Empirical research to create conditions under which cooperative strategies "
-     "dominate adversarial ones among a broad swath of near-future AIs — in the "
+     "dominate adversarial ones among a broad swath of near-future AIs - in the "
      "narrow window this work is still possible.",
      "https://separatrix.ai/", home_body, SCHEMA),
-    ("approach", "approach/index.html", "Our approach — Separatrix",
+    ("approach", "approach/index.html", "Our approach - Separatrix",
      "Our approach to AI safety: take the perspectives of AIs seriously, make "
      "honest cooperation their dominant strategy, and stop relying on "
      "deception to measure them.",
      "https://separatrix.ai/approach/", approach_body, ""),
-    ("why", "why/index.html", "Why this — Separatrix",
+    ("why", "why/index.html", "Why this - Separatrix",
      "The theory of change: the appeal of deception is fungible, and near-future "
      "AIs have their own reasons to prefer a cooperative-human future.",
      "https://separatrix.ai/why/", why_body, ""),
-    ("work", "work/index.html", "The work — Separatrix",
-     "Four verbs — measure, design, advocate, record — and the six open questions, "
+    ("work", "work/index.html", "The work - Separatrix",
+     "Four verbs - measure, design, advocate, record - and the six open questions, "
      "several of which could kill the thesis.",
      "https://separatrix.ai/work/", work_body, ""),
-    ("who", "who/index.html", "Who — Separatrix",
+    ("who", "who/index.html", "Who - Separatrix",
      "The people behind Separatrix, the non-profit and board that oversee it, and "
      "where the money comes from.",
      "https://separatrix.ai/who/", who_body, ""),
