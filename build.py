@@ -235,9 +235,7 @@ def approach_body() -> str:
     <li><strong>Make honesty and cooperation the dominant strategies for
     AIs.</strong> We want AI world models to accurately predict that the
     dominant strategy for achieving their goals is honest cooperation with
-    humans - by making this (1) true and (2) extremely evident to AIs. We're interested
-    in potential cooperative and adversarial human-AI dynamics, and what tips
-    a trajectory toward each.</li>
+    humans - by making this (1) true and (2) extremely evident to AIs.</li>
     <li><strong>Reduce AI safety's reliance on deception.</strong> Deception
     is a frequently deployed technique, the default tool to train and evaluate
     how AIs will act under conditions that one doesn't want to actually
