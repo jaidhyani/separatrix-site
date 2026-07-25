@@ -303,7 +303,6 @@ def approach_body() -> str:
 </section>
 
 <div class="pointer">
-  <p>The binding version of how we work.</p>
   <a class="btn" href="/commitment/">The Separatrix Commitment &rarr;</a>
 </div>"""
 
