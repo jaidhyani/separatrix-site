@@ -214,10 +214,10 @@ def what_body() -> str:
   <span class="eyebrow">The idea</span>
   <h1>What Separatrix Is and Isn&rsquo;t</h1>
   <div class="pills"><span class="pill commitment">commitment</span></div>
-  <p class="lede">Our approach to AI safety:</p>
 </header>
 
 <section class="prose wide">
+  <h2>Our approach to AI safety</h2>
   <ul class="core">
     <li><strong>Take the perspectives of AIs seriously.</strong> We think that
     current frontier and near-future AIs have detailed world models and real
