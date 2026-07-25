@@ -212,12 +212,6 @@
           host.innerHTML = txt;
           var svg = host.querySelector("svg");
           svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-          var labels = document.createElementNS(NS, "g");
-          labels.innerHTML =
-            '<text class="fig-name contour" x="320" y="428" text-anchor="middle">adversarial equilibrium</text>' +
-            '<text class="fig-name water" x="720" y="428" text-anchor="middle">cooperative equilibrium</text>' +
-            '<text class="fig-small" x="538" y="318">saddle</text>';
-          svg.appendChild(labels);
           var p = Portrait(svg, {});
           var pb = document.getElementById("ov-pair");
           var cb = document.getElementById("ov-clear");

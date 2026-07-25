@@ -155,6 +155,9 @@ def unstable_paths():
 # redrawing. Chosen 2026-07-24.
 MARK_FRAC, MARK_ROT = 0.40, -75
 
+# How much of each separatrix branch, measured back from the saddle, forms the S.
+S_FRAC = 0.44
+
 
 def mark_branches(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=1):
     """The mark split at the saddle: (cool_d, warm_d, viewBox).
@@ -234,24 +237,47 @@ def transform_point(px, py, tf):
     return px, py
 
 
-def _emphasis(d, mini):
-    """Weight a field line by how near it runs to the separatrix.
+def sep_split(frac, tf):
+    """Split the separatrix into the part that draws the S and the rest.
 
-    Near the curve the lines are saturated and heavy; further out they thin and
-    fade into the paper. This is what makes the S legible without drawing an S.
-    Returns None for lines far enough out that the mark drops them entirely —
-    at favicon size the far field is only mud.
+    Each branch runs from far away in to the saddle. The stretch nearest the
+    saddle is what reads as an S; the far stretch curls away and closes the
+    shape, which fights it. So they get drawn very differently.
+    """
+    def arclen(p):
+        t = [0.0]
+        for i in range(1, len(p)):
+            t.append(t[-1] + math.hypot(sx(p[i][0]) - sx(p[i - 1][0]),
+                                        sy(p[i][1]) - sy(p[i - 1][1])))
+        return t
+
+    core, rest = [], []
+    for br in separatrix_paths():
+        t = arclen(br)
+        cut = t[-1] * (1 - frac)
+        near = [q for q, d in zip(br, t) if d >= cut]
+        far = [q for q, d in zip(br, t) if d <= cut]
+        core.append([transform_point(sx(x), sy(v), tf) for x, v in near])
+        rest.append([transform_point(sx(x), sy(v), tf) for x, v in far])
+    return core, rest
+
+
+def _emphasis(d, mini):
+    """Weight a field line by how near it runs to the S.
+
+    The point of the plate is the curve. Everything else is context, so the
+    field falls away fast: legible if you look, invisible if you don't.
+    Returns None for lines the mark drops entirely.
     """
     if mini:
-        for limit, op, w in ((62, 1.0, 8.5), (125, 0.8, 6.0), (190, 0.45, 4.0)):
+        for limit, op, w in ((70, 0.42, 5.0), (150, 0.24, 4.0)):
             if d < limit:
                 return op, w
         return None
-    for limit, op, w in ((50, 0.95, 3.0), (105, 0.7, 2.1),
-                         (180, 0.42, 1.4), (290, 0.22, 1.0)):
+    for limit, op, w in ((60, 0.55, 1.6), (130, 0.30, 1.2), (230, 0.14, 0.9)):
         if d < limit:
             return op, w
-    return 0.11, 0.8
+    return 0.07, 0.7
 
 
 def _min_dists(pts, sep_samples):
@@ -279,10 +305,9 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
     mini = detail == "mini"
     out = []
 
-    # --- the separatrix, first: everything else is weighted against it -------
-    sep = [[transform_point(sx(x), sy(v), tf) for x, v in br]
-           for br in separatrix_paths()]
-    samples = [q for br in sep for q in br[::4]]
+    # --- the S, first: everything else is weighted against it ---------------
+    core, rest = sep_split(S_FRAC, tf)
+    samples = [q for br in core for q in br[::3]]
 
     # --- field trajectories -------------------------------------------------
     starts = []
@@ -299,7 +324,7 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
     starts += [(-0.3, 0.9), (0.3, -0.9), (-0.15, -0.5), (0.15, 0.5),
                (0.0, 1.4), (0.0, -1.4), (-1.9, 0.1), (1.9, -0.1)]
 
-    every = 26 if mini else 4
+    every = 18 if mini else 4
     for x0, v0 in starts:
         raw, basin = integrate(x0, v0)
         raw = clip_visible(raw)
@@ -312,8 +337,6 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
         dists = _min_dists(pts, samples)
 
         if mini:
-            # One weight for the whole line. At mark size the per-segment
-            # gradient is invisible and costs an element per band change.
             key = _emphasis(min(dists), mini)
             if key is None:
                 continue
@@ -325,8 +348,6 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
             )
             continue
 
-        # Break the line into runs of equal weight so the emphasis can vary
-        # along it, instead of one flat stroke per trajectory.
         def emit(run, key):
             if key is None or len(run) < 2:
                 return
@@ -346,13 +367,22 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
                 run, run_key = [q], key
         emit(run, run_key)
 
-    # --- the separatrix itself ----------------------------------------------
-    for k, br in enumerate(sep):
-        step = 22 if mini else 2
+    # --- the far reaches of the separatrix: no heavier than the field --------
+    if not mini:
+        for br in rest:
+            d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::4])
+            out.append(
+                f'<path d="{d}" fill="none" stroke="var(--ink)" stroke-width="1.1" '
+                f'opacity="0.14" stroke-linecap="round"/>'
+            )
+
+    # --- the S itself -------------------------------------------------------
+    for k, br in enumerate(core):
+        step = 6 if mini else 2
         d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::step])
         out.append(
             f'<path id="{idp}sep{k}" d="{d}" fill="none" stroke="var(--ink)" '
-            f'stroke-width="{17 if mini else 4.2}" stroke-linecap="round" '
+            f'stroke-width="{34 if mini else 13}" stroke-linecap="round" '
             f'stroke-linejoin="round"/>'
         )
 

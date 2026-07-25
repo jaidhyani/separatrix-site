@@ -219,11 +219,6 @@ def home_body() -> str:
     <g id="field">
 {portrait_inner("full", tf=TF)}
     </g>
-    <g id="labels">
-      <text class="fig-name contour" x="{_ADV_X:.0f}" y="-40" text-anchor="middle">adversarial equilibrium</text>
-      <text class="fig-name water" x="{_COOP_X:.0f}" y="1082" text-anchor="middle">cooperative equilibrium</text>
-      <text class="fig-small" x="{_SAD_X + 28:.0f}" y="{_SAD_Y + 5:.0f}">saddle</text>
-    </g>
   </svg>
   <figcaption><b>Fig. 1</b> — a damped double-well system
     (ẍ&nbsp;=&nbsp;x&nbsp;−&nbsp;x³&nbsp;−&nbsp;¼ẋ). Every trajectory ends at one
