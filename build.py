@@ -661,7 +661,7 @@ def who_body() -> str:
   <a href="https://manifund.org/projects/luthien">the post-mortem is
   public</a>.</p>
   <p>Crystal Stellwagen is an experienced software engineer who spends even
-  more time reading papers and running steering-vector experiments than he
+  more time reading papers and running steering-vector experiments than Jai
   does.</p>
 </section>
 
