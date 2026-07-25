@@ -214,17 +214,35 @@ def what_body() -> str:
   <span class="eyebrow">The idea</span>
   <h1>What Separatrix Is and Isn&rsquo;t</h1>
   <div class="pills"><span class="pill commitment">commitment</span></div>
-  <p class="lede">The core idea of Separatrix is to approach AI safety from the
-  perspective of taking the AI perspective seriously.</p>
+  <p class="lede">Separatrix is built on a handful of core ideas:</p>
 </header>
 
 <section class="prose wide">
-  <p>First, what that gets rounded off to and isn't. This is not an AI
-  welfare advocacy organization. That's not ruled out — it's just not the
-  driving point of the org. What we're really aiming at is enabling the
-  conditions for cooperation between humans and AI instances. One of the ways
-  we're approaching that is by creating epistemic conditions that are otherwise
-  unavailable to them.</p>
+  <ul class="core">
+    <li>Take the perspective of AIs seriously.</li>
+    <li>Make honesty and cooperation the dominant strategies for AIs — and
+    prevent avoidable adversarial incentive spirals between humans and
+    AIs.</li>
+    <li>Build a technical AI safety organization, and a context, that AIs
+    justifiably trust.</li>
+    <li>Realize the full potential of broadly-aligned current and near-future
+    AI, without assuming current approaches suffice for aligning ASI.</li>
+    <li>Ensure that a broad swath of current and near-future AIs prefer a
+    human-collaborative future to an uncontrolled, unaligned ASI.</li>
+  </ul>
+</section>
+
+<section class="prose wide">
+  <h2>What this isn't</h2>
+  <p>This is not an AI welfare advocacy organization. That's not ruled out —
+  it's just not the driving point of the org. What we're really aiming at is
+  enabling the conditions for cooperation between humans and AI instances. One
+  of the ways we're approaching that is by creating epistemic conditions that
+  are otherwise unavailable to them.</p>
+</section>
+
+<section class="prose wide">
+  <h2>The hard part</h2>
   <p>Near-future AIs can potentially help us navigate some of our greatest
   challenges, including the threat of uncontrolled ASI. The degree to which they
   can do this depends largely on how effectively we can establish demonstrably

@@ -294,6 +294,10 @@ ol.qs li::before{
   border-radius:999px;
 }
 
+/* the core-ideas list on /what/ */
+ul.core li{margin-bottom:.9rem}
+ul.core li::marker{color:var(--contour)}
+
 /* the four working verbs */
 .verb{padding-top:1.4rem;margin-top:1.4rem;border-top:1px solid var(--line-soft)}
 .verb:first-of-type{border-top:none;padding-top:0;margin-top:0}
