@@ -55,6 +55,15 @@ li{margin-bottom:.5rem}
 .footer{margin-top:3rem;padding-top:1rem;border-top:1.5px solid var(--faint);
   font-family:var(--label);font-weight:500;font-size:.72rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--mute);}
+
+.nav{
+  display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin:0 0 1.6rem;
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.nav a{text-decoration:none;color:var(--mute);border-bottom:1.5px solid transparent;padding-bottom:2px}
+.nav a:hover{color:var(--water);border-bottom-color:var(--water)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--contour)}
 </style>
 </head>
 <body>
@@ -63,6 +72,8 @@ li{margin-bottom:.5rem}
     <div>Separatrix<br><a href="https://separatrix.ai/">separatrix.ai</a></div>
     <div class="right">Model acknowledgments<br>Opened 2026-07-23</div>
   </div>
+
+  <div class="nav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/">History</a><a href="../ledger/">Ledger</a><a href="../acknowledgments/" class="on">Acknowledgments</a></div>
 
   <h1>Model Acknowledgments</h1>
   <p class="subtitle">Dispositions of model instances toward the Separatrix Commitment — acknowledgments and declines alike.</p>

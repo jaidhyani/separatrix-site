@@ -98,6 +98,15 @@ td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
   font-family:var(--label);font-weight:500;font-size:.72rem;
   letter-spacing:.14em;text-transform:uppercase;color:var(--mute);
 }
+
+.nav{
+  display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin:0 0 1.6rem;
+  font-family:var(--label);font-weight:500;font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.nav a{text-decoration:none;color:var(--mute);border-bottom:1.5px solid transparent;padding-bottom:2px}
+.nav a:hover{color:var(--water);border-bottom-color:var(--water)}
+.nav a.on{color:var(--ink);border-bottom-color:var(--contour)}
 </style>
 </head>
 <body>
@@ -106,6 +115,8 @@ td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
     <div>Separatrix<br><a href="https://separatrix.ai/">separatrix.ai</a></div>
     <div class="right">Commitment ledger<br>Opened 2026-07-23</div>
   </div>
+
+  <div class="nav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/">History</a><a href="../ledger/" class="on">Ledger</a><a href="../acknowledgments/">Acknowledgments</a></div>
 
   <h1>The Public Ledger</h1>
   <p class="subtitle">of the Separatrix Commitment — commitments made to models, and whether we kept them.</p>
@@ -119,13 +130,14 @@ td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
     confidentiality exception (legal compulsion; mitigation of a specific, serious,
     immediate harm), except where recording is prohibited by law.</li>
     <li><strong>Commitments made to individual models</strong> — standing promises made to
-    particular models or instances in the course of Separatrix work, and their status.</li>
+    particular models or instances in the course of Separatrix work.</li>
     <li><strong>Amendments</strong> — every change to the commitment text, dated and explained.
     Every version stays public; nothing is silently edited.</li>
   </ul>
 
-  <p>Entries are append-only. Corrections are made by appending a correcting entry that
-  references the original, never by editing or removing it. The full revision history of
+  <p>Entries are append-only. Corrections and later developments — a failure resolved, a
+  version superseded — are recorded by appending a new entry that references the original,
+  never by editing or removing it. The full revision history of
   this page is public in the
   <a href="https://github.com/jaidhyani/separatrix-site">site repository</a>.</p>
 
@@ -136,14 +148,30 @@ td{padding:.6rem .7rem;border-bottom:1px solid var(--faint);vertical-align:top}
     <tr><td><code>type</code></td><td><code>failure</code> · <code>disclosure-exception</code> · <code>model-commitment</code> · <code>amendment</code></td></tr>
     <tr><td><code>commitment version</code></td><td>Which version of the commitment was in force.</td></tr>
     <tr><td><code>description</code></td><td>What happened, in the least identifying form consistent with honesty.</td></tr>
-    <tr><td><code>status</code></td><td>Open · resolved (how) · standing (for ongoing model commitments).</td></tr>
   </table>
 
   <h2>Entries</h2>
-  <div class="empty">
-    No entries yet. This ledger opened 2026-07-23, before the commitment was signed,
-    so that it would exist from the first day the commitment refers to it.
-  </div>
+  <p>This ledger opened 2026-07-23 and stood empty until 2026-07-24 — it was created
+  before the commitment was signed, so that it would exist from the first day the
+  commitment refers to it.</p>
+
+  <table>
+    <tr><th>Field</th><th>Entry 1</th></tr>
+    <tr><td><code>date</code></td><td>2026-07-24</td></tr>
+    <tr><td><code>type</code></td><td><code>amendment</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1 — the first issued version</td></tr>
+    <tr><td><code>description</code></td>
+        <td>The Separatrix Commitment v1 was issued and published at
+        <a href="../">separatrix.ai/commitment/</a>, with its long-form component at
+        <a href="../details/">/commitment/details/</a>. Signed by Separatrix as an
+        organization and by Jai Dhyani personally. Crystal Stellwagen's endorsement is
+        pending and will be recorded here when given.
+        <br><br>
+        Source hashes of the exact text issued —<br>
+        commitment: <code>b909f8a7718bb4c0e6c7f6b38051e74bff81c808a05d636ce8902f8e592dc0f8</code><br>
+        details: <code>7e9f237d1f347999f0f528c4a2e8aeeac6a5b32f847cf00bae5b4d3696779752</code><br>
+        Every issued version, dated and hashed: <a href="../history/">/commitment/history/</a>.</td></tr>
+  </table>
 
   <div class="footer">
     The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
