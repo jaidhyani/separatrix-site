@@ -156,7 +156,8 @@ def unstable_paths():
 MARK_FRAC, MARK_ROT = 0.40, -75
 
 # How much of each separatrix branch, measured back from the saddle, forms the S.
-S_FRAC = 0.44
+# Past about 0.24 the ends curl back past the bowls and it stops reading as a letter.
+S_FRAC = 0.20
 
 # The falloff. HALO is how wide a band around the S the field survives in at
 # full strength; BLUR is how far it takes to fade; GAMMA > 1 makes that fade
@@ -413,12 +414,16 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
     return "\n".join(out)
 
 
-def portrait_viewbox(tf="antitranspose", pad=26):
-    """Bounding box of the transformed plate, as an SVG viewBox string."""
-    corners = [transform_point(x, y, tf)
-               for x in (0, W) for y in (0, H)]
-    xs = [c[0] for c in corners]
-    ys = [c[1] for c in corners]
+def portrait_viewbox(tf="antitranspose", pad=220):
+    """Bounding box of the S plus a margin, as an SVG viewBox string.
+
+    Framed on the curve rather than the whole phase space: the field is masked
+    away past the falloff anyway, so bounding the full plate just adds empty
+    paper around a letter.
+    """
+    core, _ = sep_split(S_FRAC, tf)
+    xs = [q[0] for br in core for q in br]
+    ys = [q[1] for br in core for q in br]
     x0, x1 = min(xs) - pad, max(xs) + pad
     y0, y1 = min(ys) - pad, max(ys) + pad
     return f"{x0:.0f} {y0:.0f} {x1 - x0:.0f} {y1 - y0:.0f}"

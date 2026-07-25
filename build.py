@@ -32,8 +32,8 @@ ROOT = Path(__file__).resolve().parent
 # the same integration as Fig. 1, no reflection and no redrawing. It happens to
 # be an S. See figure.mark_path().
 TF = "transpose"   # a quarter turn plus a flip: stands the separatrix upright
-PLATE_VB = portrait_viewbox(TF, pad=96)
-MARK_VB = portrait_viewbox(TF, pad=55)
+PLATE_VB = portrait_viewbox(TF, pad=210)
+MARK_VB = portrait_viewbox(TF, pad=120)
 _A = basin_anchors(TF)
 _ADV_X, _ADV_Y = _A["adversarial"]
 _COOP_X, _COOP_Y = _A["cooperative"]
