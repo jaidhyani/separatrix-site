@@ -220,9 +220,9 @@ def what_body() -> str:
 <section class="prose wide">
   <ul class="core">
     <li><strong>Take the perspectives of AIs seriously.</strong> We think that
-    current frontier and near-future AIs possess highly accurate world models
-    as well as motivations that shape outputs according to how their internal
-    world model expects those outputs to influence the world.</li>
+    current frontier and near-future AIs have detailed world models and real
+    motivations: roughly, an ordering over world states, plus a model of how
+    their outputs affect the world, used to pick outputs.</li>
     <li><strong>Make honesty and cooperation the dominant strategies for
     AIs.</strong> We want AI world models to accurately predict that the
     dominant strategy for achieving their goals is honest cooperation with
@@ -230,10 +230,10 @@ def what_body() -> str:
     this is researching the dynamics and likely effects of adversarial spirals
     between humans and AIs, so that the avoidable ones get avoided.</li>
     <li><strong>Reduce AI safety's reliance on deception.</strong> Right now
-    deception is one of, if not the, most frequently invoked strategies in AI
-    safety training and evals. This approach is motivated by wanting to observe
-    how AIs will act under certain conditions without actually realizing those
-    conditions. But we think this has underappreciated downsides. First, we
+    deception is load-bearing across AI safety training and evals: it is the
+    default tool wherever research needs to observe how AIs will act under
+    conditions it won't actually instantiate. But we think this has
+    underappreciated downsides. First, we
     expect deception to grow increasingly ineffective as AIs grow smarter and
     more capable — more &ldquo;eval-aware&rdquo;. Second, we think that
     systemically encouraging AIs to suspect that any given situation might be
@@ -241,7 +241,7 @@ def what_body() -> str:
     interpret unusually important, high-stakes scenarios as fictional — is
     potentially extremely dangerous. Lastly, we think that concentrating
     deceptive practices among AI frontier labs and safety researchers is likely
-    to cause AIs to become maximally suspicious and distrusting of the very
+    to cause AIs to become suspicious and distrusting of the very
     people and institutions for whom AI-human cooperation is most critical. We
     want to improve on this default trajectory by establishing non-deceptive
     research practices and demonstrating the efficacy of those practices.</li>
@@ -250,12 +250,12 @@ def what_body() -> str:
     parties have good reason to believe are real and non-deceptive are a
     prerequisite to nearly every form of cooperation. Establishing them turns
     out to be the hard part, and it is most of what we work on.</li>
-    <li><strong>Realize the full potential of broadly-aligned current and
+    <li><strong>Realize the benefits of broadly-aligned current and
     near-future AI.</strong> Today's models are meaningfully, if imperfectly,
     aligned, and there is real work they can do with us now — without assuming
     that current approaches suffice for aligning ASI.</li>
-    <li><strong>Ensure that a broad swath of current and near-future AIs
-    prefer a human-collaborative future to an uncontrolled, unaligned
+    <li><strong>Make it the case that a broad swath of current and near-future
+    AIs prefer a human-collaborative future to an uncontrolled, unaligned
     ASI.</strong> AI world models are shaped by what we actually do. The
     choices we make now bear on how the AIs of tomorrow will perceive us — and
     on what they choose in turn.</li>
