@@ -156,8 +156,22 @@ def unstable_paths():
 MARK_FRAC, MARK_ROT = 0.40, -75
 
 
+def mark_branches(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=1):
+    """The mark split at the saddle: (cool_d, warm_d, viewBox).
+
+    Both paths START at the saddle — the undecided point — and run outward, one
+    into each basin. That is the actual direction of flow, which is what lets
+    the mark animate itself honestly: it draws the way the system moves.
+    """
+    return _mark(frac, rot, step, decimals, split=True)
+
+
 def mark_path(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=0):
     """Return (path_d, viewBox) for the Separatrix mark, centred and square."""
+    return _mark(frac, rot, step, decimals, split=False)
+
+
+def _mark(frac, rot, step, decimals, split):
     def arclen(p):
         t = [0.0]
         for i in range(1, len(p)):
@@ -170,28 +184,41 @@ def mark_path(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=0):
         cut = t[-1] * f
         return [q for q, d in zip(p, t) if d <= cut]
 
+    # a runs saddle -> cooperative basin, b runs saddle -> adversarial basin
     a, b = (head(br, frac) for br in unstable_paths())
-    pts = [(sx(x), sy(v)) for x, v in b[::-1]] + [(sx(x), sy(v)) for x, v in a]
+    A = [(sx(x), sy(v)) for x, v in a]
+    B = [(sx(x), sy(v)) for x, v in b]
+    pts = B[::-1] + A
     cx = sum(p[0] for p in pts) / len(pts)
     cy = sum(p[1] for p in pts) / len(pts)
     th = math.radians(rot)
-    rot_pts = []
-    for x, y in pts:
-        x, y = x - cx, y - cy
-        rot_pts.append((x * math.cos(th) - y * math.sin(th),
+
+    def place(seq):
+        out = []
+        for x, y in seq:
+            x, y = x - cx, y - cy
+            out.append((x * math.cos(th) - y * math.sin(th),
                         x * math.sin(th) + y * math.cos(th)))
-    keep = rot_pts[::step]
-    if keep[-1] != rot_pts[-1]:
-        keep.append(rot_pts[-1])
-    xs = [p[0] for p in keep]
-    ys = [p[1] for p in keep]
+        return out
+
+    A, B, whole = place(A), place(B), place(pts)
+    xs = [p[0] for p in whole]
+    ys = [p[1] for p in whole]
     pad = 26  # half the stroke width, plus air
     side = max(max(xs) - min(xs), max(ys) - min(ys)) + 2 * pad
     ox = (min(xs) + max(xs)) / 2 - side / 2
     oy = (min(ys) + max(ys)) / 2 - side / 2
     fmt = f"{{:.{decimals}f}}"
-    d = "M" + " L".join(f"{fmt.format(x - ox)},{fmt.format(y - oy)}" for x, y in keep)
-    return d, f"0 0 {side:.0f} {side:.0f}"
+
+    def d_of(seq):
+        keep = seq[::step]
+        if keep[-1] != seq[-1]:
+            keep.append(seq[-1])
+        return "M" + " L".join(
+            f"{fmt.format(x - ox)},{fmt.format(y - oy)}" for x, y in keep)
+
+    vb = f"0 0 {side:.0f} {side:.0f}"
+    return (d_of(A), d_of(B), vb) if split else (d_of(whole), vb)
 
 
 def portrait_inner(detail="full", idp=""):

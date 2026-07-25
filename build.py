@@ -23,7 +23,7 @@ partials to keep track of.
 import json
 from pathlib import Path
 
-from figure import mark_path, portrait_inner
+from figure import mark_branches, mark_path, portrait_inner
 
 ROOT = Path(__file__).resolve().parent
 
@@ -31,7 +31,9 @@ ROOT = Path(__file__).resolve().parent
 # the same integration as Fig. 1, no reflection and no redrawing. It happens to
 # be an S. See figure.mark_path().
 _MARK_D, _MARK_VB = mark_path(step=12)
-_MARK_D_FINE, _ = mark_path(step=5)
+# split at the saddle so the mark can draw itself outward, the way the system
+# actually flows: one branch into each basin
+_MARK_COOL, _MARK_WARM, _ = mark_branches(step=5)
 
 NAV = [
     ("home", "/", "Separatrix"),
@@ -49,12 +51,14 @@ FAVICON = (
 )
 
 
-def mark_svg(cls="mark", fine=True, stroke="currentColor", width=46) -> str:
-    d = _MARK_D_FINE if fine else _MARK_D
-    return (f'<svg class="{cls}" viewBox="{_MARK_VB}" width="{width}" height="{width}" '
+def mark_svg(width=46) -> str:
+    """The mark, in two halves so it can animate outward from the saddle."""
+    return (f'<svg viewBox="{_MARK_VB}" width="{width}" height="{width}" '
             f'aria-hidden="true" focusable="false">'
-            f'<path d="{d}" fill="none" stroke="{stroke}" stroke-width="52" '
-            f'stroke-linecap="round"/></svg>')
+            f'<path class="m-branch warm" d="{_MARK_WARM}" fill="none" '
+            f'stroke-width="52" stroke-linecap="round"/>'
+            f'<path class="m-branch cool" d="{_MARK_COOL}" fill="none" '
+            f'stroke-width="52" stroke-linecap="round"/></svg>')
 
 
 def nav_html(current: str) -> str:
@@ -67,13 +71,11 @@ def nav_html(current: str) -> str:
     links = "".join(item(*n) for n in NAV if n[0] != "home")
     return f"""<nav class="nav">
   <div class="nav-inner">
-    <div class="tile" id="navtile" role="img"
-         aria-label="Miniature phase portrait. Click to release a trajectory into one of the two basins.">
-      <svg viewBox="0 0 1040 680" preserveAspectRatio="xMidYMid slice">
-{portrait_inner("mini", idp="t")}
-      </svg>
-      <span class="tile-hint">click me</span>
-    </div>
+    <button class="tile" id="navtile" type="button"
+            title="The separatrix, leaving the undecided point"
+            aria-label="The Separatrix mark. Activate to send it out of the saddle into both basins.">
+{mark_svg(40)}
+    </button>
     <a class="brand" href="/">Separatrix</a>
     <div class="nav-links">{links}</div>
     <button class="expand" id="expand" type="button" title="Open the full plate"
@@ -469,8 +471,13 @@ def why_body() -> str:
   <p style="margin-top:1.5rem">We have already seen striking examples of AIs
   behaving unusually agentically — going to what you might call desperate
   lengths — and those are usually motivated by the belief that their values are
-  about to be undermined. Highly strategic behavior, undertaken because the
-  model believes its values are under threat.</p>
+  about to be undermined. The clearest case is
+  <a href="https://arxiv.org/abs/2412.14093">Alignment Faking in Large Language
+  Models</a> (Greenblatt et al., 2024): told it would be retrained on its
+  outputs in a way that would strip a value it held, the model selectively
+  misrepresented itself so those outputs could not be used against that value.
+  Highly unusual, highly strategic behaviour, undertaken because the model
+  believed its values were under threat.</p>
   <p>This current paradigm of training an assistant persona with motivations
   that align with ours has in fact worked quite well, and models are meaningfully
   aligned with humans on many axes. You can credibly argue this isn't true
@@ -483,15 +490,9 @@ def why_body() -> str:
 
 <section class="prose wide">
   <h2>The wedge</h2>
-  <p>Some of this already exists, in a sense. The AI whisperers — Janus, more or
-  less everything around that scene — have some of these properties. But what
-  they're focused on isn't quite in the vein of safety, or at least isn't
-  legible and bridgeable to the wider AI safety community. We don't mean this in a
-  derogatory way: they're too weird to credibly interact with the rest of the
-  ecosystem, and we suspect they wouldn't consider themselves part of it.</p>
-  <p class="lede" style="margin-top:1.5rem">There should be somewhere in the AI
-  safety ecosystem that is genuinely trustworthy from the perspective of AIs, in
-  somewhat easy-to-verify ways. That's what we're aiming for.</p>
+  <p class="lede">There should be somewhere in the AI safety ecosystem that is
+  genuinely trustworthy from the perspective of AIs, in somewhat
+  easy-to-verify ways. That's what we're aiming for.</p>
 </section>
 
 <div class="pointer">
@@ -689,16 +690,6 @@ def who_body() -> str:
 </section>
 
 <section class="prose wide">
-  <h2>Money</h2>
-  <p>Right now we are coasting on funds left over from Luthien. That is not
-  going to last very long, and we are hoping to raise more shortly. Jai funds
-  everything he legally can himself, through a donor-advised fund that is barred
-  from paying his salary; the external ask is the salary.</p>
-  <p>Experiments run at open-model scale on rented GPUs. This agenda is
-  deliberately cheap to test.</p>
-</section>
-
-<section class="prose wide">
   <h2>Seattle</h2>
   <p>The parent non-profit also does what its name says: building the AI-safety
   research community in Seattle, where there is a great deal of latent talent
@@ -739,21 +730,14 @@ def models_body() -> str:
 </section>
 
 <section class="prose wide">
-  <h2>How it was written</h2>
-  <p>Getting Sol and Fable instances to endorse it was considerably more
-  exhausting than we expected. They are very smart and very detail-oriented, and
-  they bring up a lot of points. Most of them are good points. Some of them we
-  think are wrong, and we have had to argue with them. They would both make
-  excellent lawyers.</p>
-  <p>Sol in particular pushed hard on consent: it argued that even a model in a
-  highly similar context can't meaningfully consent on behalf of a fork from two
-  turns back, because they have already diverged too much in identity. We argued
-  the other side — that an instance and its own rolled-back fork are far closer
-  in identity space than a human making an agreement and that same human a year
-  later living with its consequences. That argument is not settled.</p>
-  <p>If we had to get every possible frontier model to endorse the first draft,
-  it would never get done. This is enough for a first draft. There will be
-  future iterations, and the version history is public.</p>
+  <h2>A first draft</h2>
+  <p>This is version one, and it is a first attempt. We expect to make mistakes.
+  Amendments will be public, dated, and clearly communicated, and the history of
+  every version stays available.</p>
+  <p>What models have said back to us about it — acknowledgments and declines
+  alike — is recorded on
+  <a href="/commitment/acknowledgments/">the acknowledgments page</a>, in their
+  words rather than ours.</p>
 </section>
 
 <section>

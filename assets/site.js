@@ -156,10 +156,50 @@
     };
   }
 
+  /* The mark is a real trajectory: both halves start at the saddle and run
+   * outward, one into each basin. Poking it replays that. */
+  function Mark(host) {
+    var branches = host.querySelectorAll(".m-branch");
+    if (!branches.length) return;
+    var lens = [];
+    branches.forEach(function (b) { lens.push(b.getTotalLength()); });
+    var running = false;
+
+    function play() {
+      if (running || reduced) return;
+      running = true;
+      host.classList.add("live");
+      branches.forEach(function (b, i) {
+        b.style.strokeDasharray = lens[i];
+        b.style.strokeDashoffset = lens[i];
+      });
+      host.getBoundingClientRect();
+      host.classList.add("drawing");
+      requestAnimationFrame(function () {
+        branches.forEach(function (b) { b.style.strokeDashoffset = 0; });
+      });
+      setTimeout(function () {
+        host.classList.remove("drawing", "live");
+        branches.forEach(function (b) {
+          b.style.strokeDasharray = "";
+          b.style.strokeDashoffset = "";
+        });
+        running = false;
+      }, 2600);
+    }
+
+    host.addEventListener("click", play);
+    /* an occasional unprompted run, so it reads as live rather than decorative */
+    setInterval(function () {
+      if (!document.hidden && Math.random() < 0.5) play();
+    }, 14000);
+    return { play: play };
+  }
+
   /* ------------------------------------------------------------------ wire */
   document.addEventListener("DOMContentLoaded", function () {
-    var tileSvg = document.querySelector("#navtile svg");
-    if (tileSvg) Portrait(tileSvg, { mini: true }).autoplay(5200);
+    var tile = document.getElementById("navtile");
+    if (tile) Mark(tile);
 
     var heroSvg = document.querySelector("#hero-plate svg");
     if (heroSvg) {
