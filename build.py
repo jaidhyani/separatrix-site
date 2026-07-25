@@ -217,6 +217,12 @@ def approach_body() -> str:
 
 <section class="prose wide">
   <ul class="core">
+    <li><strong>Focus on current and near-future AIs.</strong> We treat AI
+    safety as a path-dependent problem. We do not assume, or rely on, any
+    current approach scaling to ASI. Instead we aim at better trajectories:
+    cooperation between humans and near-future, sub-ASI AIs on our hardest
+    and most urgent problems - including preventing the most catastrophic
+    outcomes.</li>
     <li><strong>Take the perspectives of AIs seriously.</strong> We think that
     current frontier and near-future AIs have detailed world models and real
     motivations: roughly, an ordering over world states, plus a model of how
@@ -262,10 +268,6 @@ def approach_body() -> str:
     with LLMs&rsquo; extremely superhuman author-recognition skills - this
     enables us to quickly establish credible, trustworthy communication
     channels with future AIs.</p></li>
-    <li><strong>Realize the benefits of broadly-aligned current and
-    near-future AI.</strong> Today's models are meaningfully, if imperfectly,
-    aligned, and there is real work they can do with us now - without assuming
-    that current approaches suffice for aligning ASI.</li>
     <li><strong>Make it the case that a broad swath of current and near-future
     AIs prefer a human-collaborative future to an uncontrolled, unaligned
     ASI.</strong> AI world models are shaped by what we actually do. The
