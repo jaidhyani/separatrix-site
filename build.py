@@ -213,7 +213,6 @@ def approach_body() -> str:
     return """<header class="prose wide">
   <span class="eyebrow">The idea</span>
   <h1>Our approach to AI safety</h1>
-  <div class="pills"><span class="pill commitment">commitment</span></div>
 </header>
 
 <section class="prose wide">
