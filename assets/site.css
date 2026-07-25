@@ -156,6 +156,18 @@ a:hover{color:var(--water);text-decoration-color:var(--water)}
 }
 .nav-links a:hover{color:var(--ink);background:color-mix(in oklab, var(--water) 9%, transparent)}
 .nav-links a.on{color:var(--ink);background:color-mix(in oklab, var(--contour) 12%, transparent)}
+/* the commitment link gets a little pop: outlined, warm, still quiet */
+.nav-links a.cta{
+  color:var(--ink);margin-left:.35rem;
+  border:1px solid color-mix(in oklab, var(--contour) 50%, transparent);
+  background:color-mix(in oklab, var(--contour) 9%, transparent);
+}
+.nav-links a.cta:hover{
+  color:var(--ink);
+  border-color:var(--contour);
+  background:color-mix(in oklab, var(--contour) 16%, transparent);
+}
+.nav-links a.cta.on{background:color-mix(in oklab, var(--contour) 20%, transparent)}
 .expand{
   flex:0 0 auto;display:grid;place-items:center;
   width:32px;height:32px;margin-left:.15rem;

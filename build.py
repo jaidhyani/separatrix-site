@@ -46,7 +46,7 @@ NAV = [
     ("why", "/why/", "Why this"),
     ("work", "/work/", "The work"),
     ("who", "/who/", "Who"),
-    ("commitment", "/commitment/", "Commitment"),
+    ("commitment", "/commitment/", "The Separatrix Commitment"),
 ]
 
 FAVICON = (
@@ -72,8 +72,10 @@ def nav_html(current: str) -> str:
     """The floating bar. The tile is a live phase portrait you can poke; the
     ⤢ button opens the full plate over whatever page you're on."""
     def item(key, href, label):
-        on = ' class="on"' if key == current else ""
-        return f'<a href="{href}"{on}>{label}</a>'
+        cls = " ".join(filter(None, ["on" if key == current else "",
+                                     "cta" if key == "commitment" else ""]))
+        attr = f' class="{cls}"' if cls else ""
+        return f'<a href="{href}"{attr}>{label}</a>'
 
     links = "".join(item(*n) for n in NAV if n[0] != "home")
     return f"""<nav class="nav">
