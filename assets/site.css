@@ -294,8 +294,8 @@ ol.qs li::before{
   border-radius:999px;
 }
 
-/* the core-ideas list on /what/ */
-ul.core li{margin-bottom:.9rem}
+/* the approach list on /what/: bold claim, short specifics */
+ul.core li{margin-bottom:1.3rem}
 ul.core li::marker{color:var(--contour)}
 
 /* the four working verbs */
