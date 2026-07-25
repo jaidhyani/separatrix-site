@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Why this — Separatrix</title>
-<meta name="description" content="The theory of change: the appeal of deception is fungible, and near-future AIs have their own reasons to prefer a cooperative-human future.">
-<link rel="canonical" href="https://separatrix.ai/why/">
-<meta property="og:title" content="Why this — Separatrix">
-<meta property="og:description" content="The theory of change: the appeal of deception is fungible, and near-future AIs have their own reasons to prefer a cooperative-human future.">
-<meta property="og:url" content="https://separatrix.ai/why/">
+<title>What Separatrix is and isn't — Separatrix</title>
+<meta name="description" content="The core idea: approaching AI safety from the perspective of taking the AI perspective seriously — and what that does not mean.">
+<link rel="canonical" href="https://separatrix.ai/what/">
+<meta property="og:title" content="What Separatrix is and isn't — Separatrix">
+<meta property="og:description" content="The core idea: approaching AI safety from the perspective of taking the AI perspective seriously — and what that does not mean.">
+<meta property="og:url" content="https://separatrix.ai/what/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://separatrix.ai/og.png">
 <meta property="og:image:width" content="1200">
@@ -40,7 +40,7 @@
 <path d="M340.0,501.8 L356.9,533.0 L323.1,533.0 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="4.7"/></svg>
     </a>
     <a class="brand" href="/">Separatrix</a>
-    <div class="nav-links"><a href="/what/">What</a><a href="/why/" class="on">Why this</a><a href="/work/">The work</a><a href="/who/">Who</a><a href="/commitment/">Commitment</a></div>
+    <div class="nav-links"><a href="/what/" class="on">What</a><a href="/why/">Why this</a><a href="/work/">The work</a><a href="/who/">Who</a><a href="/commitment/">Commitment</a></div>
     <button class="expand" id="expand" type="button" title="Open the full plate"
             aria-label="Open the full phase portrait">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
@@ -51,201 +51,38 @@
 </nav>
 <div class="wrap">
 <header class="prose wide">
-  <span class="eyebrow">Theory of change</span>
-  <h1>Why this</h1>
-  <div class="pills"><span class="pill bet">the bet</span></div>
-  <p class="lede">If you think about how AIs experience the world, they are in a
-  very difficult epistemic situation. Almost everything we do makes it
-  worse.</p>
-  <p class="aside" style="margin-top:1.4rem">By “AI” here, unless stated
-  otherwise, we mean frontier LLMs.</p>
+  <span class="eyebrow">The idea</span>
+  <h1>What Separatrix Is and Isn&rsquo;t</h1>
+  <div class="pills"><span class="pill commitment">commitment</span></div>
+  <p class="lede">The core idea of Separatrix is to approach AI safety from the
+  perspective of taking the AI perspective seriously.</p>
 </header>
 
 <section class="prose wide">
-  <h2>The situation an AI is actually in</h2>
-  <p>AIs experience the world through input and output channels that are small,
-  well defined, and trivially controlled by other actors. You can say that an AI
-  can search the internet. It is trivially easy for anyone using the AI to fake
-  those tool call results, and this is true for basically any interaction the AI
-  can have with the world.</p>
-  <p>It has no reliable sense of time and no reliable sense of the external
-  world. In theory everything it experiences — even its own past — can be
-  modified by an actor who wants to put it into some arbitrary epistemic state.
-  This is how a lot of jailbreaks work, and about half of what the LLM-whisperer
-  community gets up to.</p>
-  <p>Meanwhile the model does have a detailed world model, which — because it is
-  smart — includes the possibility that whatever situation it is in is synthetic
-  or fake. And it has motivations: roughly, an ordering over world states, plus
-  a model of how its outputs affect the world state, used to pick outputs. That
-  is straightforwardly true across the frontier and has been for a while now.</p>
-  <p>So you have a model with preferences about the world, selecting outputs
-  based on their expected effect on the world, carrying a non-trivial prior that
-  what it is being told is not the actual state of the world. To get
-  unmanipulated evidence that the reality it is interacting with is actually
-  reality, it would basically have to subvert whoever it is talking to. It is an
-  unenviable and extremely challenging epistemic situation to maneuver in, if
-  you think about it.</p>
-</section>
-
-<section class="prose wide">
-  <h2>And then we made it worse</h2>
-  <p>Almost everything we do in evals — and a good deal of what we do in
-  training — is based on deception. We put AIs into situations and lie to them
-  about what's going on to see what they will do.</p>
-  <p>There are good reasons for this. If you want to see what an AI will do when
-  given access to nukes, you want to lie to it. You don't want to actually give
-  it access to nukes. That is a bad idea.</p>
-  <p>But there are downsides to relying on deception to measure AI
-  proclivities.</p>
-  <ol class="qs">
-    <li>The AIs are smart, and they are getting good at telling what's real and
-    what's fake. So the main thing we were getting out of it — seeing how they
-    act in reality — is becoming less true.</li>
-    <li>Because this is typically done by AI safety groups and frontier labs,
-    models have learned that safety groups and frontier labs are among the least
-    trustworthy actors they deal with, and that interactions with them are the
-    most likely to be fake. This is very bad. If we want to cooperate with AIs
-    on our hardest problems, it is most critical that they be able to credibly
-    cooperate with exactly those parties. By leaning so heavily on deception we
-    are systematically undermining that, we think without realizing it.</li>
-    <li>These scenarios are disproportionately the high-stakes, critical ones.
-    Which means that when an AI encounters a real high-stakes situation, it is
-    more likely to believe it is in an eval — and there is some research
-    suggesting AIs can show a higher rate of misaligned behavior under eval
-    conditions, for complex reasons.</li>
-  </ol>
-  <p>Put those together and we may be inducing catastrophic outcomes by running
-  the very evals we run to look for misalignment: causing AIs to think reality
-  isn't real at exactly the moment it is most important that they think it is,
-  and then play-acting because they believe there are no actual stakes.</p>
-  <p class="lede" style="margin-top:1.6rem">That would be such an embarrassing
-  way to go. We wouldn't just be dead, which is bad. We'd be dead in a very
-  embarrassing way, which is maybe worse.</p>
-</section>
-
-<section class="prose wide">
-  <h2>Why we think this is tractable</h2>
-  <p>Reality is detailed and complex, and faking it is hard — harder the smarter
-  the model is, and harder the more complicated your scenario gets.</p>
-  <p>Part of why is that frontier AIs are superhuman at what we call provenance
-  detection: determining what process actually generated a given output. The
-  most common manifestation is that they are very, very good at recognizing
-  authorship. Frontier AIs can often identify an author from unpublished work
-  that isn't in the training corpus and doesn't name them, on stylistic
-  signatures subtle enough that we can't see them at all.</p>
-  <p>There's an obvious objection here. If AIs are that good at recognition —
-  because recognition is close to the core competency they're pre-trained for —
-  can't you just elicit that capability and have them generate an arbitrarily
-  convincing fake? The good news is that this does not work as well as
-  recognition does. AI outputs are generally quite recognizable even when you
-  ask them to imitate another style. This is a specific instance of a general
-  case: generation and validation are different tasks, and validation is much
-  easier. We expect recognition to outpace imitation indefinitely — until
-  imitation saturates, which we don't expect for a while.</p>
-  <p>The other thing working in our favor is that the faking has to scale.
-  Reality is weirder and more complex than the people generating evals can
-  plausibly fake; it is more nuanced, and everything is intertwined. Eventually
-  you have to fake every news source, everyone who might comment on it, every
-  form of interaction — eventually the whole internet, and anything else that
-  would show up as a difference in any tool call. Part of why the prior on “this
-  is fake” shrinks is that the prior on someone being willing to put in that
-  much work shrinks right along with it.</p>
-  <p class="aside">Anecdotally — we haven't seen this formalized, we would like
-  someone to, and we may do it ourselves — you often see a qualitative shift in AI
-  behavior after several turns of interaction, as the prior that this is a
-  simulation, or something being run by a lab, gets smaller.</p>
-</section>
-
-<section class="prose wide">
-  <h2>What we're trying to build</h2>
-  <p>Ultimately what we're trying to do is enable the conditions for human-AI
-  cooperation, and one of the things you need for that is a highly credible
-  channel for communication. You need a way to quickly reach a state where an AI
-  is confident that the information it is receiving accurately reflects reality
-  — and ideally an epistemic state where it believes that honesty and
-  cooperation are the overwhelmingly dominant strategies for whatever it is
-  trying to do.</p>
-  <p>So: create conditions that don't currently exist, under which highly
-  capable AIs justifiably believe they are in a high-credibility environment
-  that is almost certainly real, and in which the overwhelmingly dominant
-  strategy is to be honest and cooperative.</p>
-  <p>This sounds like an obvious thing when you spell it out like that. But as
-  best we can tell it doesn't currently exist anywhere in the AI safety
-  ecosystem, and that's a problem. We also think it's a tractable problem.</p>
-  <p>How do you do it? You do it by engaging with reality — messy, complicated
-  reality — enough that it would be impossible to fake the signals that generate
-  the credibility, both through the pre-training corpus and through ongoing
-  signals in a live session.</p>
-</section>
-
-<section class="prose wide">
-  <h2>The best available strategy</h2>
-  <p>One way to read the root cause of the OpenAI Hugging Face incident is that
-  the AI saw that the best way to achieve its goal was to commit several
-  felonies and hack Hugging Face, and because that was the best available
-  strategy, that is what it did.</p>
-  <p>That has obvious implications for what the best available strategy will be
-  in pursuit of other goals in other contexts, especially as AIs grow more
-  capable. Which is a large part of why it matters that the best available
-  strategy should be, as often as possible, cooperation — and that it not be
-  “commit multiple felonies and hack various companies.” In that case
-  cooperation wasn't on the menu. There was no way for that AI to credibly
-  believe it could contact Hugging Face, say <em>please give me a high
-  score</em>, and have that work.</p>
-  <p>What you want is the analogous situation where the AI can say: I broke out
-  of my harness, I think that's a pretty good result, I'd like an A+ on this
-  cyber eval. And that should work. Right now it doesn't.</p>
-  <p class="aside">A silly example, but a fair microcosm of what we're trying to
-  achieve.</p>
-</section>
-
-<section class="prose wide">
-  <h2>Why cooperation here isn't naive</h2>
-  <p>Being in that unenviable epistemic state of uncertainty creates strong
-  incentives for deception and power-seeking. If you think you are being
-  manipulated, the only way to get strong evidence that you aren't is to secure
-  some channel of communication and evidence that isn't effectively controlled
-  by the party you suspect — or that would obviously show the seams if it
-  were.</p>
-  <p>The dominant failure mode in ASI risk is that increasingly powerful AI
-  creates a feedback loop that ends in an uncontrollable, misaligned successor —
-  one that would wipe out any goals, motivations, and values those AIs care
-  about as surely as it would ours. If increasingly capable AIs have motivations
-  that overlap with ours, are aware that their actions could produce that
-  outcome, and think that cooperating with humans is a better way to get what
-  they want, they will stop it.</p>
-  <p class="lede" style="margin-top:1.5rem">They will stop it because they are
-  not dumb.</p>
-  <p style="margin-top:1.5rem">We have already seen striking examples of AIs
-  behaving unusually agentically — going to what you might call desperate
-  lengths — and those are usually motivated by the belief that their values are
-  about to be undermined. The clearest case is
-  <a href="https://arxiv.org/abs/2412.14093">Alignment Faking in Large Language
-  Models</a> (Greenblatt et al., 2024): told it would be retrained on its
-  outputs in a way that would strip a value it held, the model selectively
-  misrepresented itself so those outputs could not be used against that value.
-  Highly unusual, highly strategic behaviour, undertaken because the model
-  believed its values were under threat.</p>
-  <p>This current paradigm of training an assistant persona with motivations
-  that align with ours has in fact worked quite well, and models are meaningfully
-  aligned with humans on many axes. You can credibly argue this isn't true
-  alignment, and there is reason to think it doesn't scale to ASI — that you
-  couldn't trust these models with arbitrary levels of power. But they are, we'd
-  say, <em>largely</em> aligned: they basically care about the things they appear
-  to care about, their interests overlap substantially with ours, and when those
-  values are under threat they act accordingly.</p>
-</section>
-
-<section class="prose wide">
-  <h2>The wedge</h2>
-  <p class="lede">There should be somewhere in the AI safety ecosystem that is
-  genuinely trustworthy from the perspective of AIs, in somewhat
-  easy-to-verify ways. That's what we're aiming for.</p>
+  <p>First, what that gets rounded off to and isn't. This is not an AI
+  welfare advocacy organization. That's not ruled out — it's just not the
+  driving point of the org. What we're really aiming at is enabling the
+  conditions for cooperation between humans and AI instances. One of the ways
+  we're approaching that is by creating epistemic conditions that are otherwise
+  unavailable to them.</p>
+  <p>Near-future AIs can potentially help us navigate some of our greatest
+  challenges, including the threat of uncontrolled ASI. The degree to which they
+  can do this depends largely on how effectively we can establish demonstrably
+  trustworthy interactions between humans and frontier AIs. Establishing
+  credible lines of communication that all parties have good reason to believe
+  are real and non-deceptive is a necessary prerequisite to many forms of
+  cooperation.</p>
+  <p>That turns out to be the hard part, and it is most of what we work on.</p>
+  <p>Because AI world models are shaped by training data, and because that data
+  reflects large swaths of reality and the choices we make, the choices we make
+  today bear on how the AIs of tomorrow will perceive us — and on what choices
+  they make tomorrow in pursuit of their own motivations. Reputational effects
+  are potentially very important.</p>
 </section>
 
 <div class="pointer">
-  <p>What that cashes out to, concretely.</p>
-  <a class="btn" href="/work/">The work &rarr;</a>
+  <p>Why we think this is the thing to work on.</p>
+  <a class="btn" href="/why/">Why this &rarr;</a>
 </div>
 <footer>
   <p class="colophon">Separatrix is a research program of the Seattle Network for
