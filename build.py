@@ -102,7 +102,7 @@ OVERLAY = """<div class="overlay" id="overlay" aria-hidden="true" role="dialog"
   <button class="overlay-close" type="button" aria-label="Close">&times;</button>
   <figure class="plate">
     <div class="plate-figure"></div>
-    <figcaption><b>Fig. 1</b> - a damped double-well system
+    <figcaption>A damped double-well system
       (ẍ = x − x³ − ¼ẋ). Every trajectory ends at one of two attractors. The
       bright paired curves shadow the separatrix: the starting points from
       which the outcome is not yet decided. Far from it, small pushes change
@@ -191,6 +191,7 @@ def home_body() -> str:
   humans and AIs can solve our hardest problems while avoiding catastrophic
   outcomes, and we think that the choices we make right now can significantly
   impact which trajectory we ultimately follow.</p>
+  <p style="margin-top:1.7rem"><a class="btn" href="/approach/">Our approach &rarr;</a></p>
 </header>
 
 <figure class="plate" id="hero-plate">
@@ -221,8 +222,7 @@ def approach_body() -> str:
     safety as a path-dependent problem. We do not assume, or rely on, any
     current approach scaling to ASI. Instead we aim at better trajectories:
     cooperation between humans and near-future, sub-ASI AIs on our hardest
-    and most urgent problems - including preventing the most catastrophic
-    outcomes.</li>
+    and most urgent problems.</li>
     <li><strong>Take the perspectives of AIs seriously.</strong> We think that
     current frontier and near-future AIs have detailed world models and real
     motivations: roughly, an ordering over world states, plus a model of how
@@ -234,7 +234,7 @@ def approach_body() -> str:
     in potential cooperative and adversarial human-AI dynamics, and what tips
     a trajectory toward each.</li>
     <li><strong>Reduce AI safety's reliance on deception.</strong> Deception
-    is a frequently-deployed technique, the default tool to train and evaluate
+    is a frequently deployed technique, the default tool to train and evaluate
     how AIs will act under conditions that one doesn't want to actually
     instantiate. But we think this has underappreciated downsides. First, we
     expect deception to grow increasingly ineffective as AIs grow smarter and
