@@ -4,10 +4,12 @@
 Emits the four site pages plus assets/portrait.svg (fetched by the expand
 overlay on pages that don't inline the plate):
 
-    index.html      the front page - hero, the plate, what this is
-    why/            theory of change
-    work/           the four working verbs + open questions
-    who/            people, SNAPS, funding, Seattle
+    index.html      the front page - hero, the plate
+    approach/       our approach to AI safety
+    who/            people, SNAPS, oversight, Seattle
+
+why_body() and work_body() are retained but unlisted - cut for the MVP
+launch (2026-07-25), to return once the content is up to snuff.
 
 The commitment tree under /commitment/ is built separately by clai's
 bin/separatrix-publish from the commitment markdown. Both builders link
@@ -43,8 +45,6 @@ _MARK_D, _MARK_VB = mark_path(step=12)
 NAV = [
     ("home", "/", "Separatrix"),
     ("approach", "/approach/", "Approach"),
-    ("why", "/why/", "Why this"),
-    ("work", "/work/", "The work"),
     ("who", "/who/", "Who"),
     ("commitment", "/commitment/", "The Separatrix Commitment"),
 ]
@@ -286,8 +286,8 @@ def approach_body() -> str:
 </section>
 
 <div class="pointer">
-  <p>Why we think this is the thing to work on.</p>
-  <a class="btn" href="/why/">Why this &rarr;</a>
+  <p>The binding version of how we work.</p>
+  <a class="btn" href="/commitment/">The Separatrix Commitment &rarr;</a>
 </div>"""
 
 
@@ -699,14 +699,6 @@ PAGES = [
      "honest cooperation their dominant strategy, and stop relying on "
      "deception to measure them.",
      "https://separatrix.ai/approach/", approach_body, ""),
-    ("why", "why/index.html", "Why this - Separatrix",
-     "The theory of change: the appeal of deception is fungible, and near-future "
-     "AIs have their own reasons to prefer a cooperative-human future.",
-     "https://separatrix.ai/why/", why_body, ""),
-    ("work", "work/index.html", "The work - Separatrix",
-     "Four verbs - measure, design, advocate, record - and the six open questions, "
-     "several of which could kill the thesis.",
-     "https://separatrix.ai/work/", work_body, ""),
     ("who", "who/index.html", "Who - Separatrix",
      "The people behind Separatrix, the non-profit and board that oversee it, and "
      "where the money comes from.",
