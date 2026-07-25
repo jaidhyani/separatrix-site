@@ -214,7 +214,7 @@ def what_body() -> str:
   <span class="eyebrow">The idea</span>
   <h1>What Separatrix Is and Isn&rsquo;t</h1>
   <div class="pills"><span class="pill commitment">commitment</span></div>
-  <p class="lede">Separatrix is built on a handful of core ideas:</p>
+  <p class="lede">Separatrix exists to pursue a handful of core objectives:</p>
 </header>
 
 <section class="prose wide">
