@@ -671,6 +671,9 @@ def who_body() -> str:
   Solving, a registered non-profit with a volunteer board of directors - Katie
   Cohen, Keller Scholl, Max Kircher - overseeing all activity and financial
   transactions.</p>
+  <p class="aside">(Note: as an independent oversight body that doesn't engage
+  with AIs on behalf of Separatrix, the Board is not party to
+  <a href="/commitment/">the Separatrix Commitment</a> to AIs.)</p>
 </section>"""
 
 
