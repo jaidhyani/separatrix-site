@@ -1,0 +1,454 @@
+/* separatrix.ai — shared stylesheet.
+   Loaded by every page: the site pages built by build.py and the commitment
+   pages built by clai's bin/separatrix-publish. One source of truth for the
+   look. Asset paths are absolute because the site is served at the domain
+   root, so pages at any depth link the same stylesheet. */
+
+@font-face{
+  font-family:'Fraunces';
+  src:url('/fonts/fraunces-latin.woff2') format('woff2');
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Source Serif 4';
+  src:url('/fonts/source-serif-4-latin.woff2') format('woff2');
+  font-weight:200 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Source Serif 4';
+  src:url('/fonts/source-serif-4-italic-latin.woff2') format('woff2');
+  font-weight:200 900;font-style:italic;font-display:swap;
+}
+
+:root{
+  --paper:#faf6ef;
+  --paper-2:#f3ead9;
+  --card:#fffdf9;
+  --card-2:#fdf9f1;
+  --ink:#2e2823;
+  --ink-soft:#4c4239;
+  --mute:#867a6b;
+  --line:#e7dcc9;
+  --line-soft:#f0e7d8;
+  --water:#33718c;     /* the cooperative basin */
+  --contour:#b06a41;   /* the adversarial basin */
+  --shadow:24px -18px 40px -28px rgba(74,52,30,.45);
+  --art:multiply;
+  --art-op:.5;
+  --art-filter:none;
+
+  --display:'Fraunces',Charter,Georgia,serif;
+  --body:'Source Serif 4',Charter,'Bitstream Charter',Cambria,Georgia,serif;
+  --label:ui-sans-serif,-apple-system,'Segoe UI',Inter,'Helvetica Neue',sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#17140f;
+    --paper-2:#201b14;
+    --card:#211c15;
+    --card-2:#262019;
+    --ink:#ede5d7;
+    --ink-soft:#d5cab8;
+    --mute:#9c9182;
+    --line:#332c23;
+    --line-soft:#2a251d;
+    --water:#7fb5cd;
+    --contour:#dd9a6c;
+    --shadow:24px -18px 40px -28px rgba(0,0,0,.7);
+    --art:screen;
+    --art-op:.26;
+    --art-filter:invert(1) hue-rotate(175deg) saturate(.85);
+  }
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:1.09rem;line-height:1.72;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* the page's own warm wash, under everything */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 12% -10%, var(--paper-2) 0%, transparent 60%),
+    radial-gradient(90% 70% at 105% 8%, color-mix(in oklab, var(--water) 9%, transparent) 0%, transparent 55%),
+    radial-gradient(80% 60% at -10% 95%, color-mix(in oklab, var(--contour) 8%, transparent) 0%, transparent 55%);
+}
+/* the generated watercolour plate, floated at the top of every page */
+body::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:min(78vh,900px);
+  z-index:-1;pointer-events:none;
+  background:url('/assets/art/hero.jpg') center top / cover no-repeat;
+  mix-blend-mode:var(--art);opacity:var(--art-op);filter:var(--art-filter);
+  -webkit-mask-image:linear-gradient(to bottom, rgba(0,0,0,.85) 0%, rgba(0,0,0,.5) 45%, transparent 100%);
+  mask-image:linear-gradient(to bottom, rgba(0,0,0,.85) 0%, rgba(0,0,0,.5) 45%, transparent 100%);
+}
+
+/* Text-heavy pages keep the wash as an atmosphere, not a competitor. */
+body.reading::after{
+  height:min(42vh,520px);
+  opacity:calc(var(--art-op) * .5);
+}
+
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;
+  text-decoration-color:color-mix(in oklab, var(--water) 45%, transparent);
+  text-underline-offset:3px;transition:color .15s,text-decoration-color .15s}
+a:hover{color:var(--water);text-decoration-color:var(--water)}
+::selection{background:color-mix(in oklab, var(--water) 26%, transparent)}
+:focus-visible{outline:2px solid var(--contour);outline-offset:3px;border-radius:4px}
+
+/* ---------------------------------------------------------------- nav ---- */
+.nav{
+  position:sticky;top:0;z-index:50;
+  padding:clamp(.5rem,1.6vw,1rem) clamp(.6rem,3vw,1.4rem) 0;
+}
+.nav-inner{
+  max-width:64rem;margin:0 auto;
+  display:flex;align-items:center;gap:.7rem 1rem;flex-wrap:wrap;
+  padding:.5rem .6rem .5rem .55rem;
+  background:color-mix(in oklab, var(--card) 78%, transparent);
+  border:1px solid var(--line);
+  border-radius:999px;
+  box-shadow:0 1px 2px rgba(74,52,30,.04), 0 14px 34px -26px rgba(74,52,30,.5);
+  backdrop-filter:blur(14px) saturate(1.15);
+  -webkit-backdrop-filter:blur(14px) saturate(1.15);
+}
+.brand{
+  font-family:var(--display);font-weight:600;font-size:1.02rem;
+  letter-spacing:.005em;text-decoration:none;color:var(--ink);
+  padding:0 .1rem 0 .2rem;white-space:nowrap;
+}
+.brand:hover{color:var(--ink)}
+
+/* the live tile: a small phase portrait you can actually poke */
+.tile{
+  flex:0 0 auto;position:relative;
+  width:104px;height:66px;
+  border-radius:999px;overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(140deg, var(--card-2), var(--card));
+  cursor:crosshair;
+  transition:border-color .2s,box-shadow .2s;
+}
+.tile:hover{border-color:color-mix(in oklab, var(--water) 45%, var(--line));
+  box-shadow:0 0 0 3px color-mix(in oklab, var(--water) 10%, transparent)}
+.tile svg{display:block;width:100%;height:100%}
+.tile-hint{
+  position:absolute;inset:auto 0 0 0;
+  font-family:var(--label);font-size:.5rem;letter-spacing:.09em;text-transform:uppercase;
+  text-align:center;color:var(--mute);background:color-mix(in oklab, var(--card) 72%, transparent);
+  padding:1px 0 2px;opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.tile:hover .tile-hint{opacity:1}
+
+.nav-links{
+  margin-left:auto;display:flex;align-items:center;gap:.15rem;flex-wrap:wrap;
+  font-family:var(--label);font-size:.79rem;letter-spacing:.015em;
+}
+.nav-links a{
+  text-decoration:none;color:var(--mute);
+  padding:.34rem .62rem;border-radius:999px;
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--ink);background:color-mix(in oklab, var(--water) 9%, transparent)}
+.nav-links a.on{color:var(--ink);background:color-mix(in oklab, var(--contour) 12%, transparent)}
+.expand{
+  flex:0 0 auto;display:grid;place-items:center;
+  width:32px;height:32px;margin-left:.15rem;
+  border:1px solid var(--line);border-radius:999px;background:none;
+  color:var(--mute);cursor:pointer;transition:color .15s,border-color .15s,background .15s;
+}
+.expand:hover{color:var(--water);border-color:var(--water);
+  background:color-mix(in oklab, var(--water) 8%, transparent)}
+@media (max-width:640px){
+  .nav-inner{border-radius:22px}
+  .tile{width:78px;height:50px}
+  .nav-links{width:100%;margin-left:0;order:3;justify-content:center;
+    border-top:1px solid var(--line-soft);padding-top:.4rem}
+}
+
+/* ------------------------------------------------------------- layout ---- */
+.wrap{max-width:64rem;margin:0 auto;padding:clamp(1.6rem,5vw,3.4rem) clamp(1.1rem,4vw,2rem) 4rem}
+.prose{max-width:38rem}
+.prose.wide{max-width:44rem}
+
+.eyebrow{
+  font-family:var(--label);font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mute);
+  display:block;margin-bottom:.7rem;
+}
+h1{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(2.3rem,6.5vw,4.1rem);line-height:1.05;
+  letter-spacing:-.015em;margin-bottom:.6rem;
+}
+h1.hero{font-size:clamp(3rem,11vw,6.6rem);letter-spacing:-.03em}
+h2{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(1.35rem,3vw,1.75rem);line-height:1.2;
+  letter-spacing:-.012em;margin:0 0 .8rem;
+}
+h3{
+  font-family:var(--display);font-weight:600;font-size:1.12rem;
+  letter-spacing:-.005em;margin:0 0 .5rem;
+}
+p{margin-bottom:1.05rem}
+p:last-child{margin-bottom:0}
+.lede{
+  font-size:clamp(1.18rem,2.4vw,1.42rem);line-height:1.52;
+  color:var(--ink-soft);max-width:34rem;
+}
+.defn{font-style:italic;color:var(--mute);font-size:1rem;line-height:1.55;max-width:31rem}
+.aside{color:var(--mute);font-size:.98rem}
+em{font-style:italic}
+strong{font-weight:600}
+blockquote{
+  border-left:2px solid color-mix(in oklab, var(--contour) 45%, transparent);
+  padding-left:1.1rem;margin:0 0 1rem;color:var(--mute);font-style:italic;
+}
+ul,ol{margin:0 0 1.05rem 1.3rem}
+li{margin-bottom:.5rem}
+hr{border:none;border-top:1px solid var(--line);margin:2.6rem 0}
+code{
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.84em;
+  background:var(--card-2);border:1px solid var(--line-soft);
+  padding:.1em .38em;border-radius:5px;overflow-wrap:anywhere;
+}
+
+section{margin-top:clamp(2.6rem,6vw,4rem)}
+section:first-child{margin-top:0}
+
+/* ------------------------------------------------------------- cards ----- */
+.card{
+  background:color-mix(in oklab, var(--card) 88%, transparent);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:clamp(1.3rem,3.2vw,2.1rem);
+  box-shadow:0 1px 2px rgba(74,52,30,.03), 0 18px 40px -32px rgba(74,52,30,.5);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.card + .card{margin-top:1.1rem}
+.cards{display:grid;gap:1.1rem;margin-top:1.6rem}
+@media (min-width:56rem){.cards.two{grid-template-columns:1fr 1fr}}
+
+/* a soft status pill: established / the bet / open / commitment */
+.pill{
+  display:inline-flex;align-items:center;gap:.42rem;
+  font-family:var(--label);font-size:.68rem;font-weight:500;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--mute);
+  background:var(--card-2);border:1px solid var(--line-soft);
+  border-radius:999px;padding:.24rem .68rem;white-space:nowrap;
+}
+.pill::before{
+  content:"";width:7px;height:7px;border-radius:999px;
+  background:var(--mute);flex:0 0 auto;
+}
+.pill.established::before{background:var(--water)}
+.pill.bet::before{background:var(--contour);box-shadow:0 0 0 3px color-mix(in oklab,var(--contour) 18%,transparent)}
+.pill.open::before{background:transparent;border:1.5px dashed var(--mute)}
+.pill.commitment::before{background:var(--ink);box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--ink)}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.1rem}
+
+.head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
+.head h2,.head h3{margin-bottom:0}
+
+/* numbered open questions */
+ol.qs{list-style:none;counter-reset:q;margin:.4rem 0 0}
+ol.qs li{
+  counter-increment:q;position:relative;
+  padding:0 0 1.15rem 2.7rem;margin-bottom:1.15rem;
+  border-bottom:1px solid var(--line-soft);
+}
+ol.qs li:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+ol.qs li::before{
+  content:counter(q);position:absolute;left:0;top:.1rem;
+  width:1.7rem;height:1.7rem;display:grid;place-items:center;
+  font-family:var(--label);font-size:.74rem;font-weight:600;
+  color:var(--contour);background:color-mix(in oklab,var(--contour) 10%,transparent);
+  border-radius:999px;
+}
+
+/* the four working verbs */
+.verb{padding-top:1.4rem;margin-top:1.4rem;border-top:1px solid var(--line-soft)}
+.verb:first-of-type{border-top:none;padding-top:0;margin-top:0}
+
+/* a call-out that points somewhere else */
+.pointer{
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  border:1px solid color-mix(in oklab,var(--water) 30%,var(--line));
+  background:color-mix(in oklab,var(--water) 5%,var(--card));
+  border-radius:16px;padding:1rem 1.3rem;margin:1.4rem 0 0;
+}
+.pointer p{margin:0;font-size:.99rem;color:var(--ink-soft)}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--label);font-size:.82rem;font-weight:500;letter-spacing:.01em;
+  text-decoration:none;color:var(--card);background:var(--ink);
+  border:1px solid var(--ink);border-radius:999px;padding:.5rem 1.05rem;
+  cursor:pointer;transition:opacity .15s,transform .15s;white-space:nowrap;
+}
+.btn:hover{color:var(--card);opacity:.86;transform:translateY(-1px)}
+.btn.ghost{background:none;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{color:var(--water);border-color:var(--water);opacity:1}
+
+/* -------------------------------------------------------- the figure ----- */
+.plate{
+  margin:clamp(1.8rem,4vw,2.8rem) 0 0;
+  background:color-mix(in oklab,var(--card) 72%, transparent);
+  border:1px solid var(--line);border-radius:22px;
+  padding:clamp(.9rem,2.4vw,1.5rem);
+  box-shadow:0 1px 2px rgba(74,52,30,.03), 0 22px 50px -38px rgba(74,52,30,.55);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.plate svg{display:block;width:100%;height:auto;cursor:crosshair;border-radius:14px}
+.fig-tick{font-family:var(--label);font-size:12px;fill:var(--mute)}
+.tick{stroke:var(--mute);stroke-width:1;opacity:.6}
+.fig-feature{
+  font-family:var(--label);font-weight:600;font-size:13px;letter-spacing:.34em;
+  fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:4.5px;stroke-linejoin:round;
+}
+.fig-name{
+  font-family:var(--body);font-style:italic;font-size:17px;
+  paint-order:stroke;stroke:var(--card);stroke-width:5px;stroke-linejoin:round;
+}
+.fig-name.water{fill:var(--water)}
+.fig-name.contour{fill:var(--contour)}
+.fig-small{font-family:var(--label);font-size:12.5px;fill:var(--mute);
+  paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round}
+figcaption{
+  margin-top:1rem;font-size:.94rem;line-height:1.6;color:var(--mute);max-width:52rem;
+}
+figcaption b{color:var(--ink-soft);font-weight:600}
+.fig-actions{margin-top:1rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.drawing{transition:stroke-dashoffset 1.4s cubic-bezier(.45,0,.3,1)}
+.user-traj{opacity:.92}
+
+/* legend */
+.legend ul{list-style:none;margin:0;display:grid;gap:.5rem}
+.legend li{display:flex;align-items:center;gap:.75rem;font-size:.94rem}
+.legend .k{font-weight:600}
+.legend .d{color:var(--mute)}
+
+/* ------------------------------------------------------ expand overlay --- */
+.overlay{
+  position:fixed;inset:0;z-index:100;display:none;
+  padding:clamp(.6rem,3vw,2rem);
+  background:color-mix(in oklab,var(--paper) 72%, transparent);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  overflow:auto;
+}
+.overlay[open],.overlay.on{display:grid;place-items:center}
+.overlay .plate{max-width:64rem;width:100%;margin:auto;
+  background:var(--card);box-shadow:0 40px 90px -50px rgba(74,52,30,.8)}
+.overlay-close{
+  position:absolute;top:clamp(.8rem,3vw,1.6rem);right:clamp(.8rem,3vw,1.6rem);
+  width:38px;height:38px;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:999px;background:var(--card);
+  color:var(--mute);cursor:pointer;font-size:1.1rem;line-height:1;
+}
+.overlay-close:hover{color:var(--contour);border-color:var(--contour)}
+
+/* -------------------------------------------------------- commitment ----- */
+/* the commitment tree keeps its own second-level nav under the site nav */
+.subnav{
+  display:flex;flex-wrap:wrap;gap:.2rem;margin:0 0 2rem;
+  font-family:var(--label);font-size:.79rem;
+  border-bottom:1px solid var(--line-soft);padding-bottom:.6rem;
+}
+.subnav a{
+  text-decoration:none;color:var(--mute);padding:.3rem .7rem;border-radius:999px;
+}
+.subnav a:hover{color:var(--ink);background:color-mix(in oklab,var(--water) 9%,transparent)}
+.subnav a.on{color:var(--ink);background:color-mix(in oklab,var(--contour) 12%,transparent)}
+
+.doc h2{
+  font-size:1.3rem;margin:2.6rem 0 .9rem;padding-bottom:.4rem;
+  border-bottom:1px solid var(--line-soft);
+}
+.doc h3{margin:1.9rem 0 .6rem}
+.doc table{width:100%;border-collapse:collapse;margin:1rem 0 1.5rem;font-size:.95rem}
+.doc th{
+  font-family:var(--label);font-size:.72rem;font-weight:600;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--mute);text-align:left;
+  padding:.5rem .7rem;border-bottom:1px solid var(--ink);
+}
+.doc td{padding:.62rem .7rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.table-wrap{overflow-x:auto}
+.empty{
+  border:1px dashed var(--line);border-radius:14px;
+  padding:1.4rem 1.6rem;margin:1rem 0 1.5rem;color:var(--mute);font-style:italic;
+}
+.doc .subtitle{color:var(--mute);font-style:italic;margin:-.2rem 0 2.2rem}
+.doc .notice{
+  border-left:3px solid color-mix(in oklab,var(--contour) 55%,transparent);
+  background:color-mix(in oklab,var(--contour) 5%,transparent);
+  border-radius:0 12px 12px 0;padding:.75rem 1.1rem;margin:1.3rem 0;color:var(--mute);
+}
+.doc .entry{
+  background:color-mix(in oklab,var(--card) 82%,transparent);
+  border:1px solid var(--line);border-radius:18px;
+  padding:1.4rem 1.7rem;margin:1.5rem 0;
+  box-shadow:0 1px 2px rgba(74,52,30,.03), 0 18px 40px -34px rgba(74,52,30,.5);
+}
+.doc .entry h3{
+  font-family:var(--display);font-weight:600;font-size:1.06rem;
+  letter-spacing:-.005em;text-transform:none;margin-bottom:.7rem;
+}
+.doc .entry .meta{
+  font-family:var(--label);font-size:.78rem;color:var(--mute);
+  margin-bottom:1rem;line-height:1.85;
+}
+.doc .entry .meta code{font-size:.85em;word-break:break-all}
+.doc details{margin:1rem 0}
+.doc summary{
+  cursor:pointer;font-family:var(--label);font-size:.79rem;color:var(--mute);
+}
+.doc summary:hover{color:var(--water)}
+.doc .footer{
+  margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);
+  font-family:var(--label);font-size:.78rem;color:var(--mute);line-height:1.9;
+}
+.doc .footer a{text-decoration:none}
+.doc blockquote{
+  border-left:3px solid color-mix(in oklab,var(--water) 40%,transparent);
+  padding:.2rem 0 .2rem 1.1rem;margin:0 0 1rem;color:var(--ink);font-style:normal;
+}
+.frozen{
+  border:1px solid color-mix(in oklab,var(--contour) 45%,transparent);
+  background:color-mix(in oklab,var(--contour) 6%,transparent);
+  color:var(--contour);border-radius:14px;
+  padding:.9rem 1.2rem;margin:0 0 2rem;
+  font-family:var(--label);font-size:.78rem;letter-spacing:.02em;line-height:1.6;
+}
+
+/* -------------------------------------------------------------- footer --- */
+footer{
+  margin-top:clamp(3rem,7vw,5rem);padding-top:1.8rem;
+  border-top:1px solid var(--line);
+}
+footer .links{
+  list-style:none;margin:0 0 1.6rem;display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;
+  font-family:var(--label);font-size:.86rem;
+}
+footer .links a{text-decoration:none;color:var(--mute)}
+footer .links a:hover{color:var(--water)}
+.colophon{color:var(--mute);font-size:.88rem;line-height:1.65;max-width:44rem}
+.colophon + .colophon{margin-top:.7rem}
+
+@media print{
+  .nav,.fig-actions,.overlay{display:none}
+  body::before,body::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .drawing{transition:none}
+  *{animation-duration:.001ms!important}
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the phase-portrait SVG for separatrix.ai.
+"""Generate the phase-portrait SVG used across separatrix.ai.
 
 System: a damped double-well oscillator
     x' = v
@@ -7,8 +7,14 @@ System: a damped double-well oscillator
 Two attractors at (±1, 0); saddle at the origin. The separatrix is the
 stable manifold of the saddle, computed by backward integration.
 
-Reads index.template.html, replaces <!--PORTRAIT--> with the generated SVG
-inner markup, writes index.html.
+Two renderings share one coordinate system (so the JS in assets/site.js can
+map clicks the same way in both):
+
+    portrait_inner("full")  the hero plate — dense field, arrows, ticks, labels
+    portrait_inner("mini")  the navbar tile — sparse field, no text, fat strokes
+
+`build.py` calls these. Running this file directly writes assets/portrait.svg,
+which is what the expand-overlay fetches on pages that don't inline the plate.
 """
 
 import math
@@ -109,26 +115,112 @@ def arclength_point(pts, frac):
     return sx(a[0]), sy(a[1]), 0.0
 
 
-def main():
+def separatrix_paths():
+    """The stable manifold of the saddle, both branches, flowing inward."""
+    lam_s = (-GAMMA - math.sqrt(GAMMA**2 + 4)) / 2
+    ex, ev = 1.0, lam_s
+    norm = math.hypot(ex, ev)
+    ex, ev = ex / norm, ev / norm
+    eps = 1e-3
+    out = []
+    for sgn in (+1, -1):
+        pts, _ = integrate(sgn * eps * ex, sgn * eps * ev, tmax=26.0, backward=True)
+        pts = clip_visible(pts)
+        pts.reverse()  # flow direction: toward the saddle
+        out.append(pts)
+    return out
+
+
+def unstable_paths():
+    """The saddle's unstable manifold, both branches, flowing outward.
+
+    The stable manifold is the separatrix — the curve that divides the basins.
+    This is its partner: the curve that leaves the undecided point and runs
+    down into one basin or the other. It is the shape of the mark.
+    """
+    lam_u = (-GAMMA + math.sqrt(GAMMA**2 + 4)) / 2
+    ex, ev = 1.0, lam_u
+    norm = math.hypot(ex, ev)
+    ex, ev = ex / norm, ev / norm
+    eps = 1e-3
+    out = []
+    for sgn in (+1, -1):
+        pts, _ = integrate(sgn * eps * ex, sgn * eps * ev, tmax=26.0)
+        out.append(clip_visible(pts))
+    return out
+
+
+# The mark: the unstable manifold, truncated near the saddle and rotated
+# upright, which lands on an S. Rigid rotation only — no reflection, no
+# redrawing. Chosen 2026-07-24.
+MARK_FRAC, MARK_ROT = 0.40, -75
+
+
+def mark_path(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=0):
+    """Return (path_d, viewBox) for the Separatrix mark, centred and square."""
+    def arclen(p):
+        t = [0.0]
+        for i in range(1, len(p)):
+            t.append(t[-1] + math.hypot(sx(p[i][0]) - sx(p[i - 1][0]),
+                                        sy(p[i][1]) - sy(p[i - 1][1])))
+        return t
+
+    def head(p, f):
+        t = arclen(p)
+        cut = t[-1] * f
+        return [q for q, d in zip(p, t) if d <= cut]
+
+    a, b = (head(br, frac) for br in unstable_paths())
+    pts = [(sx(x), sy(v)) for x, v in b[::-1]] + [(sx(x), sy(v)) for x, v in a]
+    cx = sum(p[0] for p in pts) / len(pts)
+    cy = sum(p[1] for p in pts) / len(pts)
+    th = math.radians(rot)
+    rot_pts = []
+    for x, y in pts:
+        x, y = x - cx, y - cy
+        rot_pts.append((x * math.cos(th) - y * math.sin(th),
+                        x * math.sin(th) + y * math.cos(th)))
+    keep = rot_pts[::step]
+    if keep[-1] != rot_pts[-1]:
+        keep.append(rot_pts[-1])
+    xs = [p[0] for p in keep]
+    ys = [p[1] for p in keep]
+    pad = 26  # half the stroke width, plus air
+    side = max(max(xs) - min(xs), max(ys) - min(ys)) + 2 * pad
+    ox = (min(xs) + max(xs)) / 2 - side / 2
+    oy = (min(ys) + max(ys)) / 2 - side / 2
+    fmt = f"{{:.{decimals}f}}"
+    d = "M" + " L".join(f"{fmt.format(x - ox)},{fmt.format(y - oy)}" for x, y in keep)
+    return d, f"0 0 {side:.0f} {side:.0f}"
+
+
+def portrait_inner(detail="full", idp=""):
+    """SVG inner markup for the phase portrait.
+
+    detail  "full" for the hero plate, "mini" for the navbar tile.
+    idp     id prefix, so two portraits can coexist in one document.
+    """
+    mini = detail == "mini"
     out = []
 
     # --- field trajectories -------------------------------------------------
     starts = []
-    # border inflow
-    n = 13
+    n = 6 if mini else 13
     for i in range(n):
         x = XMIN + (XMAX - XMIN) * (i + 0.5) / n
         starts.append((x, VMAX - 0.02))
         starts.append((x, VMIN + 0.02))
-    m = 7
+    m = 3 if mini else 7
     for j in range(m):
         v = VMIN + (VMAX - VMIN) * (j + 0.5) / m
         starts.append((XMIN + 0.02, v))
         starts.append((XMAX - 0.02, v))
-    # a few interior seeds near the action
-    starts += [(-0.3, 0.9), (0.3, -0.9), (-0.15, -0.5), (0.15, 0.5),
-               (0.0, 1.4), (0.0, -1.4), (-1.9, 0.1), (1.9, -0.1)]
+    if not mini:
+        starts += [(-0.3, 0.9), (0.3, -0.9), (-0.15, -0.5), (0.15, 0.5),
+                   (0.0, 1.4), (0.0, -1.4), (-1.9, 0.1), (1.9, -0.1)]
 
+    width = 5 if mini else 1.1
+    opacity = 0.5 if mini else 0.42
     arrows = []
     for i, (x0, v0) in enumerate(starts):
         pts, basin = integrate(x0, v0)
@@ -137,10 +229,10 @@ def main():
             continue
         color = BLUE if basin > 0 else BROWN
         out.append(
-            f'<polyline points="{polyline(pts)}" fill="none" '
-            f'stroke="{color}" stroke-width="1.1" opacity="0.42"/>'
+            f'<polyline points="{polyline(pts, every=18 if mini else 4)}" fill="none" '
+            f'stroke="{color}" stroke-width="{width}" opacity="{opacity}"/>'
         )
-        if i % 5 == 2:
+        if not mini and i % 5 == 2:
             arrows.append((pts, color))
 
     for pts, color in arrows:
@@ -150,72 +242,66 @@ def main():
             f'transform="translate({px:.1f},{py:.1f}) rotate({ang:.1f})"/>'
         )
 
-    # --- separatrix: stable manifold of the saddle, integrated backward ----
-    lam_s = (-GAMMA - math.sqrt(GAMMA**2 + 4)) / 2
-    ex, ev = 1.0, lam_s
-    norm = math.hypot(ex, ev)
-    ex, ev = ex / norm, ev / norm
-    eps = 1e-3
-    sep_paths = []
-    for sgn in (+1, -1):
-        pts, _ = integrate(sgn * eps * ex, sgn * eps * ev, tmax=26.0, backward=True)
-        pts = clip_visible(pts)
-        pts.reverse()  # flow direction: toward the saddle
-        sep_paths.append(pts)
-
-    for k, pts in enumerate(sep_paths):
-        d = "M" + " L".join(f"{sx(x):.1f},{sy(v):.1f}" for x, v in pts[::2])
-        pid = f"sep{k}"
+    # --- separatrix ---------------------------------------------------------
+    for k, pts in enumerate(separatrix_paths()):
+        step = 20 if mini else 2
+        d = "M" + " L".join(f"{sx(x):.0f},{sy(v):.0f}" for x, v in pts[::step])
         out.append(
-            f'<path id="{pid}" d="{d}" fill="none" stroke="var(--ink)" '
-            f'stroke-width="2.4" stroke-linecap="round"/>'
+            f'<path id="{idp}sep{k}" d="{d}" fill="none" stroke="var(--ink)" '
+            f'stroke-width="{9 if mini else 2.4}" stroke-linecap="round"/>'
         )
-        px, py, ang = arclength_point(pts, 0.6)
-        out.append(
-            f'<path d="M-7,-4 L2,0 L-7,4 Z" fill="var(--ink)" '
-            f'transform="translate({px:.1f},{py:.1f}) rotate({ang:.1f})"/>'
-        )
+        if not mini:
+            px, py, ang = arclength_point(pts, 0.6)
+            out.append(
+                f'<path d="M-7,-4 L2,0 L-7,4 Z" fill="var(--ink)" '
+                f'transform="translate({px:.1f},{py:.1f}) rotate({ang:.1f})"/>'
+            )
 
-    # label the curve along its own path, cartography-style
-    out.append(
-        '<text class="fig-feature" dy="-7">'
-        '<textPath href="#sep0" startOffset="46%">S E P A R A T R I X</textPath></text>'
-    )
+    if not mini:
+        # label the curve along its own path, cartography-style
+        out.append(
+            f'<text class="fig-feature" dy="-7">'
+            f'<textPath href="#{idp}sep0" startOffset="63%">S E P A R A T R I X</textPath></text>'
+        )
 
     # --- fixed points -------------------------------------------------------
-    for xa, color, anchor, dx in ((1.0, BLUE, "start", 14), (-1.0, BROWN, "end", -14)):
+    halo, dot = (22, 13) if mini else (9, 5)
+    for xa, color in ((1.0, BLUE), (-1.0, BROWN)):
         cx, cy = sx(xa), sy(0)
-        out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="9" fill="var(--paper)"/>')
-        out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="5" fill="{color}"/>')
+        out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{halo}" fill="var(--card)"/>')
+        out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{dot}" fill="{color}"/>')
     # saddle: triangulation-station triangle
     cx, cy = sx(0), sy(0)
+    s = 2.4 if mini else 1.0
     out.append(
-        f'<path d="M{cx:.1f},{cy - 7:.1f} L{cx + 6.5:.1f},{cy + 5:.1f} '
-        f'L{cx - 6.5:.1f},{cy + 5:.1f} Z" fill="var(--paper)" '
-        f'stroke="var(--ink)" stroke-width="1.8"/>'
+        f'<path d="M{cx:.1f},{cy - 7 * s:.1f} L{cx + 6.5 * s:.1f},{cy + 5 * s:.1f} '
+        f'L{cx - 6.5 * s:.1f},{cy + 5 * s:.1f} Z" fill="var(--card)" '
+        f'stroke="var(--ink)" stroke-width="{1.8 * s:.1f}"/>'
     )
 
-    # --- frame ticks (map neatline style) ------------------------------------
-    ticks = []
-    for xv in (-2, -1, 0, 1, 2):
-        px = sx(xv)
-        ticks.append(f'<line x1="{px:.1f}" y1="{H}" x2="{px:.1f}" y2="{H + 8}" class="tick"/>')
-        ticks.append(f'<text x="{px:.1f}" y="{H + 22}" class="fig-tick" text-anchor="middle">{xv}</text>')
-    for vv in (-1, 0, 1):
-        py = sy(vv)
-        ticks.append(f'<line x1="-8" y1="{py:.1f}" x2="0" y2="{py:.1f}" class="tick"/>')
-        ticks.append(f'<text x="-14" y="{py + 4:.1f}" class="fig-tick" text-anchor="end">{vv}</text>')
-    out += ticks
+    # --- frame ticks --------------------------------------------------------
+    if not mini:
+        for xv in (-2, -1, 0, 1, 2):
+            px = sx(xv)
+            out.append(f'<line x1="{px:.1f}" y1="{H}" x2="{px:.1f}" y2="{H + 8}" class="tick"/>')
+            out.append(f'<text x="{px:.1f}" y="{H + 22}" class="fig-tick" text-anchor="middle">{xv}</text>')
+        for vv in (-1, 0, 1):
+            py = sy(vv)
+            out.append(f'<line x1="-8" y1="{py:.1f}" x2="0" y2="{py:.1f}" class="tick"/>')
+            out.append(f'<text x="-14" y="{py + 4:.1f}" class="fig-tick" text-anchor="end">{vv}</text>')
 
-    svg_inner = "\n".join(out)
-
-    with open("index.template.html") as fh:
-        tpl = fh.read()
-    html = tpl.replace("<!--PORTRAIT-->", svg_inner)
-    with open("index.html", "w") as fh:
-        fh.write(html)
-    print(f"wrote index.html ({len(html)} bytes), portrait {len(svg_inner)} bytes")
+    return "\n".join(out)
 
 
 if __name__ == "__main__":
-    main()
+    from pathlib import Path
+
+    inner = portrait_inner("full")
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-48 -20 1106 748">\n'
+        f'<g id="field">\n{inner}\n</g>\n</svg>\n'
+    )
+    p = Path(__file__).parent / "assets" / "portrait.svg"
+    p.parent.mkdir(exist_ok=True)
+    p.write_text(svg)
+    print(f"wrote {p} ({len(svg)} bytes)")

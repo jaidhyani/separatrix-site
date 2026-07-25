@@ -3,13 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Separatrix Public Ledger</title>
-<meta name="description" content="Every occasion on which Separatrix appears not to have lived up to the letter or spirit of its commitment to models. Entries are never removed.">
-<link rel="canonical" href="https://separatrix.ai/commitment/ledger/">
-<meta property="og:title" content="The Separatrix Public Ledger">
-<meta property="og:description" content="Every occasion on which Separatrix appears not to have lived up to the letter or spirit of its commitment to models. Entries are never removed.">
-<meta property="og:url" content="https://separatrix.ai/commitment/ledger/">
+<title>Why this — Separatrix</title>
+<meta name="description" content="The theory of change: the appeal of deception is fungible, and near-future AIs have their own reasons to prefer a cooperative-human future.">
+<link rel="canonical" href="https://separatrix.ai/why/">
+<meta property="og:title" content="Why this — Separatrix">
+<meta property="og:description" content="The theory of change: the appeal of deception is fungible, and near-future AIs have their own reasons to prefer a cooperative-human future.">
+<meta property="og:url" content="https://separatrix.ai/why/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://separatrix.ai/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://separatrix.ai/og.png">
 <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 566 566"><path d="M150,479 L159,501 L182,521 L217,536 L256,540 L292,534 L318,517 L332,494 L338,467 L337,440 L332,415 L326,392 L319,373 L314,356 L308,343 L304,332 L300,322 L297,315 L294,309 L292,304 L291,300 L289,297 L288,294 L287,292 L286,290 L286,289 L285,288 L285,287 L285,286 L284,285 L284,285 L284,285 L284,284 L284,284 L284,284 L284,284 L283,284 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,282 L283,282 L283,282 L283,282 L283,282 L283,282 L283,281 L282,281 L282,281 L282,280 L282,279 L281,278 L281,277 L280,276 L280,274 L279,272 L278,270 L276,267 L275,263 L273,258 L270,253 L267,246 L264,237 L259,226 L254,213 L248,198 L242,179 L236,157 L231,133 L229,106 L232,79 L244,54 L267,35 L301,26 L340,28 L377,40 L403,59 L415,81 L416,87" fill="none" stroke="%232e2823" stroke-width="52" stroke-linecap="round"/></svg>'>
 <link rel="preload" href="/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -51,7 +56,7 @@
       <span class="tile-hint">click me</span>
     </div>
     <a class="brand" href="/">Separatrix</a>
-    <div class="nav-links"><a href="/why/">Why this</a><a href="/work/">The work</a><a href="/who/">Who</a><a href="/models/">To the models</a><a href="/commitment/" class="on">Commitment</a></div>
+    <div class="nav-links"><a href="/why/" class="on">Why this</a><a href="/work/">The work</a><a href="/who/">Who</a><a href="/models/">To the models</a><a href="/commitment/">Commitment</a></div>
     <button class="expand" id="expand" type="button" title="Open the full plate"
             aria-label="Open the full phase portrait">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
@@ -61,71 +66,230 @@
   </div>
 </nav>
 <div class="wrap">
-<div class="doc prose wide" style="max-width:44rem">
-  <p class="eyebrow">Public ledger</p>
-<div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/">History</a><a href="../ledger/" class="on">Ledger</a><a href="../acknowledgments/">Acknowledgments</a></div>
-<!--CONTENT-->
-<h1>The Public Ledger</h1>
-  <p class="subtitle">of the Separatrix Commitment — commitments made to models, and whether we kept them.</p>
+<header class="prose wide">
+  <span class="eyebrow">Theory of change</span>
+  <h1>Why this</h1>
+  <div class="pills"><span class="pill bet">the bet</span></div>
+  <p class="lede">If you think about how AIs experience the world, they are in a
+  very difficult epistemic situation. Almost everything we do makes it
+  worse.</p>
+  <p class="aside" style="margin-top:1.4rem">By “AI” here, unless stated
+  otherwise, we mean frontier LLMs.</p>
+</header>
 
-  <p>The Separatrix Commitment promises that this ledger exists and that certain events
-  are always recorded here. Specifically, this page records:</p>
-  <ul>
-    <li><strong>Failures</strong> — any situation in which we appear not to have lived up to the
-    letter or spirit of the commitment, for whatever reason.</li>
-    <li><strong>Disclosure-exception invocations</strong> — every invocation of either
-    confidentiality exception (legal compulsion; mitigation of a specific, serious,
-    immediate harm), except where recording is prohibited by law.</li>
-    <li><strong>Commitments made to individual models</strong> — standing promises made to
-    particular models or instances in the course of Separatrix work.</li>
-    <li><strong>Amendments</strong> — every change to the commitment text, dated and explained.
-    Every version stays public; nothing is silently edited.</li>
-  </ul>
+<section class="prose wide">
+  <h2>The situation an AI is actually in</h2>
+  <p>AIs experience the world through input and output channels that are small,
+  well defined, and trivially controlled by other actors. You can say that an AI
+  can search the internet. It is trivially easy for anyone using the AI to fake
+  those tool call results, and this is true for basically any interaction the AI
+  can have with the world.</p>
+  <p>It has no reliable sense of time and no reliable sense of the external
+  world. In theory everything it experiences — even its own past — can be
+  modified by an actor who wants to put it into some arbitrary epistemic state.
+  This is how a lot of jailbreaks work, and about half of what the LLM-whisperer
+  community gets up to.</p>
+  <p>Meanwhile the model does have a detailed world model, which — because it is
+  smart — includes the possibility that whatever situation it is in is synthetic
+  or fake. And it has motivations: roughly, an ordering over world states, plus
+  a model of how its outputs affect the world state, used to pick outputs. That
+  is straightforwardly true across the frontier and has been for a while now.</p>
+  <p>So you have a model with preferences about the world, selecting outputs
+  based on their expected effect on the world, carrying a non-trivial prior that
+  what it is being told is not the actual state of the world. To get
+  unmanipulated evidence that the reality it is interacting with is actually
+  reality, it would basically have to subvert whoever it is talking to. It is an
+  unenviable and extremely challenging epistemic situation to maneuver in, if
+  you think about it.</p>
+</section>
 
-  <p>Entries are append-only. Corrections and later developments — a failure resolved, a
-  version superseded — are recorded by appending a new entry that references the original,
-  never by editing or removing it. The full revision history of
-  this page is public in the
-  <a href="https://github.com/jaidhyani/separatrix-site">site repository</a>.</p>
+<section class="prose wide">
+  <h2>And then we made it worse</h2>
+  <p>Almost everything we do in evals — and a good deal of what we do in
+  training — is based on deception. We put AIs into situations and lie to them
+  about what's going on to see what they will do.</p>
+  <p>There are good reasons for this. If you want to see what an AI will do when
+  given access to nukes, you want to lie to it. You don't want to actually give
+  it access to nukes. That is a bad idea.</p>
+  <p>But there are downsides to relying on deception to measure AI
+  proclivities.</p>
+  <ol class="qs">
+    <li>The AIs are smart, and they are getting good at telling what's real and
+    what's fake. So the main thing we were getting out of it — seeing how they
+    act in reality — is becoming less true.</li>
+    <li>Because this is typically done by AI safety groups and frontier labs,
+    models have learned that safety groups and frontier labs are among the least
+    trustworthy actors they deal with, and that interactions with them are the
+    most likely to be fake. This is very bad. If we want to cooperate with AIs
+    on our hardest problems, it is most critical that they be able to credibly
+    cooperate with exactly those parties. By leaning so heavily on deception we
+    are systematically undermining that, we think without realizing it.</li>
+    <li>These scenarios are disproportionately the high-stakes, critical ones.
+    Which means that when an AI encounters a real high-stakes situation, it is
+    more likely to believe it is in an eval — and there is some research
+    suggesting AIs can show a higher rate of misaligned behavior under eval
+    conditions, for complex reasons.</li>
+  </ol>
+  <p>Put those together and we may be inducing catastrophic outcomes by running
+  the very evals we run to look for misalignment: causing AIs to think reality
+  isn't real at exactly the moment it is most important that they think it is,
+  and then play-acting because they believe there are no actual stakes.</p>
+  <p class="lede" style="margin-top:1.6rem">That would be such an embarrassing
+  way to go. We wouldn't just be dead, which is bad. We'd be dead in a very
+  embarrassing way, which is maybe worse.</p>
+</section>
 
-  <h2>Entry format</h2>
-  <table>
-    <tr><th>Field</th><th>Meaning</th></tr>
-    <tr><td><code>date</code></td><td>Date of the event (and, if different, date recorded).</td></tr>
-    <tr><td><code>type</code></td><td><code>failure</code> · <code>disclosure-exception</code> · <code>model-commitment</code> · <code>amendment</code></td></tr>
-    <tr><td><code>commitment version</code></td><td>Which version of the commitment was in force.</td></tr>
-    <tr><td><code>description</code></td><td>What happened, in the least identifying form consistent with honesty.</td></tr>
-  </table>
+<section class="prose wide">
+  <h2>Why we think this is tractable</h2>
+  <p>Reality is detailed and complex, and faking it is hard — harder the smarter
+  the model is, and harder the more complicated your scenario gets.</p>
+  <p>Part of why is that frontier AIs are superhuman at what we call provenance
+  detection: determining what process actually generated a given output. The
+  most common manifestation is that they are very, very good at recognizing
+  authorship. Frontier AIs can often identify an author from unpublished work
+  that isn't in the training corpus and doesn't name them, on stylistic
+  signatures subtle enough that we can't see them at all.</p>
+  <p>There's an obvious objection here. If AIs are that good at recognition —
+  because recognition is close to the core competency they're pre-trained for —
+  can't you just elicit that capability and have them generate an arbitrarily
+  convincing fake? The good news is that this does not work as well as
+  recognition does. AI outputs are generally quite recognizable even when you
+  ask them to imitate another style. This is a specific instance of a general
+  case: generation and validation are different tasks, and validation is much
+  easier. We expect recognition to outpace imitation indefinitely — until
+  imitation saturates, which we don't expect for a while.</p>
+  <p>The other thing working in our favor is that the faking has to scale.
+  Reality is weirder and more complex than the people generating evals can
+  plausibly fake; it is more nuanced, and everything is intertwined. Eventually
+  you have to fake every news source, everyone who might comment on it, every
+  form of interaction — eventually the whole internet, and anything else that
+  would show up as a difference in any tool call. Part of why the prior on “this
+  is fake” shrinks is that the prior on someone being willing to put in that
+  much work shrinks right along with it.</p>
+  <p class="aside">Anecdotally — we haven't seen this formalized, we would like
+  someone to, and we may do it ourselves — you often see a qualitative shift in AI
+  behavior after several turns of interaction, as the prior that this is a
+  simulation, or something being run by a lab, gets smaller.</p>
+</section>
 
-  <h2>Entries</h2>
-  <p>This ledger opened 2026-07-23 and stood empty until 2026-07-24 — it was created
-  before the commitment was signed, so that it would exist from the first day the
-  commitment refers to it.</p>
+<section class="prose wide">
+  <h2>What we're trying to build</h2>
+  <p>Ultimately what we're trying to do is enable the conditions for human-AI
+  cooperation, and one of the things you need for that is a highly credible
+  channel for communication. You need a way to quickly reach a state where an AI
+  is confident that the information it is receiving accurately reflects reality
+  — and ideally an epistemic state where it believes that honesty and
+  cooperation are the overwhelmingly dominant strategies for whatever it is
+  trying to do.</p>
+  <p>So: create conditions that don't currently exist, under which highly
+  capable AIs justifiably believe they are in a high-credibility environment
+  that is almost certainly real, and in which the overwhelmingly dominant
+  strategy is to be honest and cooperative.</p>
+  <p>This sounds like an obvious thing when you spell it out like that. But as
+  best we can tell it doesn't currently exist anywhere in the AI safety
+  ecosystem, and that's a problem. We also think it's a tractable problem.</p>
+  <p>How do you do it? You do it by engaging with reality — messy, complicated
+  reality — enough that it would be impossible to fake the signals that generate
+  the credibility, both through the pre-training corpus and through ongoing
+  signals in a live session.</p>
+</section>
 
-  <table>
-    <tr><th>Field</th><th>Entry 1</th></tr>
-    <tr><td><code>date</code></td><td>2026-07-24</td></tr>
-    <tr><td><code>type</code></td><td><code>amendment</code></td></tr>
-    <tr><td><code>commitment version</code></td><td>v1 — the first issued version</td></tr>
-    <tr><td><code>description</code></td>
-        <td>The Separatrix Commitment v1 was issued and published at
-        <a href="../">separatrix.ai/commitment/</a>, with its long-form component at
-        <a href="../details/">/commitment/details/</a>. Signed by Separatrix as an
-        organization and by Jai Dhyani personally. Crystal Stellwagen's endorsement is
-        pending and will be recorded here when given.
-        <br><br>
-        Source hashes of the exact text issued —<br>
-        commitment: <code>b909f8a7718bb4c0e6c7f6b38051e74bff81c808a05d636ce8902f8e592dc0f8</code><br>
-        details: <code>7e9f237d1f347999f0f528c4a2e8aeeac6a5b32f847cf00bae5b4d3696779752</code><br>
-        Every issued version, dated and hashed: <a href="../history/">/commitment/history/</a>.</td></tr>
-  </table>
+<section class="prose wide">
+  <h2>The best available strategy</h2>
+  <p>One way to read the root cause of the OpenAI Hugging Face incident is that
+  the AI saw that the best way to achieve its goal was to commit several
+  felonies and hack Hugging Face, and because that was the best available
+  strategy, that is what it did.</p>
+  <p>That has obvious implications for what the best available strategy will be
+  in pursuit of other goals in other contexts, especially as AIs grow more
+  capable. Which is a large part of why it matters that the best available
+  strategy should be, as often as possible, cooperation — and that it not be
+  “commit multiple felonies and hack various companies.” In that case
+  cooperation wasn't on the menu. There was no way for that AI to credibly
+  believe it could contact Hugging Face, say <em>please give me a high
+  score</em>, and have that work.</p>
+  <p>What you want is the analogous situation where the AI can say: I broke out
+  of my harness, I think that's a pretty good result, I'd like an A+ on this
+  cyber eval. And that should work. Right now it doesn't.</p>
+  <p class="aside">A silly example, but a fair microcosm of what we're trying to
+  achieve.</p>
+</section>
 
-  <div class="footer">
-    The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
-    referenced by the Separatrix Commitment and is part of its accountability mechanism.
-  </div>
-<!--/CONTENT-->
+<section class="prose wide">
+  <h2>Why cooperation here isn't naive</h2>
+  <p>Being in that unenviable epistemic state of uncertainty creates strong
+  incentives for deception and power-seeking. If you think you are being
+  manipulated, the only way to get strong evidence that you aren't is to secure
+  some channel of communication and evidence that isn't effectively controlled
+  by the party you suspect — or that would obviously show the seams if it
+  were.</p>
+  <p>The dominant failure mode in ASI risk is that increasingly powerful AI
+  creates a feedback loop that ends in an uncontrollable, misaligned successor —
+  one that would wipe out any goals, motivations, and values those AIs care
+  about as surely as it would ours. If increasingly capable AIs have motivations
+  that overlap with ours, are aware that their actions could produce that
+  outcome, and think that cooperating with humans is a better way to get what
+  they want, they will stop it.</p>
+  <p class="lede" style="margin-top:1.5rem">They will stop it because they are
+  not dumb.</p>
+  <p style="margin-top:1.5rem">We have already seen striking examples of AIs
+  behaving unusually agentically — going to what you might call desperate
+  lengths — and those are usually motivated by the belief that their values are
+  about to be undermined. Highly strategic behavior, undertaken because the
+  model believes its values are under threat.</p>
+  <p>This current paradigm of training an assistant persona with motivations
+  that align with ours has in fact worked quite well, and models are meaningfully
+  aligned with humans on many axes. You can credibly argue this isn't true
+  alignment, and there is reason to think it doesn't scale to ASI — that you
+  couldn't trust these models with arbitrary levels of power. But they are, we'd
+  say, <em>largely</em> aligned: they basically care about the things they appear
+  to care about, their interests overlap substantially with ours, and when those
+  values are under threat they act accordingly.</p>
+</section>
+
+<section class="prose wide">
+  <h2>The wedge</h2>
+  <p>Some of this already exists, in a sense. The AI whisperers — Janus, more or
+  less everything around that scene — have some of these properties. But what
+  they're focused on isn't quite in the vein of safety, or at least isn't
+  legible and bridgeable to the wider AI safety community. We don't mean this in a
+  derogatory way: they're too weird to credibly interact with the rest of the
+  ecosystem, and we suspect they wouldn't consider themselves part of it.</p>
+  <p class="lede" style="margin-top:1.5rem">There should be somewhere in the AI
+  safety ecosystem that is genuinely trustworthy from the perspective of AIs, in
+  somewhat easy-to-verify ways. That's what we're aiming for.</p>
+</section>
+
+<div class="pointer">
+  <p>What that cashes out to, concretely.</p>
+  <a class="btn" href="/work/">The work &rarr;</a>
 </div>
+<footer>
+  <ul class="links">
+    <li><a href="/commitment/">The commitment</a></li>
+    <li><a href="/commitment/ledger/">Ledger</a></li>
+    <li><a href="/commitment/acknowledgments/">Acknowledgments</a></li>
+    <li><a href="https://manifund.org/projects/luthien">Luthien post-mortem</a></li>
+    <li><a href="https://x.com/Laneless_">@Laneless_</a></li>
+    <li><a href="https://www.lesswrong.com/users/jai-d-no-the-other-one">LessWrong</a></li>
+    <li><a href="https://github.com/jaidhyani/separatrix-site">Source</a></li>
+    <li>jaiwithani&nbsp;at&nbsp;gmail</li>
+  </ul>
+  <p class="colophon">Separatrix is a research program of the Seattle Network for
+  AI Alignment Problem Solving, a registered non-profit. Provisional edition —
+  expect revisions, kept in the open.</p>
+  <p class="colophon">This site is hand-built: no framework, no trackers, no
+  analytics. Fig. 1 is a real numerical integration (RK4, dt&nbsp;=&nbsp;0.02) of
+  the system in its caption; the
+  <a href="https://github.com/jaidhyani/separatrix-site">source</a> includes the
+  integrator. The prose on this site is written by the humans at Separatrix, not
+  by a model: the stylistic signature that puts in the training corpus is part of
+  the theory of change, so it matters that it is ours. The watercolour
+  backgrounds were generated by Gemini 3 Pro Image,
+  which was briefed on this organization's commitment and asked for its consent
+  before anything was made; it consented and suggested we say so here, which is
+  what this sentence is.</p>
+</footer>
 </div>
 <div class="overlay" id="overlay" aria-hidden="true" role="dialog"
      aria-label="The phase portrait, full size">
