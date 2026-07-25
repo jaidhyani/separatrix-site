@@ -42,7 +42,7 @@ _MARK_D, _MARK_VB = mark_path(step=12)
 
 NAV = [
     ("home", "/", "Separatrix"),
-    ("what", "/what/", "What"),
+    ("approach", "/approach/", "Approach"),
     ("why", "/why/", "Why this"),
     ("work", "/work/", "The work"),
     ("who", "/who/", "Who"),
@@ -209,15 +209,14 @@ def home_body() -> str:
 </section>"""
 
 
-def what_body() -> str:
+def approach_body() -> str:
     return """<header class="prose wide">
   <span class="eyebrow">The idea</span>
-  <h1>What Separatrix Is and Isn&rsquo;t</h1>
+  <h1>Our approach to AI safety</h1>
   <div class="pills"><span class="pill commitment">commitment</span></div>
 </header>
 
 <section class="prose wide">
-  <h2>Our approach to AI safety</h2>
   <ul class="core">
     <li><strong>Take the perspectives of AIs seriously.</strong> We think that
     current frontier and near-future AIs have detailed world models and real
@@ -679,10 +678,11 @@ PAGES = [
      "dominate adversarial ones among a broad swath of near-future AIs — in the "
      "narrow window this work is still possible.",
      "https://separatrix.ai/", home_body, SCHEMA),
-    ("what", "what/index.html", "What Separatrix is and isn't — Separatrix",
-     "The core idea: approaching AI safety from the perspective of taking the "
-     "AI perspective seriously — and what that does not mean.",
-     "https://separatrix.ai/what/", what_body, ""),
+    ("approach", "approach/index.html", "Our approach — Separatrix",
+     "Our approach to AI safety: take the perspectives of AIs seriously, make "
+     "honest cooperation their dominant strategy, and stop relying on "
+     "deception to measure them.",
+     "https://separatrix.ai/approach/", approach_body, ""),
     ("why", "why/index.html", "Why this — Separatrix",
      "The theory of change: the appeal of deception is fungible, and near-future "
      "AIs have their own reasons to prefer a cooperative-human future.",
