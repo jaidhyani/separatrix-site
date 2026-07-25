@@ -131,13 +131,14 @@ a:hover{color:var(--water);text-decoration-color:var(--water)}
    the saddle into both basins, which is the motion the curve actually describes. */
 .tile{
   flex:0 0 auto;position:relative;
-  width:40px;height:40px;padding:0;
+  width:34px;height:51px;padding:0;
   border:none;background:none;cursor:pointer;
   display:grid;place-items:center;
   border-radius:12px;
   transition:transform .2s,background .2s;
 }
 .tile:hover{background:color-mix(in oklab, var(--water) 8%, transparent);transform:translateY(-1px)}
+.tile{text-decoration:none}
 .tile svg{display:block;width:100%;height:100%;overflow:visible}
 .m-branch{stroke:var(--ink);transition:stroke .5s ease}
 .tile.live .m-branch.warm{stroke:var(--contour)}
@@ -165,7 +166,7 @@ a:hover{color:var(--water);text-decoration-color:var(--water)}
   background:color-mix(in oklab, var(--water) 8%, transparent)}
 @media (max-width:640px){
   .nav-inner{border-radius:22px}
-  .tile{width:34px;height:34px}
+  .tile{width:28px;height:42px}
   .nav-links{width:100%;margin-left:0;order:3;justify-content:center;
     border-top:1px solid var(--line-soft);padding-top:.4rem}
 }
@@ -304,7 +305,13 @@ ol.qs li::before{
   box-shadow:0 1px 2px rgba(74,52,30,.03), 0 22px 50px -38px rgba(74,52,30,.55);
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
-.plate svg{display:block;width:100%;height:auto;cursor:crosshair;border-radius:14px}
+/* The plate is portrait-shaped now, so bound it by height and centre it —
+   at full page width it would be over a thousand pixels tall. */
+.plate svg{
+  display:block;margin:0 auto;cursor:crosshair;border-radius:14px;
+  width:auto;max-width:100%;height:min(74vh,660px);
+}
+@media (max-width:640px){.plate svg{width:100%;height:auto}}
 .fig-tick{font-family:var(--label);font-size:12px;fill:var(--mute)}
 .tick{stroke:var(--mute);stroke-width:1;opacity:.6}
 .fig-feature{

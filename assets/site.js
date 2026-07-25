@@ -26,6 +26,12 @@
   function sx(x) { return (x - XMIN) / (XMAX - XMIN) * W; }
   function sy(v) { return (VMAX - v) / (VMAX - VMIN) * H; }
 
+  /* The plate is presented reflected about a diagonal — a quarter turn plus a
+   * flip — which stands the separatrix upright. Mirror figure.py's
+   * transform_point(). It is an involution, so the same swap undoes it, which
+   * is what maps a click back onto the phase space. */
+  function tf(px, py) { return [py, px]; }
+
   function traj(x0, v0) {
     var pts = [[x0, v0]], x = x0, v = v0, basin = 0;
     for (var i = 0; i < 4000; i++) {
@@ -53,37 +59,57 @@
       return g;
     })();
     var cap = mini ? 5 : 40;
-    var stroke = mini ? 7 : 2;
-    var dot = mini ? 13 : 4;
+    var stroke = mini ? 7 : 5.5;
+    var dot = mini ? 13 : 7;
 
     function draw(x0, v0) {
       var t = traj(x0, v0);
       var g = document.createElementNS(NS, "g");
       g.setAttribute("class", "user-traj");
+      var pts = t.pts.map(function (p) {
+        var q = tf(sx(p[0]), sy(p[1]));
+        return q[0].toFixed(1) + "," + q[1].toFixed(1);
+      }).join(" ");
+
+      /* A halo in the paper colour, so a released trajectory reads on top of
+       * the field rather than disappearing into it. */
+      var halo = document.createElementNS(NS, "polyline");
+      halo.setAttribute("points", pts);
+      halo.setAttribute("fill", "none");
+      halo.setAttribute("stroke", "var(--card)");
+      halo.setAttribute("stroke-width", stroke + 5);
+      halo.setAttribute("stroke-linecap", "round");
+      halo.setAttribute("opacity", "0.85");
+      g.appendChild(halo);
+
       var pl = document.createElementNS(NS, "polyline");
-      pl.setAttribute("points", t.pts.map(function (p) {
-        return sx(p[0]).toFixed(1) + "," + sy(p[1]).toFixed(1);
-      }).join(" "));
+      pl.setAttribute("points", pts);
       pl.setAttribute("fill", "none");
       pl.setAttribute("stroke", t.basin > 0 ? "var(--water)" : "var(--contour)");
       pl.setAttribute("stroke-width", stroke);
       pl.setAttribute("stroke-linecap", "round");
       var start = document.createElementNS(NS, "circle");
-      start.setAttribute("cx", sx(x0)); start.setAttribute("cy", sy(v0));
+      var s0 = tf(sx(x0), sy(v0));
+      start.setAttribute("cx", s0[0]); start.setAttribute("cy", s0[1]);
       start.setAttribute("r", dot);
       start.setAttribute("fill", "none");
       start.setAttribute("stroke", "var(--ink)");
-      start.setAttribute("stroke-width", mini ? 4 : 1.6);
+      start.setAttribute("stroke-width", mini ? 4 : 2.4);
+      start.setAttribute("paint-order", "stroke");
       g.appendChild(pl); g.appendChild(start);
       layer.appendChild(g);
 
       if (!reduced) {
         var len = pl.getTotalLength();
-        pl.setAttribute("stroke-dasharray", len);
-        pl.setAttribute("stroke-dashoffset", len);
+        [halo, pl].forEach(function (el) {
+          el.setAttribute("stroke-dasharray", len);
+          el.setAttribute("stroke-dashoffset", len);
+        });
         pl.getBoundingClientRect();
-        pl.setAttribute("class", "drawing");
-        requestAnimationFrame(function () { pl.setAttribute("stroke-dashoffset", 0); });
+        [halo, pl].forEach(function (el) { el.setAttribute("class", "drawing"); });
+        requestAnimationFrame(function () {
+          [halo, pl].forEach(function (el) { el.setAttribute("stroke-dashoffset", 0); });
+        });
       }
       while (layer.children.length > cap) layer.removeChild(layer.firstChild);
       if (opts.onDraw) opts.onDraw(t.basin);
@@ -93,9 +119,10 @@
     function clientToData(ev) {
       var r = svg.getBoundingClientRect();
       var vb = svg.viewBox.baseVal;
-      var px = vb.x + (ev.clientX - r.left) / r.width * vb.width;
-      var py = vb.y + (ev.clientY - r.top) / r.height * vb.height;
-      return [XMIN + px / W * (XMAX - XMIN), VMAX - py / H * (VMAX - VMIN)];
+      var vx = vb.x + (ev.clientX - r.left) / r.width * vb.width;
+      var vy = vb.y + (ev.clientY - r.top) / r.height * vb.height;
+      var q = tf(vx, vy);   /* involution: undoes the presentation transform */
+      return [XMIN + q[0] / W * (XMAX - XMIN), VMAX - q[1] / H * (VMAX - VMIN)];
     }
 
     var lastTouch = 0;
@@ -156,51 +183,8 @@
     };
   }
 
-  /* The mark is a real trajectory: both halves start at the saddle and run
-   * outward, one into each basin. Poking it replays that. */
-  function Mark(host) {
-    var branches = host.querySelectorAll(".m-branch");
-    if (!branches.length) return;
-    var lens = [];
-    branches.forEach(function (b) { lens.push(b.getTotalLength()); });
-    var running = false;
-
-    function play() {
-      if (running || reduced) return;
-      running = true;
-      host.classList.add("live");
-      branches.forEach(function (b, i) {
-        b.style.strokeDasharray = lens[i];
-        b.style.strokeDashoffset = lens[i];
-      });
-      host.getBoundingClientRect();
-      host.classList.add("drawing");
-      requestAnimationFrame(function () {
-        branches.forEach(function (b) { b.style.strokeDashoffset = 0; });
-      });
-      setTimeout(function () {
-        host.classList.remove("drawing", "live");
-        branches.forEach(function (b) {
-          b.style.strokeDasharray = "";
-          b.style.strokeDashoffset = "";
-        });
-        running = false;
-      }, 2600);
-    }
-
-    host.addEventListener("click", play);
-    /* an occasional unprompted run, so it reads as live rather than decorative */
-    setInterval(function () {
-      if (!document.hidden && Math.random() < 0.5) play();
-    }, 14000);
-    return { play: play };
-  }
-
   /* ------------------------------------------------------------------ wire */
   document.addEventListener("DOMContentLoaded", function () {
-    var tile = document.getElementById("navtile");
-    if (tile) Mark(tile);
-
     var heroSvg = document.querySelector("#hero-plate svg");
     if (heroSvg) {
       var hero = Portrait(heroSvg, {});

@@ -221,103 +221,176 @@ def _mark(frac, rot, step, decimals, split):
     return (d_of(A), d_of(B), vb) if split else (d_of(whole), vb)
 
 
-def portrait_inner(detail="full", idp=""):
+# The plate is presented rotated a quarter turn and flipped about the vertical
+# axis. The composition of those two is a reflection about a diagonal, which
+# stands the separatrix upright — and once the field lines nearest the curve are
+# weighted more heavily than the far ones, the whole portrait reads as an S.
+# "transpose" reflects about the main diagonal, "antitranspose" the other one.
+def transform_point(px, py, tf):
+    if tf == "transpose":
+        return py, px
+    if tf == "antitranspose":
+        return -py, -px
+    return px, py
+
+
+def _emphasis(d, mini):
+    """Weight a field line by how near it runs to the separatrix.
+
+    Near the curve the lines are saturated and heavy; further out they thin and
+    fade into the paper. This is what makes the S legible without drawing an S.
+    Returns None for lines far enough out that the mark drops them entirely —
+    at favicon size the far field is only mud.
+    """
+    if mini:
+        for limit, op, w in ((62, 1.0, 8.5), (125, 0.8, 6.0), (190, 0.45, 4.0)):
+            if d < limit:
+                return op, w
+        return None
+    for limit, op, w in ((50, 0.95, 3.0), (105, 0.7, 2.1),
+                         (180, 0.42, 1.4), (290, 0.22, 1.0)):
+        if d < limit:
+            return op, w
+    return 0.11, 0.8
+
+
+def _min_dists(pts, sep_samples):
+    """Screen-space distance from each point to the nearest separatrix sample."""
+    out = []
+    for x, y in pts:
+        best = 1e18
+        for sxx, syy in sep_samples:
+            dx = x - sxx
+            dy = y - syy
+            d = dx * dx + dy * dy
+            if d < best:
+                best = d
+        out.append(math.sqrt(best))
+    return out
+
+
+def portrait_inner(detail="full", idp="", tf="antitranspose"):
     """SVG inner markup for the phase portrait.
 
-    detail  "full" for the hero plate, "mini" for the navbar tile.
+    detail  "full" for the hero plate, "mini" for the mark.
     idp     id prefix, so two portraits can coexist in one document.
+    tf      diagonal reflection applied to every point (see transform_point).
     """
     mini = detail == "mini"
     out = []
 
+    # --- the separatrix, first: everything else is weighted against it -------
+    sep = [[transform_point(sx(x), sy(v), tf) for x, v in br]
+           for br in separatrix_paths()]
+    samples = [q for br in sep for q in br[::4]]
+
     # --- field trajectories -------------------------------------------------
     starts = []
-    n = 6 if mini else 13
+    n = 5 if mini else 15
     for i in range(n):
         x = XMIN + (XMAX - XMIN) * (i + 0.5) / n
         starts.append((x, VMAX - 0.02))
         starts.append((x, VMIN + 0.02))
-    m = 3 if mini else 7
+    m = 3 if mini else 8
     for j in range(m):
         v = VMIN + (VMAX - VMIN) * (j + 0.5) / m
         starts.append((XMIN + 0.02, v))
         starts.append((XMAX - 0.02, v))
-    if not mini:
-        starts += [(-0.3, 0.9), (0.3, -0.9), (-0.15, -0.5), (0.15, 0.5),
-                   (0.0, 1.4), (0.0, -1.4), (-1.9, 0.1), (1.9, -0.1)]
+    starts += [(-0.3, 0.9), (0.3, -0.9), (-0.15, -0.5), (0.15, 0.5),
+               (0.0, 1.4), (0.0, -1.4), (-1.9, 0.1), (1.9, -0.1)]
 
-    width = 5 if mini else 1.1
-    opacity = 0.5 if mini else 0.42
-    arrows = []
-    for i, (x0, v0) in enumerate(starts):
-        pts, basin = integrate(x0, v0)
-        pts = clip_visible(pts)
-        if len(pts) < 8:
+    every = 26 if mini else 4
+    for x0, v0 in starts:
+        raw, basin = integrate(x0, v0)
+        raw = clip_visible(raw)
+        if len(raw) < 8:
+            continue
+        pts = [transform_point(sx(x), sy(v), tf) for x, v in raw][::every]
+        if len(pts) < 3:
             continue
         color = BLUE if basin > 0 else BROWN
-        out.append(
-            f'<polyline points="{polyline(pts, every=18 if mini else 4)}" fill="none" '
-            f'stroke="{color}" stroke-width="{width}" opacity="{opacity}"/>'
-        )
-        if not mini and i % 5 == 2:
-            arrows.append((pts, color))
+        dists = _min_dists(pts, samples)
 
-    for pts, color in arrows:
-        px, py, ang = arclength_point(pts, 0.42)
-        out.append(
-            f'<path d="M-6,-3.4 L1.5,0 L-6,3.4 Z" fill="{color}" opacity="0.75" '
-            f'transform="translate({px:.1f},{py:.1f}) rotate({ang:.1f})"/>'
-        )
-
-    # --- separatrix ---------------------------------------------------------
-    for k, pts in enumerate(separatrix_paths()):
-        step = 20 if mini else 2
-        d = "M" + " L".join(f"{sx(x):.0f},{sy(v):.0f}" for x, v in pts[::step])
-        out.append(
-            f'<path id="{idp}sep{k}" d="{d}" fill="none" stroke="var(--ink)" '
-            f'stroke-width="{9 if mini else 2.4}" stroke-linecap="round"/>'
-        )
-        if not mini:
-            px, py, ang = arclength_point(pts, 0.6)
+        if mini:
+            # One weight for the whole line. At mark size the per-segment
+            # gradient is invisible and costs an element per band change.
+            key = _emphasis(min(dists), mini)
+            if key is None:
+                continue
+            pl = " ".join(f"{a:.0f},{b:.0f}" for a, b in pts)
             out.append(
-                f'<path d="M-7,-4 L2,0 L-7,4 Z" fill="var(--ink)" '
-                f'transform="translate({px:.1f},{py:.1f}) rotate({ang:.1f})"/>'
+                f'<polyline points="{pl}" fill="none" stroke="{color}" '
+                f'stroke-width="{key[1]:.1f}" opacity="{key[0]}" '
+                f'stroke-linecap="round"/>'
+            )
+            continue
+
+        # Break the line into runs of equal weight so the emphasis can vary
+        # along it, instead of one flat stroke per trajectory.
+        def emit(run, key):
+            if key is None or len(run) < 2:
+                return
+            pl = " ".join(f"{a:.0f},{b:.0f}" for a, b in run)
+            out.append(
+                f'<polyline points="{pl}" fill="none" stroke="{color}" '
+                f'stroke-width="{key[1]:.2f}" opacity="{key[0]}" '
+                f'stroke-linecap="round"/>'
             )
 
-    if not mini:
-        # label the curve along its own path, cartography-style
+        run, run_key = [pts[0]], _emphasis(dists[0], mini)
+        for q, d in zip(pts[1:], dists[1:]):
+            key = _emphasis(d, mini)
+            run.append(q)
+            if key != run_key:
+                emit(run, run_key)
+                run, run_key = [q], key
+        emit(run, run_key)
+
+    # --- the separatrix itself ----------------------------------------------
+    for k, br in enumerate(sep):
+        step = 22 if mini else 2
+        d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::step])
         out.append(
-            f'<text class="fig-feature" dy="-7">'
-            f'<textPath href="#{idp}sep0" startOffset="63%">S E P A R A T R I X</textPath></text>'
+            f'<path id="{idp}sep{k}" d="{d}" fill="none" stroke="var(--ink)" '
+            f'stroke-width="{17 if mini else 4.2}" stroke-linecap="round" '
+            f'stroke-linejoin="round"/>'
         )
 
     # --- fixed points -------------------------------------------------------
-    halo, dot = (22, 13) if mini else (9, 5)
+    halo, dot = (20, 11) if mini else (10, 5.5)
     for xa, color in ((1.0, BLUE), (-1.0, BROWN)):
-        cx, cy = sx(xa), sy(0)
+        cx, cy = transform_point(sx(xa), sy(0), tf)
         out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{halo}" fill="var(--card)"/>')
         out.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{dot}" fill="{color}"/>')
-    # saddle: triangulation-station triangle
-    cx, cy = sx(0), sy(0)
-    s = 2.4 if mini else 1.0
+    cx, cy = transform_point(sx(0), sy(0), tf)
+    s_ = 2.6 if mini else 1.1
     out.append(
-        f'<path d="M{cx:.1f},{cy - 7 * s:.1f} L{cx + 6.5 * s:.1f},{cy + 5 * s:.1f} '
-        f'L{cx - 6.5 * s:.1f},{cy + 5 * s:.1f} Z" fill="var(--card)" '
-        f'stroke="var(--ink)" stroke-width="{1.8 * s:.1f}"/>'
+        f'<path d="M{cx:.1f},{cy - 7 * s_:.1f} L{cx + 6.5 * s_:.1f},{cy + 5 * s_:.1f} '
+        f'L{cx - 6.5 * s_:.1f},{cy + 5 * s_:.1f} Z" fill="var(--card)" '
+        f'stroke="var(--ink)" stroke-width="{1.8 * s_:.1f}"/>'
     )
 
-    # --- frame ticks --------------------------------------------------------
-    if not mini:
-        for xv in (-2, -1, 0, 1, 2):
-            px = sx(xv)
-            out.append(f'<line x1="{px:.1f}" y1="{H}" x2="{px:.1f}" y2="{H + 8}" class="tick"/>')
-            out.append(f'<text x="{px:.1f}" y="{H + 22}" class="fig-tick" text-anchor="middle">{xv}</text>')
-        for vv in (-1, 0, 1):
-            py = sy(vv)
-            out.append(f'<line x1="-8" y1="{py:.1f}" x2="0" y2="{py:.1f}" class="tick"/>')
-            out.append(f'<text x="-14" y="{py + 4:.1f}" class="fig-tick" text-anchor="end">{vv}</text>')
-
     return "\n".join(out)
+
+
+def portrait_viewbox(tf="antitranspose", pad=26):
+    """Bounding box of the transformed plate, as an SVG viewBox string."""
+    corners = [transform_point(x, y, tf)
+               for x in (0, W) for y in (0, H)]
+    xs = [c[0] for c in corners]
+    ys = [c[1] for c in corners]
+    x0, x1 = min(xs) - pad, max(xs) + pad
+    y0, y1 = min(ys) - pad, max(ys) + pad
+    return f"{x0:.0f} {y0:.0f} {x1 - x0:.0f} {y1 - y0:.0f}"
+
+
+def basin_anchors(tf="antitranspose"):
+    """Where the two attractors and the saddle land after the transform."""
+    return {
+        "cooperative": transform_point(sx(1.0), sy(0), tf),
+        "adversarial": transform_point(sx(-1.0), sy(0), tf),
+        "saddle": transform_point(sx(0), sy(0), tf),
+    }
 
 
 if __name__ == "__main__":

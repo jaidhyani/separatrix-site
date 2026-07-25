@@ -23,13 +23,22 @@ partials to keep track of.
 import json
 from pathlib import Path
 
-from figure import mark_branches, mark_path, portrait_inner
+from figure import (basin_anchors, mark_branches, mark_path,
+                    portrait_inner, portrait_viewbox)
 
 ROOT = Path(__file__).resolve().parent
 
 # The mark is the saddle's unstable manifold, truncated and rotated upright —
 # the same integration as Fig. 1, no reflection and no redrawing. It happens to
 # be an S. See figure.mark_path().
+TF = "transpose"   # a quarter turn plus a flip: stands the separatrix upright
+PLATE_VB = portrait_viewbox(TF, pad=96)
+MARK_VB = portrait_viewbox(TF, pad=55)
+_A = basin_anchors(TF)
+_ADV_X, _ADV_Y = _A["adversarial"]
+_COOP_X, _COOP_Y = _A["cooperative"]
+_SAD_X, _SAD_Y = _A["saddle"]
+
 _MARK_D, _MARK_VB = mark_path(step=12)
 # split at the saddle so the mark can draw itself outward, the way the system
 # actually flows: one branch into each basin
@@ -51,14 +60,16 @@ FAVICON = (
 )
 
 
-def mark_svg(width=46) -> str:
-    """The mark, in two halves so it can animate outward from the saddle."""
-    return (f'<svg viewBox="{_MARK_VB}" width="{width}" height="{width}" '
+def mark_svg() -> str:
+    """The mark: the plate itself, cropped and weighted toward the separatrix.
+
+    Same integration and same orientation as Fig. 1 — the lines nearest the
+    curve are saturated and heavy, the far field drops away, and what is left
+    reads as an S.
+    """
+    return (f'<svg viewBox="{MARK_VB}" preserveAspectRatio="xMidYMid meet" '
             f'aria-hidden="true" focusable="false">'
-            f'<path class="m-branch warm" d="{_MARK_WARM}" fill="none" '
-            f'stroke-width="52" stroke-linecap="round"/>'
-            f'<path class="m-branch cool" d="{_MARK_COOL}" fill="none" '
-            f'stroke-width="52" stroke-linecap="round"/></svg>')
+            f'{portrait_inner("mini", idp="m", tf=TF)}</svg>')
 
 
 def nav_html(current: str) -> str:
@@ -71,11 +82,10 @@ def nav_html(current: str) -> str:
     links = "".join(item(*n) for n in NAV if n[0] != "home")
     return f"""<nav class="nav">
   <div class="nav-inner">
-    <button class="tile" id="navtile" type="button"
-            title="The separatrix, leaving the undecided point"
-            aria-label="The Separatrix mark. Activate to send it out of the saddle into both basins.">
-{mark_svg(40)}
-    </button>
+    <a class="tile" id="navtile" href="/"
+       title="Separatrix — the phase portrait it is named for" aria-label="Separatrix, home">
+{mark_svg()}
+    </a>
     <a class="brand" href="/">Separatrix</a>
     <div class="nav-links">{links}</div>
     <button class="expand" id="expand" type="button" title="Open the full plate"
@@ -203,16 +213,16 @@ def home_body() -> str:
 </header>
 
 <figure class="plate" id="hero-plate">
-  <svg viewBox="-48 -20 1106 748" preserveAspectRatio="xMidYMid meet"
+  <svg viewBox="{PLATE_VB}" preserveAspectRatio="xMidYMid meet"
        xmlns="http://www.w3.org/2000/svg"
-       aria-label="Phase portrait of a damped double-well system. Trajectories flow to one of two attractors; a single dark curve, the separatrix, divides their basins.">
+       aria-label="Phase portrait of a damped double-well system. Two attractors, and one heavy curve — the separatrix — dividing what flows to each.">
     <g id="field">
-{portrait_inner("full")}
+{portrait_inner("full", tf=TF)}
     </g>
     <g id="labels">
-      <text class="fig-name contour" x="320" y="428" text-anchor="middle">adversarial equilibrium</text>
-      <text class="fig-name water" x="720" y="428" text-anchor="middle">cooperative equilibrium</text>
-      <text class="fig-small" x="538" y="318">saddle</text>
+      <text class="fig-name contour" x="{_ADV_X:.0f}" y="-40" text-anchor="middle">adversarial equilibrium</text>
+      <text class="fig-name water" x="{_COOP_X:.0f}" y="1082" text-anchor="middle">cooperative equilibrium</text>
+      <text class="fig-small" x="{_SAD_X + 28:.0f}" y="{_SAD_Y + 5:.0f}">saddle</text>
     </g>
   </svg>
   <figcaption><b>Fig. 1</b> — a damped double-well system
@@ -222,7 +232,7 @@ def home_body() -> str:
     pushes change nothing; near it, they choose the ending. We think AI
     development is nearer this line than most planning assumes.
     <em>A metaphor, not a model.</em> Click anywhere on the plate to release a
-    trajectory — or take the tile in the bar with you as you read.</figcaption>
+    trajectory from that point and watch which way it falls.</figcaption>
   <div class="fig-actions">
     <button class="btn" id="hero-pair" type="button">Drop two points a hair apart</button>
     <button class="btn ghost" id="hero-clear" type="button">Clear</button>
@@ -823,8 +833,8 @@ PAGES = [
 def main() -> None:
     written = []
 
-    inner = portrait_inner("full")
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="-48 -20 1106 748">\n'
+    inner = portrait_inner("full", tf=TF)
+    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{PLATE_VB}">\n'
            f'<g id="field">\n{inner}\n</g>\n</svg>\n')
     (ROOT / "assets").mkdir(exist_ok=True)
     (ROOT / "assets" / "portrait.svg").write_text(svg)
