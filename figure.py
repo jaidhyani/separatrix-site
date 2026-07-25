@@ -168,6 +168,15 @@ HALO_MINI, BLUR_MINI = 130, 70
 FIELD_W, FIELD_W_MINI = 2.0, 5.0
 FIELD_OP = 0.85
 
+# The S itself is drawn by real trajectories: one released a hair to either
+# side of the stable manifold, right where the S begins. Each shadows the
+# separatrix in toward the saddle, peels off along the unstable manifold into
+# its basin, and is clipped where it leaves the S's neighbourhood. The clip is
+# aesthetic, not mathematical — but the lines are honest integrations.
+EDGE_EPS = 0.008        # data-space offset of the release points
+EDGE_KEEP = 90.0        # screen px: how far from the S the bright part survives
+EDGE_W, EDGE_W_MINI = 7.0, 18.0
+
 
 def _box(tf):
     """Generous user-space bounds for the mask region."""
@@ -308,18 +317,52 @@ def _falloff_defs(idp, core_d, halo, blur, gamma, box):
     )
 
 
-def _min_dists(pts, sep_samples):
-    """Screen-space distance from each point to the nearest separatrix sample."""
+def _edge_starts(frac):
+    """Release points for the S trajectories: ±eps off each stable branch,
+    at the arclength where the S begins."""
     out = []
-    for x, y in pts:
-        best = 1e18
-        for sxx, syy in sep_samples:
-            dx = x - sxx
-            dy = y - syy
-            d = dx * dx + dy * dy
-            if d < best:
-                best = d
-        out.append(math.sqrt(best))
+    for br in separatrix_paths():
+        # br flows toward the saddle; find where the core (the S) starts
+        t = [0.0]
+        for i in range(1, len(br)):
+            t.append(t[-1] + math.hypot(sx(br[i][0]) - sx(br[i - 1][0]),
+                                        sy(br[i][1]) - sy(br[i - 1][1])))
+        cut = t[-1] * (1 - frac)
+        i = max(1, min(next(j for j, d in enumerate(t) if d >= cut), len(br) - 1))
+        (x0, v0), (x1, v1) = br[i - 1], br[i]
+        tx, tv = x1 - x0, v1 - v0
+        n = math.hypot(tx, tv) or 1.0
+        px, pv = -tv / n, tx / n
+        for sgn in (+1, -1):
+            out.append((x0 + sgn * EDGE_EPS * px, v0 + sgn * EDGE_EPS * pv))
+    return out
+
+
+def edge_trajectories(frac=S_FRAC):
+    """(points, basin) for each S trajectory, clipped to the S's neighbourhood.
+
+    Distances are measured in untransformed screen space; the presentation
+    transform is a rigid reflection, so they carry over unchanged.
+    """
+    core, _ = sep_split(frac, "none")
+    samples = [q for br in core for q in br[::3]]
+    out = []
+    for x0, v0 in _edge_starts(frac):
+        raw, basin = integrate(x0, v0)
+        pts = []
+        for x, v in raw:
+            a, b = sx(x), sy(v)
+            d2 = min((a - p) * (a - p) + (b - q) * (b - q) for p, q in samples)
+            if d2 > EDGE_KEEP * EDGE_KEEP:
+                break
+            pts.append((x, v))
+        # End at the closest pass to the saddle: past it the trajectory departs
+        # along the unstable manifold, which spikes across the middle of the S.
+        if pts:
+            k = min(range(len(pts)), key=lambda i: pts[i][0] ** 2 + pts[i][1] ** 2)
+            pts = pts[:k + 1]
+        if len(pts) > 8:
+            out.append((pts, basin))
     return out
 
 
@@ -387,14 +430,16 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
     out.append(f'<g mask="url(#{idp}near)" opacity="{FIELD_OP}">'
                + "".join(field) + '</g>')
 
-    # --- the S itself -------------------------------------------------------
-    for k, br in enumerate(core):
-        step = 6 if mini else 2
-        d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::step])
+    # --- the S itself: a bright trajectory riding each side of the curve ----
+    ew = EDGE_W_MINI if mini else EDGE_W
+    for pts_e, basin in edge_trajectories(S_FRAC):
+        step = 4 if mini else 2
+        spts = [transform_point(sx(x), sy(v), tf) for x, v in pts_e][::step]
+        d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in spts)
+        color = "var(--water-bright)" if basin > 0 else "var(--contour-bright)"
         out.append(
-            f'<path id="{idp}sep{k}" d="{d}" fill="none" stroke="var(--ink)" '
-            f'stroke-width="{34 if mini else 13}" stroke-linecap="round" '
-            f'stroke-linejoin="round"/>'
+            f'<path d="{d}" fill="none" stroke="{color}" '
+            f'stroke-width="{ew}" stroke-linecap="round" stroke-linejoin="round"/>'
         )
 
     # --- fixed points -------------------------------------------------------

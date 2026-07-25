@@ -1,8 +1,9 @@
 /* separatrix.ai — the interactive phase portrait, wherever it appears.
  *
  * One integrator drives three surfaces:
- *   - the tile in the nav bar (every page): click it to drop a trajectory
- *   - the hero plate on the home page
+ *   - the tile in the nav bar (every page): click it to release a trajectory
+ *   - the hero plate on the home page, which also hints at itself now and
+ *     then with a trajectory that fades back out
  *   - the expand overlay (every page), which fetches /assets/portrait.svg
  *
  * Constants mirror figure.py — keep them in sync. */
@@ -45,10 +46,10 @@
     if (!basin) basin = x > 0 ? 1 : -1;
     return { pts: pts, basin: basin };
   }
-  function basinOf(x0, v0) { return traj(x0, v0).basin; }
 
   /* Attach interaction to one <svg> holding the portrait.
-   * opts.mini  → fatter strokes, capped trail, idle autoplay. */
+   * opts.mini → the nav tile: thicker strokes in user units (the tile is
+   * tiny, so these still render hairline), shorter trail. */
   function Portrait(svg, opts) {
     opts = opts || {};
     var mini = !!opts.mini;
@@ -58,11 +59,13 @@
       svg.appendChild(g);
       return g;
     })();
-    var cap = mini ? 5 : 40;
-    var stroke = mini ? 7 : 5.5;
-    var dot = mini ? 13 : 7;
+    var cap = mini ? 4 : 40;
+    var stroke = mini ? 14 : 2.5;
+    var dot = mini ? 30 : 6;
 
-    function draw(x0, v0) {
+    /* One thin trajectory from (x0, v0). ephemeral → fades out and removes
+     * itself, which is how the plate hints that it can be poked. */
+    function draw(x0, v0, ephemeral) {
       var t = traj(x0, v0);
       var g = document.createElementNS(NS, "g");
       g.setAttribute("class", "user-traj");
@@ -70,17 +73,6 @@
         var q = tf(sx(p[0]), sy(p[1]));
         return q[0].toFixed(1) + "," + q[1].toFixed(1);
       }).join(" ");
-
-      /* A halo in the paper colour, so a released trajectory reads on top of
-       * the field rather than disappearing into it. */
-      var halo = document.createElementNS(NS, "polyline");
-      halo.setAttribute("points", pts);
-      halo.setAttribute("fill", "none");
-      halo.setAttribute("stroke", "var(--card)");
-      halo.setAttribute("stroke-width", stroke + 5);
-      halo.setAttribute("stroke-linecap", "round");
-      halo.setAttribute("opacity", "0.85");
-      g.appendChild(halo);
 
       var pl = document.createElementNS(NS, "polyline");
       pl.setAttribute("points", pts);
@@ -94,25 +86,28 @@
       start.setAttribute("r", dot);
       start.setAttribute("fill", "none");
       start.setAttribute("stroke", "var(--ink)");
-      start.setAttribute("stroke-width", mini ? 4 : 2.4);
-      start.setAttribute("paint-order", "stroke");
+      start.setAttribute("stroke-width", mini ? 8 : 1.8);
       g.appendChild(pl); g.appendChild(start);
       layer.appendChild(g);
 
       if (!reduced) {
         var len = pl.getTotalLength();
-        [halo, pl].forEach(function (el) {
-          el.setAttribute("stroke-dasharray", len);
-          el.setAttribute("stroke-dashoffset", len);
-        });
+        pl.setAttribute("stroke-dasharray", len);
+        pl.setAttribute("stroke-dashoffset", len);
         pl.getBoundingClientRect();
-        [halo, pl].forEach(function (el) { el.setAttribute("class", "drawing"); });
+        pl.setAttribute("class", "drawing");
         requestAnimationFrame(function () {
-          [halo, pl].forEach(function (el) { el.setAttribute("stroke-dashoffset", 0); });
+          pl.setAttribute("stroke-dashoffset", 0);
         });
       }
+      if (ephemeral) {
+        setTimeout(function () { g.setAttribute("class", "user-traj fading"); },
+                   reduced ? 1800 : 3200);
+        setTimeout(function () {
+          if (g.parentNode) g.parentNode.removeChild(g);
+        }, reduced ? 3600 : 5000);
+      }
       while (layer.children.length > cap) layer.removeChild(layer.firstChild);
-      if (opts.onDraw) opts.onDraw(t.basin);
       return t.basin;
     }
 
@@ -125,7 +120,7 @@
       return [XMIN + q[0] / W * (XMAX - XMIN), VMAX - q[1] / H * (VMAX - VMIN)];
     }
 
-    var lastTouch = 0;
+    var lastTouch = Date.now();
     svg.addEventListener("click", function (ev) {
       var d = clientToData(ev);
       if (d[0] < XMIN || d[0] > XMAX || d[1] < VMIN || d[1] > VMAX) return;
@@ -133,64 +128,42 @@
       draw(d[0], d[1]);
     });
 
-    /* Two starts a hair apart that end in different basins — the whole point
-     * of the figure, found by bisecting across the separatrix. */
-    function pair() {
-      for (var attempt = 0; attempt < 14; attempt++) {
-        var ax = Math.random() * 2.6 - 1.3, av = Math.random() * 2 - 1;
-        var ab = basinOf(ax, av);
-        var th = Math.random() * Math.PI * 2, dx = Math.cos(th), dv = Math.sin(th);
-        var lo = 0, hi = -1;
-        for (var s = 0.08; s < 2.2; s *= 1.7) {
-          if (basinOf(ax + dx * s, av + dv * s) !== ab) { hi = s; break; }
-          lo = s;
-        }
-        if (hi < 0) continue;
-        for (var i = 0; i < 16; i++) {
-          var mid = (lo + hi) / 2;
-          if (basinOf(ax + dx * mid, av + dv * mid) === ab) lo = mid; else hi = mid;
-        }
-        var d = 0.002;
-        var p1 = [ax + dx * (lo - d), av + dv * (lo - d)];
-        var p2 = [ax + dx * (hi + d), av + dv * (hi + d)];
-        if (p1[0] > XMIN && p1[0] < XMAX && p1[1] > VMIN && p1[1] < VMAX &&
-            p2[0] > XMIN && p2[0] < XMAX && p2[1] > VMIN && p2[1] < VMAX) {
-          lastTouch = Date.now();
-          draw(p1[0], p1[1]);
-          setTimeout(function () { draw(p2[0], p2[1]); }, reduced ? 0 : 380);
-          return true;
-        }
-      }
-      return false;
-    }
-
-    /* The tile keeps moving on its own until someone pokes it, then hands
-     * the floor over for a while. */
-    function autoplay(every) {
+    /* Now and then, trace a trajectory unprompted and let it fade — a quiet
+     * hint that the figure is live. Stands down while someone is playing. */
+    function hint(every) {
       if (reduced) return;
       setInterval(function () {
         if (document.hidden) return;
-        if (Date.now() - lastTouch < every * 2.5) return;
-        draw(Math.random() * 4.4 - 2.2, Math.random() * 3.2 - 1.6);
+        if (Date.now() - lastTouch < every * 1.6) return;
+        draw(Math.random() * 4.4 - 2.2, Math.random() * 3.2 - 1.6, true);
       }, every);
     }
 
     return {
       draw: draw,
-      pair: pair,
-      autoplay: autoplay,
+      hint: hint,
       clear: function () { layer.innerHTML = ""; }
     };
   }
 
   /* ------------------------------------------------------------------ wire */
   document.addEventListener("DOMContentLoaded", function () {
+    /* the nav tile: clicking the mark releases a trajectory instead of
+     * navigating — the brand text next to it still goes home */
+    var tile = document.getElementById("navtile");
+    if (tile) {
+      var tsvg = tile.querySelector("svg");
+      if (tsvg) {
+        Portrait(tsvg, { mini: true });
+        tile.addEventListener("click", function (ev) { ev.preventDefault(); });
+      }
+    }
+
     var heroSvg = document.querySelector("#hero-plate svg");
     if (heroSvg) {
       var hero = Portrait(heroSvg, {});
-      var pb = document.getElementById("hero-pair");
+      hero.hint(9000);
       var cb = document.getElementById("hero-clear");
-      if (pb) pb.addEventListener("click", function () { hero.pair(); });
       if (cb) cb.addEventListener("click", function () { hero.clear(); });
     }
 
@@ -213,9 +186,7 @@
           var svg = host.querySelector("svg");
           svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
           var p = Portrait(svg, {});
-          var pb = document.getElementById("ov-pair");
           var cb = document.getElementById("ov-clear");
-          if (pb) pb.addEventListener("click", function () { p.pair(); });
           if (cb) cb.addEventListener("click", function () { p.clear(); });
         })
         .catch(function () {
