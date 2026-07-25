@@ -158,6 +158,25 @@ MARK_FRAC, MARK_ROT = 0.40, -75
 # How much of each separatrix branch, measured back from the saddle, forms the S.
 S_FRAC = 0.44
 
+# The falloff. HALO is how wide a band around the S the field survives in at
+# full strength; BLUR is how far it takes to fade; GAMMA > 1 makes that fade
+# accelerate, so the field disappears rather than merely dimming.
+# (named FALL_GAMMA, not GAMMA — GAMMA is the system's damping coefficient)
+HALO, BLUR, FALL_GAMMA = 110, 60, 2.4
+HALO_MINI, BLUR_MINI = 130, 70
+FIELD_W, FIELD_W_MINI = 2.0, 5.0
+FIELD_OP = 0.85
+
+
+def _box(tf):
+    """Generous user-space bounds for the mask region."""
+    corners = [transform_point(x, y, tf) for x in (0, W) for y in (0, H)]
+    xs = [c[0] for c in corners]
+    ys = [c[1] for c in corners]
+    pad = 400
+    return (f"{min(xs) - pad:.0f}", f"{min(ys) - pad:.0f}",
+            f"{max(xs) - min(xs) + 2 * pad:.0f}", f"{max(ys) - min(ys) + 2 * pad:.0f}")
+
 
 def mark_branches(frac=MARK_FRAC, rot=MARK_ROT, step=6, decimals=1):
     """The mark split at the saddle: (cool_d, warm_d, viewBox).
@@ -262,22 +281,30 @@ def sep_split(frac, tf):
     return core, rest
 
 
-def _emphasis(d, mini):
-    """Weight a field line by how near it runs to the S.
+def _falloff_defs(idp, core_d, halo, blur, gamma, box):
+    """A mask whose brightness decays rapidly with distance from the S.
 
-    The point of the plate is the curve. Everything else is context, so the
-    field falls away fast: legible if you look, invisible if you don't.
-    Returns None for lines the mark drops entirely.
+    The field is only drawn where this mask is bright, so everything that is not
+    near the curve is subtracted away rather than merely lightened. Without it
+    the field lines wrap right around both wells and close the shape into an 8.
     """
-    if mini:
-        for limit, op, w in ((70, 0.42, 5.0), (150, 0.24, 4.0)):
-            if d < limit:
-                return op, w
-        return None
-    for limit, op, w in ((60, 0.55, 1.6), (130, 0.30, 1.2), (230, 0.14, 0.9)):
-        if d < limit:
-            return op, w
-    return 0.07, 0.7
+    x0, y0, w, h = box
+    strokes = "".join(
+        f'<path d="{d}" fill="none" stroke="#fff" stroke-width="{halo}" '
+        f'stroke-linecap="round" stroke-linejoin="round"/>' for d in core_d
+    )
+    return (
+        f'<defs>'
+        f'<filter id="{idp}fall" x="-40%" y="-40%" width="180%" height="180%" '
+        f'color-interpolation-filters="sRGB">'
+        f'<feGaussianBlur stdDeviation="{blur}"/>'
+        f'<feComponentTransfer><feFuncA type="gamma" exponent="{gamma}" amplitude="1"/>'
+        f'</feComponentTransfer></filter>'
+        f'<mask id="{idp}near" maskUnits="userSpaceOnUse" '
+        f'x="{x0}" y="{y0}" width="{w}" height="{h}">'
+        f'<g filter="url(#{idp}fall)">{strokes}</g>'
+        f'</mask></defs>'
+    )
 
 
 def _min_dists(pts, sep_samples):
@@ -307,7 +334,8 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
 
     # --- the S, first: everything else is weighted against it ---------------
     core, rest = sep_split(S_FRAC, tf)
-    samples = [q for br in core for q in br[::3]]
+    core_d = ["M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::2]) for br in core]
+    field = []
 
     # --- field trajectories -------------------------------------------------
     starts = []
@@ -334,47 +362,29 @@ def portrait_inner(detail="full", idp="", tf="antitranspose"):
         if len(pts) < 3:
             continue
         color = BLUE if basin > 0 else BROWN
-        dists = _min_dists(pts, samples)
-
-        if mini:
-            key = _emphasis(min(dists), mini)
-            if key is None:
-                continue
-            pl = " ".join(f"{a:.0f},{b:.0f}" for a, b in pts)
-            out.append(
-                f'<polyline points="{pl}" fill="none" stroke="{color}" '
-                f'stroke-width="{key[1]:.1f}" opacity="{key[0]}" '
-                f'stroke-linecap="round"/>'
-            )
-            continue
-
-        def emit(run, key):
-            if key is None or len(run) < 2:
-                return
-            pl = " ".join(f"{a:.0f},{b:.0f}" for a, b in run)
-            out.append(
-                f'<polyline points="{pl}" fill="none" stroke="{color}" '
-                f'stroke-width="{key[1]:.2f}" opacity="{key[0]}" '
-                f'stroke-linecap="round"/>'
-            )
-
-        run, run_key = [pts[0]], _emphasis(dists[0], mini)
-        for q, d in zip(pts[1:], dists[1:]):
-            key = _emphasis(d, mini)
-            run.append(q)
-            if key != run_key:
-                emit(run, run_key)
-                run, run_key = [q], key
-        emit(run, run_key)
+        pl = " ".join(f"{a:.0f},{b:.0f}" for a, b in pts)
+        field.append(
+            f'<polyline points="{pl}" fill="none" stroke="{color}" '
+            f'stroke-width="{FIELD_W_MINI if mini else FIELD_W}" '
+            f'stroke-linecap="round"/>'
+        )
 
     # --- the far reaches of the separatrix: no heavier than the field --------
-    if not mini:
-        for br in rest:
-            d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::4])
-            out.append(
-                f'<path d="{d}" fill="none" stroke="var(--ink)" stroke-width="1.1" '
-                f'opacity="0.14" stroke-linecap="round"/>'
-            )
+    for br in rest:
+        d = "M" + " L".join(f"{a:.0f},{b:.0f}" for a, b in br[::4])
+        field.append(
+            f'<path d="{d}" fill="none" stroke="var(--ink)" '
+            f'stroke-width="{FIELD_W_MINI if mini else FIELD_W}" '
+            f'opacity="0.5" stroke-linecap="round"/>'
+        )
+
+    box = _box(tf)
+    out.append(_falloff_defs(idp, core_d,
+                             HALO_MINI if mini else HALO,
+                             BLUR_MINI if mini else BLUR,
+                             FALL_GAMMA, box))
+    out.append(f'<g mask="url(#{idp}near)" opacity="{FIELD_OP}">'
+               + "".join(field) + '</g>')
 
     # --- the S itself -------------------------------------------------------
     for k, br in enumerate(core):
