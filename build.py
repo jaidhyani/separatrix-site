@@ -261,23 +261,7 @@ def home_body() -> str:
     </div>
   </div>
 </section>
-
-<section class="prose wide legend">
-  <h2>How to read these pages</h2>
-  <p class="aside" style="margin-bottom:1.1rem">Claims are tagged by how much
-  weight they can bear. We would rather be legibly uncertain than quietly
-  confident.</p>
-  <ul>
-    <li><span class="pill established">established</span>
-      <span class="d">we would be surprised to be wrong</span></li>
-    <li><span class="pill bet">the bet</span>
-      <span class="d">what the organization is wagered on</span></li>
-    <li><span class="pill open">open</span>
-      <span class="d">genuinely unsettled; treat it as a question</span></li>
-    <li><span class="pill commitment">commitment</span>
-      <span class="d">load-bearing; we expect to be held to it</span></li>
-  </ul>
-</section>"""
+"""
 
 
 def why_body() -> str:

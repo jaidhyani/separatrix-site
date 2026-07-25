@@ -344,12 +344,6 @@ figcaption b{color:var(--ink-soft);font-weight:600}
 .user-traj{opacity:.92;transition:opacity 1.6s ease}
 .user-traj.fading{opacity:0}
 
-/* legend */
-.legend ul{list-style:none;margin:0;display:grid;gap:.5rem}
-.legend li{display:flex;align-items:center;gap:.75rem;font-size:.94rem}
-.legend .k{font-weight:600}
-.legend .d{color:var(--mute)}
-
 /* ------------------------------------------------------ expand overlay --- */
 .overlay{
   position:fixed;inset:0;z-index:100;display:none;
