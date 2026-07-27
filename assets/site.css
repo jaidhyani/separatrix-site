@@ -168,6 +168,13 @@ a:hover{color:var(--water);text-decoration-color:var(--water)}
   background:color-mix(in oklab, var(--contour) 16%, transparent);
 }
 .nav-links a.cta.on{background:color-mix(in oklab, var(--contour) 20%, transparent)}
+/* the manifund link: the loudest thing in the bar - filled, cooperative blue */
+.nav-links a.fund{
+  color:var(--paper);margin-left:.35rem;
+  background:var(--water);
+}
+.nav-links a.fund:hover{color:var(--paper);background:var(--water-bright)}
+.nav-links a.fund::after{content:"\2197";margin-left:.3em;font-size:.85em}
 .expand{
   flex:0 0 auto;display:grid;place-items:center;
   width:32px;height:32px;margin-left:.15rem;

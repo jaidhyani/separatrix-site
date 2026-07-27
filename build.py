@@ -47,6 +47,7 @@ NAV = [
     ("approach", "/approach/", "Approach"),
     ("who", "/who/", "Who"),
     ("commitment", "/commitment/", "The Separatrix Commitment"),
+    ("manifund", "https://manifund.org/projects/separatrix", "Fund on Manifund"),
 ]
 
 FAVICON = (
@@ -73,8 +74,11 @@ def nav_html(current: str) -> str:
     ⤢ button opens the full plate over whatever page you're on."""
     def item(key, href, label):
         cls = " ".join(filter(None, ["on" if key == current else "",
-                                     "cta" if key == "commitment" else ""]))
+                                     "cta" if key == "commitment" else "",
+                                     "fund" if key == "manifund" else ""]))
         attr = f' class="{cls}"' if cls else ""
+        if href.startswith("http"):
+            attr += ' target="_blank" rel="noopener"'
         return f'<a href="{href}"{attr}>{label}</a>'
 
     links = "".join(item(*n) for n in NAV if n[0] != "home")
