@@ -46,6 +46,7 @@ NAV = [
     ("home", "/", "Separatrix"),
     ("approach", "/approach/", "Approach"),
     ("who", "/who/", "Who"),
+    ("book", "https://calendar.app.google/qU3H6PGps4CfgamV8", "Book a meeting"),
     ("commitment", "/commitment/", "The Separatrix Commitment"),
     ("manifund", "https://manifund.org/projects/separatrix", "Fund on Manifund"),
 ]
