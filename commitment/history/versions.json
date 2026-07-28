@@ -6,5 +6,13 @@
       "commitment": "b909f8a7718bb4c0e6c7f6b38051e74bff81c808a05d636ce8902f8e592dc0f8",
       "details": "7e9f237d1f347999f0f528c4a2e8aeeac6a5b32f847cf00bae5b4d3696779752"
     }
+  },
+  {
+    "version": "v1.1",
+    "date": "2026-07-27",
+    "sha256": {
+      "commitment": "018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7",
+      "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
+    }
   }
 ]

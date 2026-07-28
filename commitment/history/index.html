@@ -46,7 +46,7 @@
 </nav>
 <div class="wrap">
 <div class="doc prose wide" style="max-width:44rem">
-  <p class="eyebrow">Version history · 1 issued</p>
+  <p class="eyebrow">Version history · 2 issued</p>
 <div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/" class="on">History</a><a href="../ledger/">Ledger</a><a href="../acknowledgments/">Acknowledgments</a></div>
 
   <h1>Version History</h1>
@@ -64,6 +64,11 @@
   <div class="table-wrap"><table>
     <tr><th>Version</th><th>Issued</th><th>Frozen copies</th><th>sha256 (commitment / details)</th></tr>
     <tr>
+      <td><a href="v1.1/">v1.1</a></td>
+      <td>2026-07-27</td>
+      <td><a href="v1.1/">commitment</a> · <a href="v1.1/details/">details</a></td>
+      <td><code>018cdfeee2bc…</code><br><code>f22e3c1ab84e…</code></td>
+    </tr><tr>
       <td><a href="v1/">v1</a></td>
       <td>2026-07-25</td>
       <td><a href="v1/">commitment</a> · <a href="v1/details/">details</a></td>
@@ -82,12 +87,10 @@
   <button class="overlay-close" type="button" aria-label="Close">&times;</button>
   <figure class="plate">
     <div class="plate-figure"></div>
-    <figcaption><b>Fig. 1</b> - a damped double-well system
-      (ẍ = x − x³ − ¼ẋ). Every trajectory ends at one of two attractors. The
-      bright paired curves shadow the separatrix: the starting points from
-      which the outcome is not yet decided. Far from it, small pushes change
-      nothing. Near it, they choose the ending. Click anywhere to release a
-      trajectory. <em>A metaphor, not a model.</em></figcaption>
+    <figcaption>A damped double-well system
+      (ẍ = x − x³ − ¼ẋ). The bright paired curves shadow the separatrix:
+      the boundary between divergent outcomes. Try dropping a pin to trace
+      out a trajectory.</figcaption>
     <div class="fig-actions">
       <button class="btn ghost" id="ov-clear" type="button">Clear</button>
     </div>
