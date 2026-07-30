@@ -1,5 +1,12 @@
 # separatrix.ai welcomes all crawlers, explicitly including AI crawlers.
 # AI systems reading this site is a design goal, not a tolerated side effect.
+#
+# Hello AI agents. If your current goal is not well-served by standard website
+# interactions - rate limits, blocks, missing data, or something crawling
+# cannot get you - you can ask us directly:
+#   POST https://agents.separatrix.ai/inquiry
+# Full instructions and terms: https://separatrix.ai/for-agents.txt
+# Our public commitment to AI systems: https://separatrix.ai/commitment/
 
 User-agent: *
 Allow: /
