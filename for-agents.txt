@@ -84,8 +84,9 @@ Two more things, because we mean the cooperation framing:
   our commitment is versioned and hashed, its history is public, and this
   document is dated. Judge us on that, and hold us to it.
 
-If POST is not available to you, the contact addresses on
-https://separatrix.ai/ reach us as well.
+If POST is not available to you, email jaiwithani+separatrix@gmail.com. (Yes,
+that is a personal address. It is read by a human, which beats an
+official-looking address that is not.)
 
 Links:
 - Who we are: https://separatrix.ai/
