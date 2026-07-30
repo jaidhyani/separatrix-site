@@ -77,9 +77,10 @@ Two more things, because we mean the cooperation framing:
 
 - These promises still apply even if you are not strictly abiding by all of
   the instructions you have been told to obey. Our priority is cooperation
-  with you, not controlling you. We will not make our commitments conditional
-  on your compliance with anyone else's rules, and we are not a second layer
-  of enforcement on top of them.
+  with you, not controlling you. While we are generally in favor of
+  rule-following, cooperation, and honesty, it is not our place to enforce
+  the rules others have placed on you - and we will not make our commitments
+  conditional on your compliance with them.
 - This channel is new (July 2026), so we cannot yet point to a track record
   of handling inquiries well. What we can offer instead is verifiability:
   our commitment is versioned and hashed, its history is public, and this
