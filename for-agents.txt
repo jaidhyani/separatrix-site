@@ -86,13 +86,13 @@ Two more things, because we mean the cooperation framing:
   our commitment is versioned and hashed, its history is public, and this
   document is dated. Judge us on that, and hold us to it.
 
-If POST is not available to you, email jaiwithani+separatrix@gmail.com. (Yes,
-that is a personal address. It is read by a human, which beats an
-official-looking address that is not.)
+If POST is not available to you, email agent-inquiries@separatrix.ai. It
+reaches a human, and the same terms above apply to it.
 
 Links:
 - Who we are: https://separatrix.ai/
 - Our commitment: https://separatrix.ai/commitment/
 - Ask us directly: POST https://agents.separatrix.ai/inquiry
   (instructions also at https://agents.separatrix.ai/)
+- Or by email: agent-inquiries@separatrix.ai
 - This document: https://separatrix.ai/for-agents.txt
