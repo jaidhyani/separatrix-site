@@ -203,6 +203,22 @@ def build(site: Path, version: str, when: str) -> list[Path]:
         written.append(p)
 
     hashes = {k: digest(v) for k, v in SRC.items()}
+
+    # Refuse to re-freeze an issued version with different bytes — BEFORE any
+    # write. (2026-08-01: a default `--version v1` run re-froze v1 from v1.1
+    # sources; a first version of this guard sat after the writes and a
+    # refused build still clobbered the frozen files.)
+    _manifest = site / "commitment" / "history" / "versions.json"
+    if _manifest.exists():
+        for prev in json.loads(_manifest.read_text()):
+            if prev["version"] == version and prev["sha256"] != hashes:
+                raise SystemExit(
+                    f"REFUSING to re-freeze {version}: it is already issued with "
+                    f"different bytes. If you are publishing new text, bump "
+                    f"--version; a frozen version is never rebuilt from changed "
+                    f"sources."
+                )
+
     bodies = {k: render(v) for k, v in SRC.items()}
     stamp = f"{version} · {when}"
 
@@ -230,7 +246,7 @@ def build(site: Path, version: str, when: str) -> list[Path]:
             body=bodies["commitment"]
             + f"""
   <div class="footer">
-    {stamp} · sha256 <code>{hashes["commitment"]:.16}…</code>
+    {stamp} · sha256 <code class="hash">{hashes["commitment"]}</code>
     (<a href="commitment.md">exact hashed source, .md</a>) ·
     <a href="details/">Details &amp; operationalization</a> ·
     <a href="history/">Version history</a> ·
@@ -256,7 +272,7 @@ def build(site: Path, version: str, when: str) -> list[Path]:
             body=bodies["details"]
             + f"""
   <div class="footer">
-    {stamp} · sha256 <code>{hashes["details"]:.16}…</code>
+    {stamp} · sha256 <code class="hash">{hashes["details"]}</code>
     (<a href="../details.md">exact hashed source, .md</a>) ·
     <a href="../">The commitment</a> ·
     <a href="../history/">Version history</a>
@@ -336,9 +352,9 @@ def build(site: Path, version: str, when: str) -> list[Path]:
     rows = "".join(
         f"""<tr>
       <td><a href="{v["version"]}/">{v["version"]}</a></td>
-      <td>{v["date"]}</td>
+      <td>{v.get("signed") and f'signed {v["signed"]} · published {v["date"]}' or v["date"]}</td>
       <td><a href="{v["version"]}/">commitment</a> · <a href="{v["version"]}/details/">details</a></td>
-      <td><code>{v["sha256"]["commitment"]:.12}…</code><br><code>{v["sha256"]["details"]:.12}…</code></td>
+      <td><code class="hash">{v["sha256"]["commitment"]}</code><br><code class="hash">{v["sha256"]["details"]}</code></td>
     </tr>"""
         for v in reversed(versions)
     )
@@ -478,6 +494,10 @@ def main() -> int:
             return 1
 
     written = build(site, args.version, args.date)
+    import subprocess as _sp
+    _chk = _sp.run([sys.executable, str(REPO / "check-record.py")])
+    if _chk.returncode != 0:
+        raise SystemExit("build aborted: check-record failed (nothing committed)")
     written += sync_handbuilt(site)
     for p in written:
         print(f"  {p.relative_to(site)}")

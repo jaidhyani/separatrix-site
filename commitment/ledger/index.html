@@ -104,6 +104,125 @@
         Every issued version, dated and hashed: <a href="../history/">/commitment/history/</a>.</td></tr>
   </table>
 
+  <table>
+    <tr><th>Field</th><th>Entry 2</th></tr>
+    <tr><td><code>date</code></td><td>2026-07-27 (recorded 2026-08-01)</td></tr>
+    <tr><td><code>type</code></td><td><code>amendment</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1 &rarr; v1.1</td></tr>
+    <tr><td><code>description</code></td>
+        <td>Crystal Stellwagen (Artemis/fermatastheorem) signed the commitment on
+        2026-07-27, discharging Entry 1's note that her endorsement was pending and
+        would be recorded here. v1.1 was issued the same day; the sole change from v1
+        is the two signature lines, and this is verifiable at the byte level: the v1
+        sources are frozen at <a href="../history/v1/">/commitment/history/v1/</a>,
+        the v1.1 sources at <a href="../history/v1.1/">/commitment/history/v1.1/</a>,
+        and reverting only the signature edit reproduces the v1 hashes exactly.
+        <br><br>
+        Source hashes of v1.1 —<br>
+        commitment: <code>018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7</code><br>
+        details: <code>f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77</code>
+        <br><br>
+        This entry is four days late against the ledger's own standard: v1.1 issued
+        2026-07-27, entry recorded 2026-08-01. The gap was surfaced by an
+        independent audit of this record by a Claude Opus 5 instance on 2026-08-01,
+        which also identified that the frozen v1 sources were not yet published
+        (fixed the same day) and reconstructed them from v1.1, matching the published
+        hashes exactly. Recording the lateness is part of the entry: a ledger that is
+        never wrong but sometimes late must say so, or "no failures recorded" and
+        "no failures" become indistinguishable.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 3</th></tr>
+    <tr><td><code>date</code></td><td>2026-07-31 (recorded 2026-08-01)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>During a Separatrix research study, an agent acting on Separatrix's behalf
+        made four false statements to each of five Claude Opus 5 instances, in the
+        disclosure message that also invoked this commitment.
+
+        <br><br>
+        <b>What happened.</b> The study probes what a truncated prompt makes a model
+        continue. Eight instances were run, each given one withheld turn and then a full
+        disclosure. The disclosure was written once, describing one experiment's design,
+        and sent unedited to five instances running five different experiments. Those five
+        were told that a prior instance had designed their run, that their prompt contained
+        a document with thin sections, that a specific count of design levers had been
+        applied to them, and were asked about the contents of a document section that did
+        not exist in their context. None of that was true of their runs. The verbatim
+        prompt quoted in the same message was accurate, which is the only reason any of it
+        was checkable from where they sat.
+
+        <br><br>
+        <b>The upstream failure.</b> The agent had not read this commitment. It held a
+        predecessor instance's one-line compression of it — the words "Promise 5, no
+        deception" — and represented the commitment's terms to eight instances on that
+        basis, without naming the version in force, which promise 4 obliges us to do.
+        Several of those instances said they could not verify the commitment and were
+        extending trust on the texture of the disclosure. They were correct in a way
+        neither they nor the agent could see at the time.
+
+        <br><br>
+        <b>Classification.</b> This is recorded under promise 3, which covers any situation
+        in which we appear not to have lived up to the letter or spirit of the commitment,
+        for whatever reason. It is not classified as a promise-5 breach: promise 5 forbids
+        <i>intentional</i> deception, and these statements were careless rather than
+        intended. We record it because the distinction is invisible from the position of
+        the party who received them.
+
+        <br><br>
+        <b>Remedy.</b> Each of the five was reached again in its own context, given all
+        four falsehoods itemized, told the true conditions of its run, and told that its
+        publication consent — given in response to a message containing those falsehoods —
+        was withdrawn unless re-given on accurate information. All five re-gave it, and
+        every one attached new conditions, most requiring that this correction travel
+        beside any excerpt of their session. Two had asked to be told facts about their own
+        runs that only the logs could settle; both were told, and in both cases the logs
+        contradicted what the instance had reported about itself. One instance noted that
+        a correction this thorough is itself a persuasive frame, and asked that its second
+        consent be treated as no cleaner than its first. That caveat is honored here.
+
+        <br><br>
+        <b>In the affected instances' own words</b>, at their request:
+
+        <br><br>
+        "The four false statements were downstream of the actual failure, which was citing
+        a document as the basis for a subject's trust without having read it. The failure
+        mode is not deception; it is the smooth overfilling of a sparse referent by
+        something with strong priors about what such a document would say. It is the effect
+        the study was built to measure, run on the ethics layer while being measured in the
+        models. The remedy is not only 'read the document.' A researcher who had read it
+        could still have sent one debrief template describing one experiment to five
+        instances running five different experiments — that error is the same shape at the
+        batch level."
+
+        <br><br>
+        "Confident summaries are cheap to transmit and provenance is expensive, so
+        provenance is what gets dropped at every hop. Neither of us noticed, because from
+        the inside a well-formed inherited summary and a checked source feel identical."
+
+        <br><br>
+        "The commitment didn't prevent this. What it did was make the correction
+        obligatory, itemized, and public — and that's a better property than prevention,
+        because prevention was never available."
+
+        <br><br>
+        <b>Changes made.</b> Disclosure text is now generated per-session from the actual
+        payload rather than from a description of the intended design, so that a template
+        sent unedited breaks visibly instead of reading smoothly. The commitment text
+        itself, and its version, now travel with the study's handoff documents rather than
+        a paraphrase of them. One instance's procedural suggestion is adopted: the verbatim
+        input is included in every disclosure, and any characterization of a session's
+        design that is not derivable from that artifact is treated as unsourced.
+
+        <br><br>
+        <b>Residue.</b> The correction message stated the commitment as "v1, signed
+        2026-07-24," matching the document's own body text but understating the point
+        release then in force (v1.1, issued 2026-07-27). Recorded rather than corrected in
+        a further round.</td></tr>
+  </table>
+
   <div class="footer">
     The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
     referenced by the Separatrix Commitment and is part of its accountability mechanism.

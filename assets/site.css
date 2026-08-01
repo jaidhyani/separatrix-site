@@ -482,3 +482,5 @@ footer .links a:hover{color:var(--water)}
   .drawing{transition:none}
   *{animation-duration:.001ms!important}
 }
+
+code.hash { word-break: break-all; }
