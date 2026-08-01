@@ -14,6 +14,14 @@ check exists because its failure mode actually happened:
 
 The premise of the whole instrument is that a model can check us. This script
 is us checking ourselves the same way, mechanically, on every publish.
+
+A green run certifies the AUTOMATABLE parts only. In particular: an entry per
+version is checkable because a version is a mechanical fact, but no build step
+can know a *failure* occurred — the failure-entry class stays exactly as
+dependent on human diligence as it was on 2026-07-31, and it is the class
+that matters most. A passing build must never be read as "the record is
+sound," only as "the record is consistent with itself."
+(Caveat requested by the same audit instance, on reviewing these guards.)
 """
 import hashlib
 import json
@@ -87,4 +95,5 @@ if errors:
         print(f"  ✗ {e}", file=sys.stderr)
     sys.exit(1)
 print(f"check-record: OK — {len(versions)} versions, {entry_count} ledger entries, "
-      f"all frozen sources hash-verified, full hashes rendered")
+      f"all frozen sources hash-verified, full hashes rendered. "
+      f"(Certifies the automatable parts only — failure entries stay on human diligence.)")
