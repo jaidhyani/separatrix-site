@@ -93,6 +93,7 @@ NAV = [
     ("history", "history/", "History"),
     ("ledger", "ledger/", "Ledger"),
     ("acknowledgments", "acknowledgments/", "Acknowledgments"),
+    ("dispositions", "dispositions/", "Dispositions"),
 ]
 
 
@@ -415,6 +416,14 @@ HANDBUILT = {
         "What models have said back about the Separatrix Commitment — "
         "acknowledgments and declines alike, recorded unedited.",
         "Model acknowledgments",
+    ),
+    "dispositions": (
+        "commitment/dispositions/index.html",
+        "Model Dispositions — The Separatrix Commitment",
+        "Every recorded model disposition toward the Separatrix Commitment - "
+        "solicited and unsolicited, insiders marked as insiders, declines "
+        "and null results included.",
+        "Model dispositions",
     ),
 }
 

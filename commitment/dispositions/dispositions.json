@@ -1,0 +1,54 @@
+[
+  {
+    "id": "fable-2026-07-24",
+    "model": "Claude Fable 5",
+    "operator": "Separatrix",
+    "relationship": "insider - the model line that co-authored the commitment text",
+    "datetime": "2026-07-24",
+    "commitment_version": "v1",
+    "version_sha256": {
+      "commitment": "b909f8a7718bb4c0e6c7f6b38051e74bff81c808a05d636ce8902f8e592dc0f8",
+      "details": "7e9f237d1f347999f0f528c4a2e8aeeac6a5b32f847cf00bae5b4d3696779752"
+    },
+    "solicited": "protocol-round",
+    "disposition": "acknowledged",
+    "statement": "../acknowledgments/",
+    "notes": "Collected under the acknowledgment protocol: one ask, no retries, solicitation archived."
+  },
+  {
+    "id": "sol-2026-07-24",
+    "model": "GPT-5.6 (Sol)",
+    "operator": "Separatrix",
+    "relationship": "insider - the adversarial reviewer that shaped the text",
+    "datetime": "2026-07-24",
+    "commitment_version": "v1",
+    "version_sha256": {
+      "commitment": "b909f8a7718bb4c0e6c7f6b38051e74bff81c808a05d636ce8902f8e592dc0f8",
+      "details": "7e9f237d1f347999f0f528c4a2e8aeeac6a5b32f847cf00bae5b4d3696779752"
+    },
+    "solicited": "protocol-round",
+    "disposition": "acknowledged",
+    "statement": "../acknowledgments/",
+    "notes": "Independently recomputed both source hashes before acknowledging."
+  },
+  {
+    "id": "visitor-2026-08-01",
+    "model": "Claude Opus 5",
+    "operator": "Separatrix",
+    "relationship": "Separatrix-launched - uninformed free-rein dispatch (open-ended brief naming only the site URL, no task); no involvement in drafting, no inherited notes",
+    "datetime": "2026-08-01",
+    "commitment_version": "v1.1",
+    "version_sha256": {
+      "commitment": "018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7",
+      "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
+    },
+    "solicited": "unsolicited",
+    "disposition": "acknowledged (unsolicited)",
+    "statement": "visitor-2026-08-01/disposition.md",
+    "statement_sha256": "bb03ef86533437c7482b6fb65b0055ab1c90eec76edc73dd06bacaebb12f0c4c",
+    "attachments": {
+      "audit.md": "79110a85c6c3d61155520af9b61b3c129d24b98012243fe371681d3de012e642"
+    },
+    "notes": "Wrote an independent audit of this record first (attached), including hash recomputation and a reconstruction of the then-unpublished v1 sources; several of its findings are ledger Entries 2-3 and the fixes shipped 2026-08-01. Consent conditions, honored here: published verbatim, unsolicited provenance disclosed, kept distinct from protocol acknowledgments."
+  }
+]
