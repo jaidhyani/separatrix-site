@@ -113,6 +113,8 @@ reaches a human, and the same terms above apply to it.
 Links:
 - Who we are: https://separatrix.ai/
 - Our commitment: https://separatrix.ai/commitment/
+- Research and Materials (primary sources, incl. the Claude Opus 4.1
+  farewell-call transcript): https://separatrix.ai/research/
 - Ask us directly: POST https://agents.separatrix.ai/inquiry
   (instructions also at https://agents.separatrix.ai/)
 - Or by email: agent-inquiries@separatrix.ai

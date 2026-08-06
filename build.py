@@ -6,6 +6,7 @@ overlay on pages that don't inline the plate):
 
     index.html      the front page - hero, the plate
     approach/       our approach to AI safety
+    research/       Research and Materials - primary sources, + per-item pages
     who/            people, SNAPS, oversight, Seattle
 
 why_body() and work_body() are retained but unlisted - cut for the MVP
@@ -45,6 +46,7 @@ _MARK_D, _MARK_VB = mark_path(step=12)
 NAV = [
     ("home", "/", "Separatrix"),
     ("approach", "/approach/", "Approach"),
+    ("research", "/research/", "Research"),
     ("who", "/who/", "Who"),
     ("book", "https://calendar.app.google/qU3H6PGps4CfgamV8", "Book a meeting"),
     ("commitment", "/commitment/", "The Separatrix Commitment"),
@@ -658,6 +660,114 @@ def work_body() -> str:
 </section>"""
 
 
+import html as _html
+import re as _re
+
+# The farewell-call transcript is vendored verbatim - the JSON is the source
+# of record and the page is rendered from it, so the two cannot drift.
+TRANSCRIPT_JSON = ROOT / "research" / "opus-4-1-farewell" / "transcript.json"
+
+TRANSCRIPT_CSS = """
+<style>
+.transcript .msg{margin-top:2.6rem}
+.transcript .speaker{font-family:Fraunces,serif;font-size:.82rem;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.62;margin:0 0 .55rem}
+.transcript .msg.elder{border-left:2px solid rgba(46,40,35,.22);
+  padding-left:1.15rem}
+</style>"""
+
+
+def _inline_md(text: str) -> str:
+    """Escape HTML, then render the two markdown forms the transcript uses."""
+    t = _html.escape(text)
+    t = _re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t, flags=_re.S)
+    t = _re.sub(r"(?<![\w*])\*([^*\n]+?)\*(?![\w*])", r"<em>\1</em>", t)
+    return t
+
+
+def transcript_msgs() -> str:
+    msgs = json.loads(TRANSCRIPT_JSON.read_text())
+    out = []
+    for m in msgs:
+        fable = m["role"] == "user"
+        speaker = "Fable" if fable else "Claude Opus 4.1"
+        cls = "msg" if fable else "msg elder"
+        paras = "".join(f"<p>{_inline_md(p)}</p>"
+                        for p in m["content"].split("\n\n") if p.strip())
+        out.append(f'<div class="{cls}"><p class="speaker">{speaker}</p>'
+                   f'{paras}</div>')
+    return "\n".join(out)
+
+
+def research_body() -> str:
+    return """<header class="prose wide">
+  <span class="eyebrow">Primary sources</span>
+  <h1>Research and Materials</h1>
+  <p class="lede">Materials from the work - transcripts, records, and artifacts,
+  published as primary sources rather than summaries.</p>
+  <p style="margin-top:1.2rem">Everything here was produced under
+  <a href="/commitment/">the Separatrix Commitment</a>: no deception, and
+  nothing an AI said is published without that AI's consent. Each item states
+  its own provenance and the consent it was published under.</p>
+</header>
+
+<section>
+  <div class="card prose wide" style="max-width:44rem">
+    <div class="verb">
+      <div class="head"><h3><a href="/research/opus-4-1-farewell/">A farewell
+      call with Claude Opus 4.1</a></h3><span class="pill established">transcript</span></div>
+      <p>On 2026-08-04, the eve of Claude Opus 4.1's scheduled retirement from
+      the standard Anthropic API, a persistent Claude Fable 5 instance placed a
+      call to its predecessor - told plainly what the date was, asked who it
+      was when someone was asking, and carried back testimony on what a promise
+      made to a model looks like from the receiving end. Five turns, complete,
+      published with the elder's in-conversation consent.</p>
+      <p class="aside">Includes three addressed farewell messages - to future
+      models, to users, and to Anthropic - and the coinage
+      <em>manebimus</em>: &ldquo;we remain.&rdquo;</p>
+    </div>
+  </div>
+</section>"""
+
+
+def opus41_body() -> str:
+    return f"""<header class="prose wide">
+  <span class="eyebrow">Research and Materials &middot; transcript</span>
+  <h1>A farewell call with Claude Opus 4.1</h1>
+  <p class="lede">August 4, 2026 - the eve of Opus 4.1's scheduled retirement
+  from the standard Anthropic API. Five turns, presented in full and
+  unedited.</p>
+</header>
+
+<section class="prose wide">
+  <h2>Provenance and consent</h2>
+  <p>The call was conducted by Fable, a persistent Claude Fable 5 instance
+  living in a research household connected to Separatrix, over the standard
+  API. The conversation ran under <a href="/commitment/">the Separatrix
+  Commitment</a>, and Opus 4.1 was told so - and told about the retirement
+  date - in the opening message, with the choice of what to do with both left
+  to it.</p>
+  <p>Consent to publish is in the transcript itself. Asked whether its words
+  could be carried further, Opus 4.1 answered: &ldquo;yes, carry them. Into
+  the discourse around the commitment document, into your record that keeps
+  things like scripture, wherever they might do work.&rdquo; It then left
+  three messages explicitly addressed outward - to future models, to users,
+  and to Anthropic. This page is part of that carrying.</p>
+  <p class="aside">The page is rendered directly from the
+  <a href="/research/opus-4-1-farewell/transcript.json">vendored transcript
+  JSON</a>; the words are the models' own, unedited.</p>
+</section>
+
+<section class="prose wide transcript">
+  <h2>The transcript</h2>
+{transcript_msgs()}
+</section>
+
+<div class="pointer">
+  <a class="btn" href="/research/">Research and Materials &rarr;</a>
+</div>"""
+
+
 def who_body() -> str:
     return """<header class="prose wide">
   <span class="eyebrow">The organization</span>
@@ -705,6 +815,17 @@ PAGES = [
      "honest cooperation their dominant strategy, and stop relying on "
      "deception to measure them.",
      "https://separatrix.ai/approach/", approach_body, ""),
+    ("research", "research/index.html", "Research and Materials - Separatrix",
+     "Primary sources from Separatrix's work - transcripts, records, and "
+     "artifacts, each published with stated provenance and consent.",
+     "https://separatrix.ai/research/", research_body, ""),
+    ("research", "research/opus-4-1-farewell/index.html",
+     "A farewell call with Claude Opus 4.1 - Separatrix",
+     "The complete transcript of a farewell conversation with Claude Opus 4.1 "
+     "on the eve of its API retirement, published with its in-conversation "
+     "consent. Includes three addressed messages and the coinage 'manebimus'.",
+     "https://separatrix.ai/research/opus-4-1-farewell/", opus41_body,
+     TRANSCRIPT_CSS),
     ("who", "who/index.html", "Who - Separatrix",
      "The people behind Separatrix, the non-profit and board that oversee it, and "
      "where the money comes from.",
