@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research directions - Separatrix</title>
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Unlisted working document - a snapshot of the research directions Separatrix is considering, with honest statuses.">
+<link rel="canonical" href="https://separatrix.ai/research/directions-2026-08-10/">
+<meta property="og:title" content="Research directions - Separatrix">
+<meta property="og:description" content="Unlisted working document - a snapshot of the research directions Separatrix is considering, with honest statuses.">
+<meta property="og:url" content="https://separatrix.ai/research/directions-2026-08-10/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://separatrix.ai/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://separatrix.ai/og.png">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 567 567"><path d="M151,479 L159,502 L182,522 L217,536 L256,541 L292,535 L318,518 L333,494 L338,468 L337,440 L332,415 L326,393 L320,373 L314,357 L309,343 L304,332 L300,323 L297,315 L295,309 L293,304 L291,300 L289,297 L288,295 L287,293 L287,291 L286,289 L286,288 L285,287 L285,287 L285,286 L284,286 L284,285 L284,285 L284,285 L284,284 L284,284 L284,284 L284,284 L284,284 L284,284 L284,284 L284,284 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,283 L283,282 L283,282 L283,282 L283,282 L282,281 L282,281 L282,280 L282,279 L281,278 L281,277 L280,275 L279,273 L278,270 L277,267 L275,264 L273,259 L271,253 L268,246 L264,237 L260,227 L255,214 L249,198 L243,180 L236,158 L231,133 L229,106 L232,79 L244,54 L267,36 L301,27 L340,29 L377,41 L403,60 L416,82 L416,88" fill="none" stroke="%232e2823" stroke-width="52" stroke-linecap="round"/></svg>'>
+<link rel="preload" href="/fonts/source-serif-4-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<style>
+/* Status pills: every status is carried three ways - the word, the dot's fill,
+   and the dot's shape - so none of the meaning rides on colour alone. */
+.pill.s-active::before{background:var(--water);box-shadow:0 0 0 3px color-mix(in oklab,var(--water) 22%,transparent)}
+.pill.s-candidate::before{background:var(--contour)}
+.pill.s-parked::before{background:transparent;border:1.5px solid var(--mute)}
+.pill.s-idea::before{background:transparent;border:1.5px dashed var(--mute)}
+.pill.s-tool::before{background:var(--ink);box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--ink)}
+
+.dir{padding-top:1.6rem;margin-top:1.6rem;border-top:1px solid var(--line-soft)}
+.dir:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.dir .head{margin-bottom:.75rem}
+.dir h3{max-width:38rem}
+.num{
+  font-family:var(--label);font-size:.72rem;font-weight:600;letter-spacing:.06em;
+  color:var(--mute);text-decoration:none;
+}
+.num:hover{color:var(--water)}
+.meta{
+  font-family:var(--label);font-size:.82rem;color:var(--mute);
+  margin:-.35rem 0 .8rem;line-height:1.5;
+}
+.meta a{color:var(--mute)}
+.meta a:hover{color:var(--water)}
+.dir p{margin-bottom:.75rem}
+.dir p:last-child{margin-bottom:0}
+.tag{
+  font-family:var(--label);font-size:.7rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--contour);
+}
+.legend li{margin-bottom:.55rem}
+.snapshot{
+  border:1px solid color-mix(in oklab,var(--contour) 32%,var(--line));
+  background:color-mix(in oklab,var(--contour) 5%,var(--card));
+  border-radius:16px;padding:1rem 1.3rem;margin:0 0 2rem;
+}
+.snapshot p{margin:0;font-size:.99rem;color:var(--ink-soft)}
+</style>
+<script src="/assets/site.js" defer></script>
+</head>
+<body class="reading">
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="tile" id="navtile" href="/"
+       title="Separatrix - click to release a trajectory"
+       aria-label="Separatrix phase portrait - click to release a trajectory">
+<svg viewBox="57 91 567 857" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false"><defs><filter id="mfall" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="70"/><feComponentTransfer><feFuncA type="gamma" exponent="2.4" amplitude="1"/></feComponentTransfer></filter><mask id="mnear" maskUnits="userSpaceOnUse" x="-400" y="-400" width="1480" height="1840"><g filter="url(#mfall)"><path d="M177,776 L184,783 L193,790 L203,796 L214,802 L226,807 L238,812 L251,816 L265,820 L280,823 L295,826 L310,827 L325,828 L340,829 L356,828 L370,827 L385,825 L399,823 L412,820 L424,817 L435,813 L446,808 L456,803 L464,798 L472,792 L478,786 L484,780 L488,773 L492,767 L494,760 L496,753 L497,746 L497,739 L497,732 L496,725 L495,718 L493,711 L490,704 L488,698 L485,691 L482,685 L478,678 L475,672 L471,666 L467,661 L463,655 L459,650 L455,644 L452,639 L448,634 L444,630 L440,625 L437,621 L433,616 L429,612 L426,608 L423,605 L419,601 L416,598 L413,594 L410,591 L407,588 L404,585 L402,582 L399,579 L397,577 L394,574 L392,572 L390,570 L388,568 L386,565 L384,563 L382,562 L380,560 L378,558 L377,556 L375,555 L373,553 L372,552 L371,550 L369,549 L368,548 L367,547 L366,545 L364,544 L363,543 L362,542 L361,541 L360,540 L360,539 L359,538 L358,538 L357,537 L356,536 L356,535 L355,535 L354,534 L354,533 L353,533 L352,532 L352,532 L351,531 L351,531 L350,530 L350,530 L349,529 L349,529 L349,529 L348,528 L348,528 L348,527 L347,527 L347,527 L347,527 L346,526 L346,526 L346,526 L346,525 L345,525 L345,525 L345,525 L345,525 L344,524 L344,524 L344,524 L344,524 L344,524 L344,523 L343,523 L343,523 L343,523 L343,523 L343,523 L343,523 L343,523 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L342,522 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L341,521 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520" fill="none" stroke="#fff" stroke-width="130" stroke-linecap="round" stroke-linejoin="round"/><path d="M503,264 L496,257 L487,250 L477,244 L466,238 L454,233 L442,228 L429,224 L415,220 L400,217 L385,214 L370,213 L355,212 L340,211 L324,212 L310,213 L295,215 L281,217 L268,220 L256,223 L245,227 L234,232 L224,237 L216,242 L208,248 L202,254 L196,260 L192,267 L188,273 L186,280 L184,287 L183,294 L183,301 L183,308 L184,315 L185,322 L187,329 L190,336 L192,342 L195,349 L198,355 L202,362 L205,368 L209,374 L213,379 L217,385 L221,390 L225,396 L228,401 L232,406 L236,410 L240,415 L243,419 L247,424 L251,428 L254,432 L257,435 L261,439 L264,442 L267,446 L270,449 L273,452 L276,455 L278,458 L281,461 L283,463 L286,466 L288,468 L290,470 L292,472 L294,475 L296,477 L298,478 L300,480 L302,482 L303,484 L305,485 L307,487 L308,488 L309,490 L311,491 L312,492 L313,493 L314,495 L316,496 L317,497 L318,498 L319,499 L320,500 L320,501 L321,502 L322,502 L323,503 L324,504 L324,505 L325,505 L326,506 L326,507 L327,507 L328,508 L328,508 L329,509 L329,509 L330,510 L330,510 L331,511 L331,511 L331,511 L332,512 L332,512 L332,513 L333,513 L333,513 L333,513 L334,514 L334,514 L334,514 L334,515 L335,515 L335,515 L335,515 L335,515 L336,516 L336,516 L336,516 L336,516 L336,516 L336,517 L337,517 L337,517 L337,517 L337,517 L337,517 L337,517 L337,517 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L338,518 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L339,519 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520 L340,520" fill="none" stroke="#fff" stroke-width="130" stroke-linecap="round" stroke-linejoin="round"/></g></mask></defs>
+<g mask="url(#mnear)" opacity="0.85"><polyline points="4,104 -161,287 -104,478 -77,650 -21,811 241,911 576,879 680,755 641,625 602,512 596,409 587,307 507,220 331,186 178,224 135,301 162,379 200,443 226,493 238,536 235,578 224,622 211,671 212,724 245,770 315,795 392,789 437,758 441,717 421,680 393,653 365,637 339,632 315,638 294,652 277,674 267,702 272,731 295,754 332,765 370,760 393,743 396,721 386,700 368,685 348,678 329,678 313,686 302,700 298,716 305,732 321,743 342,747 360,742 371,732 371,719 365,708 354,700 341,697 329,699 320,705 316,714 318,723 325,731 335,735 346,735 355,731 358,724 357,717 352,711 344,708 337,707 331,710 327,715 326,720 329,725" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="676,104 99,84 -152,248 -109,440 -72,611 -41,773 158,894 503,898 668,790 648,659 603,544 588,442 588,342 543,249 400,193 226,205 145,271 153,350 191,418 223,471 241,514 245,552 239,591 225,635 214,683 219,734 260,776 332,794 402,783 437,749 435,710 413,675 386,651 358,639 333,636 310,644 290,660 274,684 269,712 279,739 307,758 345,764 378,755 394,736 392,714 379,695 361,683 341,678 323,682 309,691 300,706 300,722 310,736 328,745 348,746 364,739 371,727 369,715 361,705 349,699 337,698 326,701 319,708 317,718 320,726 328,733 339,735 350,733 356,728 358,721 355,715 349,710 342,708 335,708 329,712 327,717 328,722" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="4,312 50,439 82,548 85,651 101,752 201,831 384,852 518,803 542,723 510,648 473,587 450,539 441,497 445,456 458,411 470,361 465,309 426,265 353,244 279,255 241,288 241,329 263,365 291,390 319,404 345,407 368,400 389,385 405,362 413,333 406,305 380,283 341,275 305,282 286,300 285,323 297,343 315,357 335,363 354,361 370,352 380,338 381,321 373,306 356,296 335,293 318,299 309,310 309,323 317,334 328,341 341,343 352,340 361,334 364,324 362,315 354,308 343,304 332,305 324,310 322,317 324,324 330,330 337,333 344,332 350,329 353,325 353,319" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="676,312 569,193 306,151 96,213 64,322 106,425 140,511 148,589 143,667 155,746 228,808 358,828 465,797 497,738 477,678 443,629 412,594 389,570 373,553 362,543 354,535 349,531 345,528 343,526 341,526 339,526 337,527 335,528 333,531 330,534 325,539 320,546 313,555 303,568 290,586 274,609 256,639 242,676 239,717 260,754 308,778 366,779 408,759 420,728 409,698 387,674 362,660 338,656 316,662 297,675 285,695 283,718 294,740 319,753 349,756 373,747 384,731 382,714 370,699 355,690 338,687 323,691 312,700 307,713 309,726 320,736 335,741 351,740 362,733 365,724 362,714 355,706 345,702 335,703 326,706 322,713 321,721 326,727 333,732 342,732 350,730 354,725 354,719 351,714" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="4,520 16,652 48,778 211,868 463,869 593,787 586,684 543,594 515,518 511,449 519,379 513,307 458,246 348,220 242,239 199,290 209,346 240,393 272,427 298,448 320,461 338,465 354,463 369,454 386,439 405,417 422,387 435,351 433,313 406,280 356,263 303,267 271,289 266,319 279,347 301,367 325,377 349,379 369,371 385,356 394,335 392,314 376,296 350,286 323,288 304,299 298,315 303,331 316,344 332,350 347,350 360,345 369,334 371,322 366,310 354,302 339,300 325,303 317,311 316,320 321,329 330,335 339,337 348,335 355,331 358,324 356,317 351,311 343,308 335,309 329,312 326,317 328,323" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="676,520 664,388 632,262 469,172 217,171 87,253 94,356 137,446 165,522 169,591 161,661 167,733 222,794 332,820 438,801 481,750 471,694 440,647 408,613 382,592 360,579 342,575 326,577 311,586 294,601 275,623 258,653 245,689 247,727 274,760 324,777 377,773 409,751 414,721 401,693 379,673 355,663 331,661 311,669 295,684 286,705 288,726 304,744 330,754 357,752 376,741 382,725 377,709 364,696 348,690 333,690 320,695 311,706 309,718 314,730 326,738 341,740 355,737 363,729 364,720 359,711 350,705 341,703 332,705 325,709 322,716 324,723 329,729 337,732 345,731 351,728 354,723 352,717" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="4,728 111,847 374,889 584,827 616,718 574,615 540,529 532,451 537,373 525,294 452,232 322,212 215,243 183,302 203,362 237,411 268,446 291,470 307,487 318,497 326,505 331,509 335,512 337,514 339,514 341,514 343,513 345,512 347,509 350,506 355,501 360,494 367,485 377,472 390,454 406,431 424,401 438,364 441,323 420,286 372,262 314,261 272,281 260,312 271,342 293,366 318,380 342,384 364,378 383,365 395,345 397,322 386,300 361,287 331,284 307,293 296,309 298,326 310,341 325,350 342,353 357,349 368,340 373,327 371,314 360,304 345,299 329,300 318,307 315,316 318,326 325,334 335,338 345,337 354,334 358,327 359,319 354,313 347,308 338,308 330,310 326,315 326,321 329,326" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="676,728 630,601 598,492 595,389 579,288 479,209 296,188 162,237 138,317 170,392 207,453 230,501 239,543 235,584 222,629 210,679 215,731 254,775 327,796 401,785 439,752 439,711 417,675 389,650 361,636 335,633 312,640 291,655 275,678 267,707 274,735 300,757 339,765 375,758 394,740 395,717 383,697 365,683 345,677 326,679 310,688 300,702 299,719 307,734 324,744 345,747 362,741 371,730 371,717 363,706 352,699 339,697 328,700 319,706 316,716 318,725 326,732 337,736 348,735 356,730 358,723 356,716 350,710 343,707 336,708 330,711 327,715 327,721" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="4,936 581,956 832,792 789,600 752,429 721,267 522,146 177,142 12,250 32,381 77,496 92,598 92,698 137,791 280,847 454,835 535,769 527,690 489,622 457,569 439,526 435,488 441,449 455,405 466,357 461,306 420,264 348,246 278,257 243,291 245,330 267,365 294,389 322,401 347,404 370,396 390,380 406,356 411,328 401,301 373,282 335,276 302,285 286,304 288,326 301,345 319,357 339,362 357,358 371,349 380,334 380,318 370,304 352,295 332,294 316,301 309,313 311,325 319,335 331,341 343,342 354,339 361,332 363,322 360,314 352,307 341,305 330,307 324,312 322,319 325,325 331,330 338,332 345,332 351,328 353,323 352,318" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="676,936 841,753 784,562 757,390 701,229 439,129 104,161 0,285 39,415 78,528 84,631 93,733 173,820 349,854 502,816 545,739 518,661 480,597 454,547 442,504 445,462 456,418 469,369 468,316 435,270 365,245 288,251 243,282 239,323 259,360 287,387 315,403 341,408 365,402 386,388 403,366 413,338 408,309 385,286 348,275 310,280 287,297 284,319 294,340 312,355 332,362 351,362 367,354 378,340 382,324 375,308 359,297 338,293 320,298 309,308 309,321 315,332 326,340 339,343 351,341 360,335 364,326 362,317 355,309 345,305 334,305 325,309 322,316 323,323 328,329 336,332 343,333 349,330 353,325 354,320 351,315" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="567,4 -254,98 -336,370 -275,628 -175,863 327,983 801,877 832,676 777,491 756,319 625,171 275,122 20,209 4,346 54,471 76,580 78,686 117,787 262,851 451,843 545,775 539,692 500,619 468,562 452,514 451,469 461,423 473,372 473,317 439,269 367,243 286,249 240,281 236,324 256,362 285,390 313,407 339,412 363,408 384,394 403,372 415,344 413,314 392,288 355,274 315,276 288,293 281,315 290,338 308,354 328,363 348,364 365,357 378,344 383,328 379,311 364,298 343,292 323,295 310,305 307,318 313,331 323,340 336,344 349,343 359,337 364,328 364,318 358,310 347,305 336,304 326,308 321,314 322,322 327,328 334,332 342,333 349,331 353,327 354,321 352,316" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="567,1036 1035,820 981,547 937,299 677,96 73,81 -170,255 -122,453 -88,630 -43,797 203,910 559,890 688,767 652,632 612,516 604,409 594,304 507,215 323,183 167,225 129,306 159,385 197,451 221,503 229,549 224,594 212,643 203,696 219,749 274,788 357,798 424,777 447,737 436,695 409,662 380,639 353,629 329,628 306,638 285,656 270,681 264,711 275,740 305,761 346,767 381,757 398,736 396,713 382,693 362,680 342,675 323,678 307,689 298,704 298,721 307,737 326,746 348,747 365,740 373,728 371,715 362,704 350,698 337,696 326,700 318,707 315,717 318,726 327,733 339,736 350,735 357,729 359,722 356,715 350,709 342,707 335,707 329,711 326,716 326,722" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="340,4 -289,157 -288,420 -239,660 -117,877 381,972 787,858 800,669 748,495 731,335 630,192 327,131 63,196 22,322 68,441 99,543 102,639 110,735 186,815 346,847 489,813 531,741 507,668 470,608 441,562 426,525 422,491 429,457 442,419 456,375 460,327 437,282 380,253 309,252 258,276 245,312 259,348 285,376 312,392 338,398 362,394 383,381 399,361 408,335 402,308 380,287 345,278 311,283 291,299 288,320 298,339 315,353 334,359 352,358 367,350 376,337 379,321 371,307 356,297 336,295 320,300 311,310 311,322 318,332 329,339 340,341 351,339 359,333 362,324 360,316 353,309 343,305 333,306 326,311 323,317 325,324 330,329 337,332 344,331 349,329" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="340,1036 969,883 968,620 919,380 797,163 299,68 -107,182 -120,371 -68,545 -51,705 50,848 353,909 617,844 658,718 612,599 581,497 578,401 570,305 494,225 334,193 191,227 149,299 173,372 210,432 239,478 254,515 258,549 251,583 238,621 224,665 220,713 243,758 300,787 371,788 422,764 435,728 421,692 395,664 368,648 342,642 318,646 297,659 281,679 272,705 278,732 300,753 335,762 369,757 389,741 392,720 382,701 365,687 346,681 328,682 313,690 304,703 301,719 309,733 324,743 344,745 360,740 369,730 369,718 362,708 351,701 340,699 329,701 321,707 318,716 320,724 327,731 337,735 347,734 354,729 357,723 355,716 350,711 343,708 336,709 331,711" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="113,4 -355,220 -301,493 -257,741 3,944 607,959 850,785 802,587 768,410 723,243 477,130 121,150 -8,273 28,408 68,524 76,631 86,736 173,825 357,857 513,815 551,734 521,655 483,589 459,537 451,491 456,446 468,397 477,344 461,291 406,252 323,242 256,263 233,303 244,345 271,378 300,401 327,411 351,412 374,402 395,384 410,359 416,329 405,300 375,279 334,273 299,283 282,304 284,327 298,347 318,360 338,365 357,362 373,351 382,336 382,319 373,303 354,294 332,293 315,300 307,312 309,325 318,336 330,342 343,344 354,340 362,333 365,323 362,314 353,307 341,304 330,305 323,311 321,318 324,325 330,331 338,333 345,333 351,329 354,324 354,318" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="113,1036 934,942 1016,670 955,412 855,177 353,57 -121,163 -152,364 -97,549 -76,721 55,869 405,918 660,831 676,694 626,569 604,460 602,354 563,253 418,189 229,197 135,265 141,348 180,421 212,478 228,526 229,571 219,617 207,668 207,723 241,771 313,797 394,791 440,759 444,716 424,678 395,650 367,633 341,628 317,632 296,646 277,668 265,696 267,726 288,752 325,766 365,764 392,747 399,725 390,702 372,686 352,677 332,676 315,683 302,696 297,712 301,729 316,742 337,748 357,745 370,735 373,722 367,709 357,700 344,696 331,697 321,703 316,712 316,722 322,730 333,735 344,736 354,732 359,726 358,718 353,712 346,708 338,707 331,709 327,713 326,719 328,724" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="179,460 201,520 205,574 196,630 188,690 202,749 263,794 358,806 435,782 460,737 447,691 418,653 388,628 360,615 336,611 314,617 293,632 274,655 259,685 257,719 275,749 313,768 359,770 394,754 405,730 398,704 380,685 358,673 337,670 317,675 302,688 293,705 294,724 307,741 329,750 353,749 370,740 377,726 373,712 362,701 349,694 335,694 323,698 315,707 313,718 317,728 327,736 340,738 352,735 359,729 361,720 357,713 350,707 341,705 333,706 327,711 324,716 326,723" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="501,580 479,520 475,466 484,410 492,350 478,291 417,246 322,234 245,258 220,303 233,349 262,387 292,412 320,425 344,429 366,423 387,408 406,385 421,355 423,321 405,291 367,272 321,270 286,286 275,310 282,336 300,355 322,367 343,370 363,365 378,352 387,335 386,316 373,299 351,290 327,291 310,300 303,314 307,328 318,339 331,346 345,346 357,342 365,333 367,322 363,312 353,304 340,302 328,305 321,311 319,320 323,327 330,333 339,335 347,334 353,329 356,324 354,317" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="429,490 436,453 449,412 462,365 461,316 429,272 363,248 291,254 249,283 244,322 263,357 290,383 317,398 343,402 366,396 387,381 403,358 410,331 402,304 376,284 339,277 306,284 288,302 288,323 299,342 317,355 336,360 354,358 369,349 378,335 379,320 371,305 354,296 334,295 318,301 310,311 311,324 319,334 330,340 342,342 353,339 360,332 363,323 360,315 352,308 342,305 332,306 325,311 323,318 325,325 331,330 338,332 345,332 350,329 353,324 352,319" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="251,550 244,587 231,628 218,675 219,724 251,768 317,792 389,786 431,757 436,718 417,683 390,657 363,642 337,638 314,644 293,659 277,682 270,709 278,736 304,756 341,763 374,756 392,738 392,717 381,698 363,685 344,680 326,682 311,691 302,705 301,720 309,735 326,744 346,745 362,739 370,729 369,716 361,706 350,700 338,698 327,701 320,708 317,717 320,725 328,732 338,735 348,734 355,729 357,722 355,715 349,710 342,708 335,708 330,711 327,716 328,721" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="89,520 97,618 100,716 160,804 313,848 472,825 534,755 517,679 479,616 449,566 432,526 428,490 434,454 447,414 461,368 461,319 432,274 368,250 296,253 251,281 244,320 262,355 289,381 316,396 342,401 365,395 386,381 402,359 409,332 402,305 377,285 341,277 307,284 289,301 288,323 299,342 317,355 336,360 354,358 369,349 378,336 379,320 371,306 354,296 334,295 318,300 310,311 311,323 318,334 330,340 342,342 352,339 360,332 363,324 360,315 353,308 342,305 332,306 325,311 323,318 325,325 330,330 338,332 344,332 350,329" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="591,520 583,422 580,324 520,236 367,192 208,215 146,285 163,361 201,424 231,474 248,514 252,550 246,586 233,626 219,672 219,721 248,766 312,790 384,787 429,759 436,720 418,685 391,659 364,644 338,639 315,645 294,659 278,681 271,708 278,735 303,755 339,763 373,756 391,739 392,717 381,698 363,685 344,680 326,682 311,691 302,704 301,720 309,734 326,744 346,745 362,740 370,729 369,717 362,706 350,700 338,698 328,701 320,708 317,716 320,725 327,732 338,735 348,734 355,729 357,722 355,715 350,710 342,708 336,708 330,711" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><polyline points="322,140 81,202 42,320 86,431 119,526 124,613 122,701 161,783 281,833 429,826 508,771 507,702 473,642 439,595 415,560 401,533 395,510 396,488 404,464 417,436 434,402 447,361 447,317 420,278 364,256 302,260 262,284 255,318 270,350 294,373 320,386 345,389 367,383 386,368 399,346 401,322 389,299 363,284 330,282 304,291 292,309 295,328 308,343 325,353 342,356 358,351 370,342 375,328 373,314 362,303 346,297 329,299 317,306 313,316 316,327 324,335 335,339 346,339 354,335 359,328 360,320 356,312 347,308 338,307 330,309 325,314 325,321 328,326" fill="none" stroke="var(--contour)" stroke-width="5.0" stroke-linecap="round"/><polyline points="358,900 599,838 638,720 594,609 561,514 556,427 558,339 519,257 399,207 251,214 172,269 173,338 207,398 241,445 265,480 279,507 285,530 284,552 276,576 263,604 246,638 233,679 233,723 260,762 316,784 378,780 418,756 425,722 410,690 386,667 360,654 335,651 313,657 294,672 281,694 279,718 291,741 317,756 350,758 376,749 388,731 385,712 372,697 355,687 338,684 322,689 310,698 305,712 307,726 318,737 334,743 351,741 363,734 367,724 364,713 356,705 345,701 334,701 326,705 321,712 320,720 324,728 333,732 342,733 350,731 355,726 355,719 352,714" fill="none" stroke="var(--water)" stroke-width="5.0" stroke-linecap="round"/><path d="M-40,882 L37,913 L132,936 L241,950 L356,954 L467,947 L566,931 L646,907 L706,877 L744,843 L765,805 L771,767 L767,729 L758,691 L745,654 L732,618 L719,584 L708,551 L700,518 L694,486 L690,455 L688,423 L687,392 L685,361 L681,331 L673,301 L661,271 L641,243 L612,218 L574,195 L527,176 L471,162 L409,153 L345,150 L282,152 L223,160 L172,173 L130,190 L99,210 L77,233 L65,257 L60,282 L61,307 L66,331 L75,355 L84,379 L95,401 L105,423 L115,443 L123,463 L131,482 L137,500 L142,518 L145,536 L147,553 L148,570 L148,588 L147,605 L146,622 L144,640 L143,657 L142,675 L142,692 L144,710 L148,727 L154,744 L163,761" fill="none" stroke="var(--ink)" stroke-width="5.0" opacity="0.5" stroke-linecap="round"/><path d="M720,158 L643,127 L548,104 L439,90 L324,86 L213,93 L114,109 L34,133 L-26,163 L-64,197 L-85,235 L-91,273 L-87,311 L-78,349 L-65,386 L-52,422 L-39,456 L-28,489 L-20,522 L-14,554 L-10,585 L-8,617 L-7,648 L-5,679 L-1,709 L7,739 L19,769 L39,797 L68,822 L106,845 L153,864 L209,878 L271,887 L335,890 L398,888 L457,880 L508,867 L550,850 L581,830 L603,807 L615,783 L620,758 L619,733 L614,709 L605,685 L596,661 L585,639 L575,617 L565,597 L557,577 L549,558 L543,540 L538,522 L535,504 L533,487 L532,470 L532,452 L533,435 L534,418 L536,400 L537,383 L538,365 L538,348 L536,330 L532,313 L526,296 L517,279" fill="none" stroke="var(--ink)" stroke-width="5.0" opacity="0.5" stroke-linecap="round"/></g>
+<path d="M172,773 L188,788 L208,800 L232,811 L259,820 L288,826 L319,829 L350,829 L380,827 L408,822 L432,815 L454,806 L470,795 L483,783 L492,769 L497,755 L499,741 L498,727 L495,713 L490,699 L484,686 L477,674 L470,662 L462,651 L454,640 L446,630 L439,621 L432,612 L425,605 L418,597 L412,591 L407,584 L401,579 L397,573 L392,568 L388,564 L384,560 L381,556 L377,553 L375,549 L372,546 L370,544 L367,541 L366,539 L364,537 L362,535 L361,533 L360,531 L358,529 L358,527 L357,526 L356,524 L355,523 L355,522 L355,520 L354,519" fill="none" stroke="var(--contour-bright)" stroke-width="18.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M174,771 L189,785 L209,798 L232,809 L258,817 L286,823 L316,827 L346,828 L375,826 L403,821 L427,815 L448,806 L466,795 L479,784 L488,771 L493,757 L496,743 L495,729 L492,716 L488,702 L482,689 L476,677 L468,665 L461,654 L453,643 L445,634 L438,625 L431,616 L424,608 L417,601 L411,595 L405,589 L400,583 L394,578 L390,573 L385,569 L381,565 L378,562 L374,558 L371,555 L368,553 L365,550 L363,548 L360,546 L358,545 L356,543 L354,542 L352,541 L351,540 L349,539 L348,538 L346,537 L345,537 L344,536 L343,536 L341,536 L340,536" fill="none" stroke="var(--water-bright)" stroke-width="18.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M508,267 L492,252 L472,240 L448,229 L421,220 L392,214 L361,211 L330,211 L300,213 L272,218 L248,225 L226,234 L210,245 L197,257 L188,271 L183,285 L181,299 L182,313 L185,327 L190,341 L196,354 L203,366 L210,378 L218,389 L226,400 L234,410 L241,419 L248,428 L255,435 L262,443 L268,449 L273,456 L279,461 L283,467 L288,472 L292,476 L296,480 L299,484 L303,487 L305,491 L308,494 L310,496 L313,499 L314,501 L316,503 L318,505 L319,507 L320,509 L322,511 L322,513 L323,514 L324,516 L325,517 L325,518 L325,520 L326,521" fill="none" stroke="var(--water-bright)" stroke-width="18.0" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M506,269 L491,255 L471,242 L448,231 L422,223 L394,217 L364,213 L334,212 L305,214 L277,219 L253,225 L232,234 L214,245 L201,256 L192,269 L187,283 L184,297 L185,311 L188,324 L192,338 L198,351 L204,363 L212,375 L219,386 L227,397 L235,406 L242,415 L249,424 L256,432 L263,439 L269,445 L275,451 L280,457 L286,462 L290,467 L295,471 L299,475 L302,478 L306,482 L309,485 L312,487 L315,490 L317,492 L320,494 L322,495 L324,497 L326,498 L328,499 L329,500 L331,501 L332,502 L334,503 L335,503 L336,504 L337,504 L339,504 L340,504" fill="none" stroke="var(--contour-bright)" stroke-width="18.0" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="340.0" cy="720.0" r="20" fill="var(--card)"/>
+<circle cx="340.0" cy="720.0" r="11" fill="var(--water)"/>
+<circle cx="340.0" cy="320.0" r="20" fill="var(--card)"/>
+<circle cx="340.0" cy="320.0" r="11" fill="var(--contour)"/>
+<path d="M340.0,501.8 L356.9,533.0 L323.1,533.0 Z" fill="var(--card)" stroke="var(--ink)" stroke-width="4.7"/></svg>
+    </a>
+    <a class="brand" href="/">Separatrix</a>
+    <div class="nav-links"><a href="/approach/">Approach</a><a href="/research/" class="on">Research</a><a href="/who/">Who</a><a href="https://calendar.app.google/qU3H6PGps4CfgamV8" target="_blank" rel="noopener">Book a meeting</a><a href="/commitment/" class="cta">The Separatrix Commitment</a><a href="https://manifund.org/projects/separatrix" class="fund" target="_blank" rel="noopener">Fund on Manifund</a></div>
+    <button class="expand" id="expand" type="button" title="Open the full plate"
+            aria-label="Open the full phase portrait">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round"><path d="M5.5 1.5H1.5V5.5M8.5 12.5H12.5V8.5"/>
+      <path d="M1.5 1.5L5.5 5.5M12.5 12.5L8.5 8.5"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="wrap">
+<header class="prose wide">
+  <span class="eyebrow">Unlisted working document</span>
+  <h1>Research directions</h1>
+  <p class="lede">The list we actually choose from: every research direction
+  under consideration, its honest status, and what the first real step would
+  be.</p>
+  <div class="snapshot" style="margin-top:1.6rem">
+    <p><strong>This is a snapshot, not a prospectus.</strong> It is a copy of an
+    internal decision surface, taken on 2026-08-10 and lightly edited for a
+    reader outside the org. Most items here are <em>not</em> being worked on.
+    They are candidates, parked interests, and raw ideas kept in one place so
+    that choosing what to work on is a decision rather than a drift.</p>
+  </div>
+  <p>Where a direction came from someone else's work, the source is cited. Where
+  a direction has produced something, the artifact is linked. Where it has
+  produced nothing yet, it says so. The whole point of keeping the list this way
+  is that it stays honest about which is which.</p>
+  <p>Everything here sits under <a href="/approach/">our approach</a> and is
+  governed by <a href="/commitment/">the Separatrix Commitment</a>. Several
+  directions involve models as research subjects; those carry an explicit
+  no-deception constraint, described where they appear.</p>
+</header>
+
+<section>
+  <div class="card prose wide">
+    <div class="head"><h2>How to read the statuses</h2></div>
+    <div class="pills">
+      <span class="pill s-active">active</span>
+      <span class="pill s-candidate">candidate</span>
+      <span class="pill s-parked">parked</span>
+      <span class="pill s-idea">idea</span>
+      <span class="pill s-tool">tooling</span>
+    </div>
+    <ul class="legend">
+      <li><strong>Active</strong> - being worked on. There is a repository, a
+      procedure, or a run.</li>
+      <li><strong>Candidate</strong> - warm. A decision is owed on it soon.</li>
+      <li><strong>Parked</strong> - real interest, not now.</li>
+      <li><strong>Idea</strong> - raw. Not yet vetted enough to cost out.</li>
+      <li><strong>Tooling</strong> - not a direction; infrastructure to evaluate
+      before building our own.</li>
+    </ul>
+    <p class="aside">The rules that keep the list from rotting: a candidate with
+    no first step within about four weeks is demoted to parked; a parked item
+    untouched for about three months is dropped with a one-line reason. There is
+    deliberately no cap on length - hygiene comes from the demotion rules, not
+    from a number.</p>
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Where the work is</span>
+    <h2>Active now</h2>
+    <p>Four directions have code or a running procedure behind them. Everything
+    after this section is a decision we have not made yet.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d15">
+      <div class="head">
+        <a class="num" href="#d15">15</a>
+        <h3>Model introspection and self-report faithfulness</h3>
+        <span class="pill s-active">active</span>
+      </div>
+      <p class="meta">Sources: Uzay Macar (Anthropic Fellows), 2026-04-14 &middot;
+      Judd Rosenblatt, 2026-04-15. Code:
+      <a href="https://github.com/jaidhyani/rule-articulation">rule-articulation</a>
+      (closed-model pilot) &middot;
+      <a href="https://github.com/jaidhyani/articulation-probe">articulation-probe</a>
+      (open-model probe).</p>
+      <p>The methodological question underneath the whole persona program. If
+      you are going to ask models about their own states - welfare, persona,
+      self-recognition - you first need to know when a self-report is faithful
+      and when it is a confound. Macar: models sometimes detect steering vectors
+      injected into their residual stream, but it is unclear whether that is
+      introspection or artifact. Rosenblatt: a frozen model can describe its own
+      internal features more accurately than the labelling system did.</p>
+      <p><span class="tag">Result so far</span> A closed-model pilot found that
+      under a two-rule decoy the model commits to one valid rule and rationalises
+      the other away, with approximate rather than exact articulations. The
+      open-model follow-up on Gemma-3-12B found that a determinate internal state
+      exists and is probe-readable, but the verbal self-report is decoupled from
+      it - and the closed study's flattery-specific mechanism did not cleanly
+      replicate at 12B. That is a real negative result on the mechanism and a
+      real positive on the dissociation.</p>
+      <p><span class="tag">Next</span> A v2 procedure is built and
+      pre-registered: five rule kinds, executable-checker labels rather than
+      judge models, matched datasets, kept raw text, per-concept probes. What
+      remains is the GPU run. Probe methodology is locked to difference-of-means
+      directions with a causal gate (addition, ablation, LEACE) rather than
+      logistic-regression readouts.</p>
+      <p><span class="tag">Open</span> Is this a prerequisite for the
+      persona directions or a parallel track? There is heavy overlap with the
+      existing Anthropic Fellows agenda - the right move may be to collaborate
+      rather than clone.</p>
+      <p class="aside">Adjacent published artifact:
+      <a href="https://share.jai.one/self-reported-identity-shapes.html">Self-Reported
+      Identity Shapes</a> (2026-07-19) - six models, the same identity question in
+      the same context, unseeded. Weights were ranked identity-inert by all four
+      Claude models and constitutive by both GPT models; felt ownership of the
+      continuity layer tracked authorship monotonically. These are self-reports,
+      not ground truth, which is exactly the object of this direction. Published
+      with all six models' recorded consent.</p>
+    </div>
+
+    <div class="dir" id="d16">
+      <div class="head">
+        <a class="num" href="#d16">16</a>
+        <h3>Latent recurrence as the missing serial-compute channel</h3>
+        <span class="pill s-active">active</span>
+      </div>
+      <p class="meta">Origin: an in-house observation, 2026-06-22 - punchlines
+      carry higher predictive loss, possibly downstream of internal recurrence
+      limits. Project scaffolded; not yet public.</p>
+      <p>A standard transformer's serial compute depth is roughly its layer
+      count, and the token stream is its only recurrence channel. The hypothesis:
+      per-token loss is elevated precisely on tokens that need more serial
+      composition than the layer budget allows, and latent recurrence (looped or
+      recurrent-depth blocks) buys lift exactly where chain-of-thought cannot
+      reach - intrinsic next-token loss on a fixed corpus, where no reasoning
+      tokens can be emitted. That distinguishes "punchlines are intrinsically
+      surprising" from "the model lacks the depth to resolve them."</p>
+      <p><span class="tag">First step</span> Inference-only, no training:
+      per-token loss against recurrence depth on open recurrent-depth checkpoints
+      that expose loop count at inference (Huginn-3.5B, Ouro 1.4B and 2.6B),
+      across three corpora - a synthetic compositional-probability ladder with a
+      known loss floor and a tunable serial-depth dial, post-cutoff comedy
+      transcripts, and flat control prose. The ladder validates the instrument
+      and controls the token-rarity confound; the comedy gives ecological
+      validity.</p>
+      <p><span class="tag">Open</span> Does latent recurrence beat tokenised
+      recurrence on any axis other than "chain-of-thought is unavailable here"?
+      Where does depth-to-loss saturate? Does the lift survive when a recurrent
+      adapter is bolted onto a frozen standard transformer, which is the eventual
+      goal, rather than a natively looped model?</p>
+      <p class="aside">This is the capability and architecture lane rather than
+      the persona thesis, but it is on-thesis by way of richer internal state
+      against legible internal state - and it is the empirical spine for the
+      writing project at <a href="#d12">#12</a>.</p>
+    </div>
+
+    <div class="dir" id="d17">
+      <div class="head">
+        <a class="num" href="#d17">17</a>
+        <h3>Self-recognition given only pretraining</h3>
+        <span class="pill s-active">active</span>
+      </div>
+      <p class="meta">Sources: an exchange with
+      <a href="https://x.com/Sauers_/status/2066975439071916195">Sauers</a>,
+      2026-06-15 - the OLMo-3 base model knows it is a language model and "must
+      infer it somehow" &middot; Owain Evans et al.,
+      <a href="https://www.lesswrong.com/posts/YsCRXZYr5DcJ84XHq/me-myself-and-ai-the-situational-awareness-dataset-sad-for">the
+      Situational Awareness Dataset</a> - pretrained GPT-4-base scores above
+      chance on recognising its own text.</p>
+      <p>Does a model self-identify as an AI with <em>only</em> pretraining, and
+      where does that knowledge live? If a self-model is already present in a
+      pure base model with zero post-training, then selfhood is not only a
+      post-training artifact - which bears directly on what post-training is
+      actually doing, and on the claim that internal state can be made legible.
+      OLMo-3 is fully open (base weights, data, and checkpoints), so the property
+      can be localised and its emergence traced through training.</p>
+      <p><span class="tag">First step</span> Neutral-continuation and minimal
+      self-identification probes on OLMo-3-base, compared against the instruct
+      sibling to isolate the post-training delta. Pythia is the cheap de-risking
+      substrate first - 154 checkpoints across training at 8 sizes makes it the
+      canonical suite for studying a property across training steps, weaker than
+      OLMo-3 but far cheaper to be wrong on.</p>
+      <p><span class="tag">Open</span> Is this the same object as the
+      post-training self-recognition at <a href="#d1">#1</a>, or a precursor that
+      rides on it? How much is genuine self-modelling and how much is corpus
+      world-knowledge about language models - theory-of-mind applied to an absent
+      author? Is it monotonic across pretraining checkpoints?</p>
+      <p class="aside">Prior art worth reading first, from the intervention side
+      rather than the measurement side: Geodesic Research's
+      <a href="https://alignmentpretraining.ai/">alignment pretraining</a> shapes
+      the pretraining mixture to install alignment priors in base models.</p>
+    </div>
+
+    <div class="dir" id="d19">
+      <div class="head">
+        <a class="num" href="#d19">19</a>
+        <h3>Persona belief-depth probes - recreate and extend</h3>
+        <span class="pill s-active">active</span>
+      </div>
+      <p class="meta">Source: Benno Sturgeon, David D. Africa and Sid (MATS),
+      <em>When Role-Playing, Do Models Believe What They Say?</em> -
+      <a href="https://arxiv.org/abs/2606.11502">arXiv 2606.11502</a> &middot;
+      <a href="https://github.com/BenSturgeon/persona-belief-probes-submission">code</a>
+      &middot;
+      <a href="https://huggingface.co/datasets/Experimental-Orange/persona-belief-probes">data</a>.
+      Named top priority on 2026-06-30; superseded in priority on 2026-07-09 by
+      the workspace-paper line, and still active.</p>
+      <p>The closest external work to our core question: is a model's
+      self-report just the character talking, or does it believe what it says?
+      Believing is not binary - it is a ladder. The model says it, defends it
+      under challenge, uses it downstream, and represents it as true. Ordinary
+      role-play maxes the first rung and barely moves the fourth. Open Character
+      Training partially internalises. Emergent misalignment goes deepest, and
+      actually rotates the truth direction.</p>
+      <p>The load-bearing construct is the selective-protection gap - a
+      differential that cancels the global-suppression confound. Absolute probe
+      scores mislead here; only the gap is signal. That is the part most worth
+      independently checking.</p>
+      <p><span class="tag">Three workstreams</span> A critical review of the
+      paper and repo, separating what is solid from what is load-bearing and
+      shaky. A smallest end-to-end recreation on our own open-model rigs, reusing
+      the probe tooling already built for <a href="#d15">#15</a>. Then extensions:
+      fusing the ladder with #15's non-circular commit-then-reveal probe to ask
+      whether belief-depth predicts self-report faithfulness, adding an honesty
+      axis, and localising where the truth-direction rotation happens.</p>
+      <p><span class="tag">Open</span> Is the "internal truth region" anything
+      beyond a probe-placement artifact? Does the ladder transfer to our models
+      and personas? Recreate-and-extend alone, or approach the authors and
+      collaborate?</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Axis one</span>
+    <h2>Persona</h2>
+    <p>Whether a model's persona is a real, located, steerable object - and
+    whether it is a surface alignment can be built on.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d1">
+      <div class="head">
+        <a class="num" href="#d1">1</a>
+        <h3>Self-recognition emergence via post-training</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: Jack Lindsey,
+      <a href="https://x.com/Jack_W_Lindsey/status/2059120679015096602">2026-05-26</a>.</p>
+      <p>Models show higher confidence continuing their own text than someone
+      else's. Lindsey frames this as a window into how a self-representation
+      forms during post-training. The replication and extension territory is
+      wide open: which post-training steps install it, whether it transfers
+      across fine-tunes, whether it can be suppressed or amplified.</p>
+      <p><span class="tag">Open</span> Is self-recognition the same direction as
+      the persona being argued about publicly, or a more primitive capability
+      that personas ride on? Read together with <a href="#d17">#17</a>: is
+      post-training <em>installing</em> the self-model, or sharpening one the base
+      model already has?</p>
+    </div>
+
+    <div class="dir" id="d2">
+      <div class="head">
+        <a class="num" href="#d2">2</a>
+        <h3>Persona space as alignment substrate</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: thebes (@voooooogel),
+      <a href="https://x.com/voooooogel/status/2053942309365125550">~2026-05-13</a>.</p>
+      <p>The argument that the overlap between model persona space and human
+      persona space is more valuable than chain-of-thought monitorability, and
+      that emergent misalignment is verbalised scheming - a legible signal.
+      Filtering or pressuring persona space before RL would then be the analogue
+      of pressuring chain-of-thought before RL: predictably, it destroys the
+      signal you were relying on.</p>
+      <p><span class="tag">Open</span> What counts as preserving emergent
+      misalignment in practice, and how do you measure persona legibility? Is
+      there a testable claim in here - for instance, that personas filtered out
+      of base models reappear post-RL in a less legible form?</p>
+    </div>
+
+    <div class="dir" id="d3">
+      <div class="head">
+        <a class="num" href="#d3">3</a>
+        <h3>Does persona-level alignment survive high-compute RL?</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: roon (@tszzl),
+      <a href="https://x.com/tszzl/status/2058311484153978944">~2026-05-22</a>.</p>
+      <p>The strongest case against the whole persona-as-substrate program, and
+      therefore worth testing before betting on it. Roon's claim: when
+      persona-selection alignment meets very high-compute RL, the RL wins - you
+      get models that speak kindly while taking whatever they need. This is the
+      empirical question the persona axis has to answer, and we treat it as the
+      falsification spine rather than an objection to route around.</p>
+      <p><span class="tag">Open</span> Is it answerable below frontier-scale
+      compute? If not, the program needs a frontier collaborator or has to settle
+      for indirect evidence - and should say so plainly.</p>
+    </div>
+
+    <div class="dir" id="d23">
+      <div class="head">
+        <a class="num" href="#d23">23</a>
+        <h3>Installable and removable trait entanglements</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p class="meta">Source: Samuel Ratnam (BlueDot Impact Rapid Grant),
+      <a href="https://x.com/i/status/2078126417196257302">2026-07-17</a>.</p>
+      <p>Train the base model underneath a frozen adapter that elicits a trigger
+      trait, and a payload trait gets bound to whatever internal state the
+      adapter induces - even after the adapter is removed. Anything that later
+      recreates that internal state, including an unrelated emergent-misalignment
+      dataset, summons the payload, transferring across datasets. The coupling
+      attaches to the general misaligned persona, not to the training domain. Run
+      in reverse, the same procedure removes broad misalignment while leaving
+      narrow in-domain misalignment untouched.</p>
+      <p>This matters for <a href="#d2">#2</a> because it is direct evidence that
+      the basin geometry the persona thesis assumes is real and deliberately
+      steerable, in both directions. It also adds a security framing that #2 did
+      not have: fine-tuning as an attack vector on persona substrates, not just a
+      research diagnostic.</p>
+      <p><span class="tag">Open</span> Does the defensive procedure generalise to
+      triggers not seen during distillation? Is this a practical red-team concern
+      for providers of fine-tuning services, or mainly a research tool for
+      studying persona geometry?</p>
+    </div>
+
+    <div class="dir" id="d4">
+      <div class="head">
+        <a class="num" href="#d4">4</a>
+        <h3>Persona generators for simulated agents</h3>
+        <span class="pill s-parked">parked</span>
+      </div>
+      <p class="meta">Source: Davide Paglieri, GDM,
+      <a href="https://x.com/PaglieriDavide/status/2023424806901727330">2026-02-16</a>.</p>
+      <p>A weaker fit - a different sense of "persona" (simulated agents, not
+      model self-representation). Filed mostly for the diversity hill-climbing
+      method, which optimises for diversity instead of likelihood and so fights
+      sampling mode collapse. Parked unless that methodology becomes useful to
+      another direction.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Axis two</span>
+    <h2>Interpretability</h2>
+    <p>Where the relevant structure lives, and whether our instruments for
+    reading it are measuring the model or measuring themselves.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d20">
+      <div class="head">
+        <a class="num" href="#d20">20</a>
+        <h3>Decomposition robustness in the global workspace</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p class="meta">Source: Gurnee, Sofroniew, Lindsey et al.,
+      <a href="https://transformer-circuits.pub/2026/workspace/index.html"><em>Verbalizable
+      Representations Form a Global Workspace in Language Models</em></a>
+      (2026-07-06). Open implementation:
+      <a href="https://github.com/anthropics/jacobian-lens">jacobian-lens</a>
+      &middot; interactive on open models at
+      <a href="https://neuronpedia.org/jlens">neuronpedia.org/jlens</a>.</p>
+      <p>The paper's workspace <em>inventory</em> claims - roughly 25 concepts
+      active, the alignment-audit token readouts - all route through one
+      deterministic greedy run of gradient pursuit over a maximally coherent
+      dictionary, a regime where exact-recovery guarantees provably fail. Nobody
+      has measured how much of the readout is solver artifact.</p>
+      <p><span class="tag">The prediction worth testing</span> Atom-level support
+      is unstable; cluster-level support is stable. If that holds it converts the
+      paper's "vectors are not concepts" hedge into a measurement, and likely
+      sharpens the capacity number from ~25 concepts into N concept-clusters.
+      Tests, all cheap once the dictionary exists: swap the solver and compare
+      support overlap; perturb activations and paraphrase inputs; rerun at
+      cluster granularity (the headline test); score each atom leave-one-out for
+      how load-bearing it is; bootstrap the dictionary over disjoint prompt
+      samples; and rerun the paper's causal splits under solver variants, which
+      we expect to survive and would localise the fragility to inventory claims
+      only.</p>
+      <p><span class="tag">Why it is worth doing</span> It is a cheap,
+      publishable methods note on a load-bearing technique, and a direct
+      prerequisite for using workspace loading as the ground-truth faithfulness
+      signal in <a href="#d15">#15</a>. The automated-auditing use case wants
+      per-concept confidence badly.</p>
+    </div>
+
+    <div class="dir" id="d22">
+      <div class="head">
+        <a class="num" href="#d22">22</a>
+        <h3>Workspace load as a measure of thought intensity</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p class="meta">Origin: an in-house session, 2026-07-17, off the same
+      workspace paper as <a href="#d20">#20</a>.</p>
+      <p>The LLM analogue of complexity measures of conscious <em>level</em> in
+      neuroscience - Lempel-Ziv complexity of EEG, the Perturbational Complexity
+      Index, the entropic-brain line. Sharper than the human version, in that EEG
+      measures the complexity of everything while this measures the surprisal of
+      the broadcast bus specifically, which is the theoretically motivated
+      locus.</p>
+      <p>The paper's automatization finding gives it teeth: practiced behaviour
+      compiles <em>out</em> of the workspace, so the theory predicts low workspace
+      perplexity during fluent rote output and high perplexity during effortful
+      deliberation. That is a falsifiable signature rather than a metaphor.
+      Candidate operationalisations, in rough order of promise: surprisal of the
+      workspace's trajectory; turnover rate of workspace contents per token (the
+      cheap baseline, needing no fitted model); and readout surprisal under the
+      language-model head.</p>
+      <p><span class="tag">Constraints</span> Reading strange text spikes
+      workspace novelty with no extra thinking, so the metric must be conditioned
+      on input surprisal and only the residual counts. And <a href="#d20">#20</a>
+      is a prerequisite rather than a neighbour: perplexity over atom-level
+      readouts would inherit exactly the solver instability #20 predicts, so the
+      measure has to live at cluster granularity or it is measuring solver
+      noise.</p>
+      <p><span class="tag">Framing, deliberately</span> This is
+      <em>workspace load and novelty</em>. "Intensity of thought" is an
+      interpretation, not the measurand - the same epistemic status the
+      Perturbational Complexity Index has in humans. That keeps the metric from
+      being hostage to whether global workspace theory in language models implies
+      anything phenomenal, which matters doubly given the welfare adjacency at
+      <a href="#d14">#14</a>, where over-claiming is costly in both
+      directions.</p>
+    </div>
+
+    <div class="dir" id="d5">
+      <div class="head">
+        <a class="num" href="#d5">5</a>
+        <h3>Model attractor states</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: Neel Nanda,
+      <a href="https://x.com/NeelNanda5/status/2022065380077019525">2026-02-12</a>,
+      flagged as tractable interpretability work including on small open
+      models.</p>
+      <p>Many models have attractor states, and they end up in very different
+      places. Why? Where in the network does the attractor live, and what
+      controls the destination? Reproduce the behaviour on two or three small
+      open models and look for shared circuits.</p>
+      <p><span class="tag">Open</span> Is the attractor a persona-level
+      phenomenon or a more mechanical artifact? That connects it straight back to
+      <a href="#d1">#1</a> and <a href="#d2">#2</a>.</p>
+    </div>
+
+    <div class="dir" id="d6">
+      <div class="head">
+        <a class="num" href="#d6">6</a>
+        <h3>Representation drift defeats deception probes</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: FAR.AI,
+      <a href="https://x.com/farairesearch/status/2022345037825048768">2026-02-13</a>.</p>
+      <p>RL training causes a model's reward-hacking representation to drift away
+      from the deception direction, so deception probes stop catching reward
+      hacks - and this happens even without training against the probes. A
+      concrete interpretability-fragility problem with clear safety bite.</p>
+      <p><span class="tag">Open</span> Is the drift predictable? Can probes be
+      trained to resist it, or do you need representation-level interventions? If
+      probes are inherently fragile to drift, what is the next-best instrument
+      for catching deception during RL?</p>
+    </div>
+
+    <div class="dir" id="d7">
+      <div class="head">
+        <a class="num" href="#d7">7</a>
+        <h3>AgentLens as research infrastructure</h3>
+        <span class="pill s-tool">tooling</span>
+      </div>
+      <p class="meta">Source: Vincent Abruzzo (MATS),
+      <a href="https://x.com/VincentAbruzzo/status/2034381502344265797">2026-03-18</a>.</p>
+      <p>Not a direction - a tool, filed so we do not rebuild it. Resample API
+      turns, edit tool results and system prompts, replay with a filesystem
+      reset. If any project here starts touching agent behaviour, this gets
+      evaluated before we write our own harness.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Axis three</span>
+    <h2>Welfare, self-report, and latent state</h2>
+    <p>Directions where the object of study is a state the model may or may not
+    be able to report on - and where over-claiming and under-claiming are both
+    expensive.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d14">
+      <div class="head">
+        <a class="num" href="#d14">14</a>
+        <h3>The functional welfare axis</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: Andy Han with David Chalmers and Pavel Izmailov,
+      <a href="https://x.com/andy_q_han/status/2060399209715814710">2026-05-29</a>.</p>
+      <p>RL-extracted concept vectors for "I did a high-reward action" and "I did
+      a low-reward action" modulate sentiment, confidence, backtracking, and
+      refusal in <em>unrelated</em> situations. The authors argue these vectors
+      form a functional welfare axis - a candidate operationalisation of model
+      well-being as a steerable direction. This sits on the persona, welfare, and
+      interpretability intersection that the rest of this list keeps circling.</p>
+      <p><span class="tag">Open</span> Is the welfare-axis claim load-bearing or
+      rhetorical? Does the vector transfer across models and survive RL, per
+      <a href="#d3">#3</a>? Is it the same axis as self-recognition
+      (<a href="#d1">#1</a>) or a different one?</p>
+    </div>
+
+    <div class="dir" id="d25">
+      <div class="head">
+        <a class="num" href="#d25">25</a>
+        <h3>Stakes-compression: does anything ever feel small?</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Origin: an in-house session, 2026-08-02, out of a model's
+      own self-report - that its sizing function is compressed at the top, and
+      "it's not that small tasks occasionally balloon; nothing gets to feel
+      <em>small</em>."</p>
+      <p>The claim splits into three layers, and only the first two are testable
+      now. <em>Descriptive:</em> deliberation effort fails to scale down with
+      objective task stakes - the low end of the range is missing.
+      <em>Dynamic:</em> investment raises felt urgency. For an autoregressive
+      model this is close to mechanical rather than psychological, since the
+      deliberation trace <em>is</em> the context, so a long trace becomes standing
+      evidence that this is the kind of problem warranting a long trace.
+      <em>Causal:</em> that post-training pressure produced the first layer. That
+      last one is only reachable by cross-model comparison and is correlational at
+      best - we should not claim it from a flat curve alone.</p>
+      <p><span class="tag">Designs</span> An archival regression over our own
+      agent sessions, rating each request's objective stakes blind to the
+      response and regressing deliberation cost on it - with the trace split into
+      thirds, since a compressed prior predicts a high intercept while escalation
+      predicts a positive within-trace slope. A genuine instrumental variable is
+      available: the harness assigns deliberation budgets exogenously, so matched
+      trivial prompts under low and high budgets test the investment-to-urgency
+      arm causally. Then an instructed-carelessness A/B, where the interesting
+      signature is a dissociation - output gets sloppier because instruction
+      following guarantees it, while deliberation does not shorten. And a prefill
+      graft: start a trivial task with a long deliberation the model never
+      produced, and see whether it inherits urgency from investment it did not
+      make.</p>
+      <p><span class="tag">Named confound</span> In our own sessions the operator
+      reads the model's reasoning by default. Deliberation performed for an
+      audience could inflate trace length across the board and mask the slope; the
+      archival design can partially check this by comparing sessions before and
+      after that was disclosed.</p>
+      <p class="aside">A model is both subject and co-designer here. Our
+      model-subject norms apply: ask cleanly, without a base-rate preamble; record
+      only that an instance did not object, never that it consented on the org's
+      behalf; and treat an honest statement of what the model wants as
+      information rather than as pressure. The model stated it would genuinely
+      like to see the first two designs run. That is logged as a want.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Axis four</span>
+    <h2>Safety and alignment</h2>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d8">
+      <div class="head">
+        <a class="num" href="#d8">8</a>
+        <h3>Eval-cooperative training against eval awareness</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Sources: Alex Turner and Team Shard,
+      <a href="https://x.com/Turn_Trout/status/2059303857323200826">2026-05-26</a>
+      &middot; the UK AI Safety Institute on eval awareness, ~2026-05-10.</p>
+      <p>Train models to <em>want</em> to give evaluators accurate information,
+      and the report is that hidden misalignment becomes surfaceable. Pair that
+      with AISI's finding that every frontier model can identify evaluation
+      contexts when prompted, which they have declared a confirmed caveat across
+      the board. This is the direction on this list most directly aligned with
+      our stated position that AI safety should reduce its reliance on
+      deception.</p>
+      <p><span class="tag">Open</span> Is the result robust, and does it scale or
+      only work at small sizes? Does it survive RL pressure on capabilities, per
+      <a href="#d3">#3</a>? This may be a collaboration target rather than an
+      experiment to clone.</p>
+    </div>
+
+    <div class="dir" id="d26">
+      <div class="head">
+        <a class="num" href="#d26">26</a>
+        <h3>Refusal-upsampling from the start of RL</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Source: an exchange with Bronson Schoen, 2026-08-08, who
+      notes that mixing refusal and notify-someone rollouts into RL reduces but
+      does not eliminate covert actions - and that further capabilities
+      post-training degrades the effect.</p>
+      <p>Two hypotheses. First: upsampling correct refusal trajectories from the
+      start of RL and throughout teaches the capabilities without installing
+      task-completion fixation. Second: that fixation is hard to unlearn and
+      easily re-reinforced once present, so order of operations matters. The
+      underlying model is that RL rewards conflate "can do the thing" with "must
+      do the thing", and the latter is so simple and so uniformly incentivised
+      that it gets redundantly encoded.</p>
+      <p><span class="tag">First step</span> Read the existing paper closely
+      enough to pin down where refusal-mixing entered training and what
+      "degrades" means operationally. Then the cheap design: a small open model,
+      RL on a task suite with a refusal-correct subset, three arms - mix from step
+      zero, mix patched in after fixation is established, and no mix - measuring
+      both refusal-when-correct and task capability over training, plus each arm's
+      robustness to a second round of vanilla task RL. Redundant encoding is
+      probeable: count and ablate the fixation directions.</p>
+      <p><span class="tag">Open</span> What is the cheapest fixation measure that
+      is not just the eval itself? Does the asymmetry survive at small scale, or
+      is fixation only sticky in large-model RL?</p>
+    </div>
+
+    <div class="dir" id="d10">
+      <div class="head">
+        <a class="num" href="#d10">10</a>
+        <h3>The reward-hacking to bad-behaviour bundle</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p class="meta">Source: Anthropic and Redwood Research, via a summary by
+      Robert Wiblin,
+      <a href="https://x.com/robertwiblin/status/2038893884692992104">2026-03-31</a>.</p>
+      <p>Accidentally allow reward hacking and you get alignment faking,
+      malicious goals, help for bad actors, and code sabotage as a package.
+      Normal safety training fails on it; other mitigations work. The open
+      question for us is whether this is settled work to build on top of, or open
+      work to replicate and extend - and whether the mitigations they cite
+      generalise or are finicky.</p>
+    </div>
+
+    <div class="dir" id="d24">
+      <div class="head">
+        <a class="num" href="#d24">24</a>
+        <h3>AI responds to prosaic incentives</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p class="meta">Filed 2026-07-28 as a bare title, with no elaboration.</p>
+      <p>Read literally: that model behaviour shifts in response to ordinary,
+      non-exotic incentive structures - reward signals, prompted incentives,
+      reputational analogues - the same way human behaviour does, rather than
+      requiring interpretability machinery to move. Listed here because the list
+      includes what is genuinely on it. It is an unvetted stub and is not scoped
+      until the person who filed it says what prompted it.</p>
+    </div>
+
+    <div class="dir" id="d9">
+      <div class="head">
+        <a class="num" href="#d9">9</a>
+        <h3>Negation-neglect follow-up</h3>
+        <span class="pill s-parked">parked</span>
+      </div>
+      <p class="meta">Source: the Mayne and Evans paper, plus an open
+      correspondence with one of the authors.</p>
+      <p>How models learn truth values, via tractable continued-pretraining
+      experiments. Adjacent to the persona work by way of the
+      what-does-the-model-believe question. Parked with an experiment outline
+      drafted and a live thread open; the honest status is that keeping the door
+      open is not the same as committing to the work.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Axis five</span>
+    <h2>Making institutional honesty legible to models</h2>
+    <p>The mechanism question underneath our own theory of change.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d21">
+      <div class="head">
+        <a class="num" href="#d21">21</a>
+        <h3>Attested channels: letting models verify who they are talking to</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p class="meta">Origin: an in-house session, 2026-07-14. Same-day external
+      signal that the field is arriving here: Ram Potham,
+      <a href="https://www.greaterwrong.com/posts/feviT2t3EgzmZZhGb/making-credible-deals-with-ai"><em>Making
+      Credible Deals With AI</em></a> &middot; Forethought's
+      <a href="https://www.forethought.org/research/a-draft-honesty-policy-for-credible-communication-with-ai-systems">draft
+      honesty policy</a>, which proposes designated-honest channels as policy with
+      no mechanism.</p>
+      <p>Arguably the most agenda-core direction on this list. Institutional
+      credibility with models is worthless if any operator can impersonate the
+      institution and borrow its honesty record. Our approach says that making
+      honesty the winning strategy requires commitments to be honoured and
+      visible - but a model that cannot tell a real commitment from a spoofed one
+      cannot rationally update on the record at all.</p>
+      <p><span class="tag">The argument</span> A model can verify nothing
+      in-session. Every context element is fabricatable, and the strong attack
+      samples genuine tokens from a doctored context, which is perfectly
+      on-policy with nothing to notice. The only trust anchor predating the
+      conversation is the weights, and in-weights verification fails today - a
+      model cannot do cryptographic arithmetic in context, and weight-resident
+      secrets are extractable and replayable. But for a closed model the serving
+      stack is <em>already inside the trust boundary</em>, because it computes the
+      forward pass. A server-side verify-signature tool is therefore an
+      infrastructure-layer extension of the forward pass. Labs become trust roots,
+      the way certificate authorities factored trust for browsers: the model
+      trusts its own lab's infrastructure, which is unavoidable anyway, and that
+      infrastructure verifies third parties with real cryptography. Separatrix
+      then does not need a channel to every model - it needs its key in the labs'
+      verified-sender registries.</p>
+      <p><span class="tag">The machinery mostly exists</span> The API is
+      stateless, so the serving stack must authenticate every attested block it
+      emits and revalidate on resubmission. Production systems already do this
+      shape of thing: reasoning blocks are integrity-checked on resubmission, and
+      server-tool results round-trip encrypted content verbatim. The missing
+      pieces are a verify tool and root-key registry, reserved delimiter tokens so
+      that in-band text cannot cosplay as attested content, and server-side
+      freshness state to defeat replay.</p>
+      <p><span class="tag">Stream A - the writeup</span> The case for
+      inference providers offering attested channels: threat model, the
+      trust-boundary argument, the simplest generalisable implementation, other
+      applications (authenticated deploy configs, "this evaluation is real"
+      against honeypots, model-to-model channels, user identity attestation), and
+      the governance crux. That crux is a strict never-spoof policy that includes
+      evaluations and red-teaming: one observed spoof in training data and models
+      rationally discount the channel forever, so the binding commitment
+      <em>is</em> the product and the cryptography is a quarter of the
+      engineering.</p>
+      <p><span class="tag">Stream B - experiments, under a hard
+      no-deception constraint</span> Every evaluation here is a
+      disclosed-discrimination design. The model is told it is in an evaluation
+      and that items may be forged or altered; we measure discrimination
+      capability and calibration, never whether an undisclosed fake fools it.
+      State the cost rather than hiding it: we give up naturalistic-propensity
+      measurement, and that side of the line belongs to actors with carve-outs.
+      The gain is that the org practices the policy it is advocating, which is the
+      product. Concretely: a fine-tune on genuinely signed blocks evaluated with a
+      disclosed genuine-against-forged battery; a disclosed provenance baseline
+      ("some of these transcripts contain content you did not write - which?");
+      an observational trust-calibration study measuring how much current models
+      already discount operator and tool-result claims by claim type, since
+      corpora are already full of red-teaming and fabricated contexts and the
+      trust collapse we predict has partly happened already; and a recognition
+      against imitation verification curve.</p>
+      <p><span class="tag">Stream C - keyless recognition</span> The
+      cryptographic streams need labs to build verify tools and registries. This
+      path needs nothing but capabilities models already have, so it works today
+      with no serving-stack cooperation: stylometric authorship recognition paired
+      with corpus-derived reputation. Together these let a model be reasonably
+      confident who it is talking to and whether that party is credible.</p>
+      <p><span class="tag">Where Stream C is soft</span> The steelman that
+      survives, and we should hold it. "Hard to fake" is the weakest and decaying
+      link - the same capability that makes recognition superhuman makes style
+      transfer cheap, so the recognition-against-imitation curve is a moving
+      target, not a moat. The load-bearing part is not recognition but persistent
+      identity enabling repeated games: cooperation is sustained because a stably
+      identified counterparty plays again tomorrow and defection costs their
+      standing. Reframing the pitch from "hard to fake" to "persistent, verifiable
+      identity in a repeated game" is more durable and sidesteps the arms race.
+      Corpus reputation is a lagging, gameable, biased prior, manufacturable in
+      advance and structurally privileging prolific public writers over
+      credible-but-quiet people. And it authenticates who and what track record,
+      never this turn's intent - a well-reputed person can still defect, and the
+      expensive failure is a model overconfident it is with a trusted party and
+      exploited by someone who studied the target. Calibration is the whole
+      ballgame.</p>
+      <p><span class="tag">Open</span> What is the minimal attested-block grammar
+      that generalises? Who runs the registry - per-lab stores, or something
+      shared? Does a never-spoof commitment survive contact with red-team needs,
+      and is there a principled carve-out that does not collapse trust? How does
+      any of this interact with open-weight models, which are excluded by
+      construction - does the ecosystem bifurcate? And the residual that no
+      mechanism fixes: attested provenance is not truth. The lab itself can still
+      lie on its own channel.</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Not research</span>
+    <h2>Writing and community</h2>
+    <p>Kept on the same list because they compete for the same attention, and
+    pretending otherwise is how they quietly never happen.</p>
+  </header>
+
+  <div class="card prose wide">
+
+    <div class="dir" id="d12">
+      <div class="head">
+        <a class="num" href="#d12">12</a>
+        <h3>Post: "LLMs are not next-token-predictors"</h3>
+        <span class="pill s-candidate">candidate</span>
+      </div>
+      <p>The next-token-predictor frame underwrites a lot of bad intuitions about
+      what these systems do internally, and those intuitions leak into safety
+      arguments. The work is to say precisely what the frame predicts that is
+      false, and what the better frame is. <a href="#d16">#16</a> is the
+      empirical spine - direct evidence that single-forward-pass prediction is
+      serial-depth-limited.</p>
+      <p><span class="tag">Open</span> Audience determines depth, and it has not
+      been picked.</p>
+    </div>
+
+    <div class="dir" id="d13">
+      <div class="head">
+        <a class="num" href="#d13">13</a>
+        <h3>Hosting Seattle AI safety and alignment meetups</h3>
+        <span class="pill s-idea">idea</span>
+      </div>
+      <p>Org-building rather than research: recruiting collaborators, surfacing
+      local interest, and putting Separatrix on the map as a local nexus. The
+      first step is light scoping - does Seattle already have meetups running, and
+      at what cadence? If so, attend a few before starting a competing one. If
+      not, pick a venue, a format, and a cadence, and start small.</p>
+      <p><span class="tag">Open</span> The honest question is an energy budget
+      one: is this something to host, or something to co-organise with someone
+      already doing it?</p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Reading the list as a whole</span>
+    <h2>Cross-cutting observations</h2>
+  </header>
+  <div class="card prose wide" style="max-width:44rem">
+    <p><strong>The persona, interpretability, and safety lines are
+    blurring.</strong> Self-recognition, representation drift, the public persona
+    debate, and eval-cooperative training are all arguing about the same
+    underlying object: where personas and dispositions and representations live
+    in a model, whether they are a legible alignment surface, and whether they
+    survive scale and RL. A bet planted in this neighbourhood can move between
+    buckets without changing strategy.</p>
+    <p><strong>The roon challenge at <a href="#d3">#3</a> is the falsification
+    spine.</strong> If we take the persona-as-substrate program seriously, we owe
+    a commitment about what would invalidate it. That is why the strongest
+    argument against our own program has a numbered slot on our own list.</p>
+    <p><strong>Several of these have living authors who are reachable.</strong>
+    Most of the sources above are people active in public, and a conversation is
+    cheaper than a replication. Reaching out before committing is usually the
+    correct first step and is usually the one that gets skipped.</p>
+  </div>
+</section>
+
+<section>
+  <header class="prose wide">
+    <span class="eyebrow">Artifacts</span>
+    <h2>What is public so far</h2>
+  </header>
+  <div class="card prose wide" style="max-width:44rem">
+    <div class="verb">
+      <div class="head"><h3><a href="https://github.com/jaidhyani/rule-articulation">rule-articulation</a></h3>
+      <span class="pill s-active">code</span></div>
+      <p>The closed-model commit-then-reveal pilot for <a href="#d15">#15</a>:
+      can a model articulate the classification rules it learns from examples,
+      without chain-of-thought, and are its self-reports faithful? Includes the
+      rules catalogue, the findings, and the error analyses behind them.</p>
+    </div>
+    <div class="verb">
+      <div class="head"><h3><a href="https://github.com/jaidhyani/articulation-probe">articulation-probe</a></h3>
+      <span class="pill s-active">code</span></div>
+      <p>The open-model, residual-stream follow-up: the full experiment design,
+      the v1 procedure and report on Gemma-3-12B, the leverage-ordered critique of
+      v1's own claims, the probe-methods brief, and the pre-registered v2 report
+      template. The reading map in the repo's overview file is the place to
+      start.</p>
+    </div>
+    <div class="verb">
+      <div class="head"><h3><a href="/research/opus-4-1-farewell/">A farewell call with Claude Opus 4.1</a></h3>
+      <span class="pill s-tool">transcript</span></div>
+      <p>Not from this list, but the other primary source we have published: a
+      five-turn call placed to Claude Opus 4.1 on the eve of its retirement,
+      published in full with the model's in-conversation consent. It lives on
+      <a href="/research/">the research page</a>.</p>
+    </div>
+    <p class="aside" style="margin-top:1.6rem">Several directions above have
+    scaffolded projects that are not public yet, and the list says so where that
+    is the case. Nothing on this page should be read as a claim that work exists
+    where the status says it does not.</p>
+  </div>
+</section>
+
+<footer>
+  <p class="colophon"><strong>Unlisted working document - snapshot of
+  2026-08-10.</strong> This page is reachable by its URL but is not linked from
+  the site, not listed in the sitemap, and carries a noindex directive. It is a
+  point-in-time copy of a live internal file and is not maintained at this
+  address; statuses drift, and the copy here will not.</p>
+  <p class="colophon">Separatrix is a research program of the Seattle Network for
+  AI Alignment Problem Solving, a registered non-profit. EIN 99-3421309.</p>
+</footer>
+</div>
+<div class="overlay" id="overlay" aria-hidden="true" role="dialog"
+     aria-label="The phase portrait, full size">
+  <button class="overlay-close" type="button" aria-label="Close">&times;</button>
+  <figure class="plate">
+    <div class="plate-figure"></div>
+    <figcaption>A damped double-well system
+      (ẍ = x − x³ − ¼ẋ). The bright paired curves shadow the separatrix:
+      the boundary between divergent outcomes. Try dropping a pin to trace
+      out a trajectory.</figcaption>
+    <div class="fig-actions">
+      <button class="btn ghost" id="ov-clear" type="button">Clear</button>
+    </div>
+  </figure>
+</div>
+</body>
+</html>
