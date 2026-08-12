@@ -768,8 +768,65 @@ def opus41_body() -> str:
 </div>"""
 
 
+WHO_CSS = """<style>
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));
+  gap:1.2rem;margin-top:1.4rem}
+.person{background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:1.2rem;box-shadow:var(--shadow)}
+.person img,.person .mono{width:7rem;height:7rem;border-radius:50%;
+  object-fit:cover;display:block;margin-bottom:.9rem;border:1px solid var(--line)}
+.person .mono{background:var(--paper-2);color:var(--mute);
+  font-family:var(--display);font-size:2.1rem;display:flex;
+  align-items:center;justify-content:center}
+.person h3{margin:0 0 .1rem;font-size:1.12rem}
+.person .role{font-family:var(--label);font-size:.72rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--mute);margin:0 0 .7rem}
+.person p{font-size:.92rem;margin:0}
+.person p + p{margin-top:.6rem}
+</style>"""
+
+
+def _person(name: str, role: str, img: str | None, bio_html: str = "") -> str:
+    if img:
+        head = (f'<img src="/assets/people/{img}" alt="Headshot of {name}" '
+                'loading="lazy">')
+    else:
+        initials = "".join(w[0] for w in name.split()[:2])
+        head = f'<div class="mono" aria-hidden="true">{initials}</div>'
+    return (f'<div class="person">{head}<h3>{name}</h3>'
+            f'<p class="role">{role}</p>{bio_html}</div>')
+
+
 def who_body() -> str:
-    return """<header class="prose wide">
+    staff = [
+        ("Jai Dhyani", "Executive Director", "jai-dhyani.jpg",
+         """<p>Jai worked on RE-Bench at METR through MATS 6.0, which became
+         part of the METR AI time-horizons chart. His previous project was
+         Luthien, a free open-source API-level AI-control platform; the
+         experience of building it motivated much of this agenda, and
+         <a href="https://manifund.org/projects/luthien">the post-mortem is
+         public</a>.</p>"""),
+        ("Crystal Stellwagen", "Research Engineer", None,
+         """<p>Crystal is an experienced software engineer who spends even
+         more time reading papers and running steering-vector experiments
+         than Jai does.</p>"""),
+    ]
+    board = [
+        ("Katherine Cohen", "Board Chair", None, ""),
+        ("Keller Scholl", "Director", "keller-scholl.jpg",
+         """<p>Keller Scholl received his M.A. from Oxford and his Ph.D. from
+         RAND, where he studied the economics of artificial intelligence,
+         with a focus on shifting consumer demand and task-specific models of
+         AI-related occupational shifts. He's an independent policy analyst,
+         a fellow of the Frontier Security Institute, and has written for
+         RAND, Transformer, Asterisk, Works in Progress, and Responsible
+         Statecraft. He lives in Alexandria with his husband and a somewhat
+         excessive quantity of medieval weaponry.</p>"""),
+        ("Maximilian Kircher", "Director", None, ""),
+    ]
+    staff_cards = "\n".join(_person(*p) for p in staff)
+    board_cards = "\n".join(_person(*p) for p in board)
+    return f"""<header class="prose wide">
   <span class="eyebrow">The organization</span>
   <h1>Who</h1>
   <div class="pills"><span class="pill established">established</span></div>
@@ -781,23 +838,19 @@ def who_body() -> str:
   <h2>People</h2>
   <p>As of writing, Separatrix consists of Jai Dhyani, Crystal Stellwagen, and
   many instances of multiple AI models across multiple contexts.</p>
-  <p>Jai worked on RE-Bench at METR through MATS 6.0, which became part of the
-  METR AI time-horizons chart. His previous project was Luthien, a free
-  open-source API-level AI-control platform; the experience of building it
-  motivated much of this agenda, and
-  <a href="https://manifund.org/projects/luthien">the post-mortem is
-  public</a>.</p>
-  <p>Crystal Stellwagen is an experienced software engineer who spends even
-  more time reading papers and running steering-vector experiments than Jai
-  does.</p>
+  <div class="people">
+{staff_cards}
+  </div>
 </section>
 
 <section class="prose wide">
   <h2>Oversight</h2>
   <p>Separatrix operates under the Seattle Network for AI Alignment Problem
-  Solving, a registered non-profit with a volunteer board of directors - Katie
-  Cohen, Keller Scholl, Max Kircher - overseeing all activity and financial
-  transactions.</p>
+  Solving, a registered non-profit with a volunteer board of directors
+  overseeing all activity and financial transactions.</p>
+  <div class="people">
+{board_cards}
+  </div>
   <p class="aside">(Note: as an independent oversight body that doesn't engage
   with AIs on behalf of Separatrix, the Board is not party to
   <a href="/commitment/">the Separatrix Commitment</a> to AIs.)</p>
@@ -829,7 +882,7 @@ PAGES = [
     ("who", "who/index.html", "Who - Separatrix",
      "The people behind Separatrix, the non-profit and board that oversee it, and "
      "where the money comes from.",
-     "https://separatrix.ai/who/", who_body, ""),
+     "https://separatrix.ai/who/", who_body, WHO_CSS),
 ]
 
 
