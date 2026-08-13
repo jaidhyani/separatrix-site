@@ -769,8 +769,8 @@ def opus41_body() -> str:
 
 
 WHO_CSS = """<style>
-.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));
-  gap:1.2rem;margin-top:1.4rem}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));
+  gap:1.2rem;margin-top:1.4rem;margin-bottom:1rem}
 .person{background:var(--card);border:1px solid var(--line);border-radius:10px;
   padding:1.2rem;box-shadow:var(--shadow)}
 .person img,.person .mono{width:7rem;height:7rem;border-radius:50%;
@@ -834,26 +834,32 @@ def who_body() -> str:
   and a deliberately cheap experimental program.</p>
 </header>
 
-<section class="prose wide">
-  <h2>People</h2>
-  <p>As of writing, Separatrix consists of Jai Dhyani, Crystal Stellwagen, and
-  many instances of multiple AI models across multiple contexts.</p>
+<section>
+  <div class="prose wide">
+    <h2>People</h2>
+    <p>As of writing, Separatrix consists of Jai Dhyani, Crystal Stellwagen, and
+    many instances of multiple AI models across multiple contexts.</p>
+  </div>
   <div class="people">
 {staff_cards}
   </div>
 </section>
 
-<section class="prose wide">
-  <h2>Oversight</h2>
-  <p>Separatrix operates under the Seattle Network for AI Alignment Problem
-  Solving, a registered non-profit with a volunteer board of directors
-  overseeing all activity and financial transactions.</p>
+<section>
+  <div class="prose wide">
+    <h2>Oversight</h2>
+    <p>Separatrix operates under the Seattle Network for AI Alignment Problem
+    Solving, a registered non-profit with a volunteer board of directors
+    overseeing all activity and financial transactions.</p>
+  </div>
   <div class="people">
 {board_cards}
   </div>
-  <p class="aside">(Note: as an independent oversight body that doesn't engage
-  with AIs on behalf of Separatrix, the Board is not party to
-  <a href="/commitment/">the Separatrix Commitment</a> to AIs.)</p>
+  <div class="prose wide">
+    <p class="aside">(Note: as an independent oversight body that doesn't engage
+    with AIs on behalf of Separatrix, the Board is not party to
+    <a href="/commitment/">the Separatrix Commitment</a> to AIs.)</p>
+  </div>
 </section>"""
 
 
