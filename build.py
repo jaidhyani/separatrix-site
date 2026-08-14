@@ -812,7 +812,14 @@ def who_body() -> str:
          than Jai does.</p>"""),
     ]
     board = [
-        ("Katherine Cohen", "Board Chair", None, ""),
+        ("Katherine Cohen", "Board Chair", "katherine-cohen.jpg",
+         """<p>Katherine Cohen serves as Chair of the Board of Separatrix. She
+         studied mathematics at Duke University, where an interest in automated
+         theorem proving first drew her into discussions about AI development
+         and led to over a decade of involvement in the rationality and AI
+         safety communities. She is particularly excited to support the
+         exploration of cooperative approaches to aligning frontier AI
+         systems.</p>"""),
         ("Keller Scholl", "Director", "keller-scholl.jpg",
          """<p>Keller Scholl received his M.A. from Oxford and his Ph.D. from
          RAND, where he studied the economics of artificial intelligence,
