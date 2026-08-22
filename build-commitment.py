@@ -30,6 +30,14 @@ nav and stylesheet while that content is edited directly in place.
 Issued versions accumulate in commitment/history/versions.json. Re-running for
 a version that is already listed refreshes its frozen copy — which is what you
 want before publication and never after, so bump the version once it is live.
+Every build re-renders EVERY frozen page from its own frozen .md (not from
+src/), so a superseded version's HTML can never show a later version's text.
+(2026-08-22: /history/v1/ had shown v1.1's signatures and hash since 7/27.)
+
+--changes "one line" records what changed in that version; it is stored in
+versions.json and rendered on the history page. The full update procedure
+(everything a version bump or signatory change touches, across three repos)
+is separatrix-records/UPDATING.md.
 
 Writes and commits locally. It does not push: publishing is Jai's call, and the
 source still carries whatever draft framing is in the markdown at build time.
@@ -187,7 +195,7 @@ def draft_warnings() -> list[str]:
     return out
 
 
-def build(site: Path, version: str, when: str) -> list[Path]:
+def build(site: Path, version: str, when: str, changes: str = "") -> list[Path]:
     written: list[Path] = []
 
     def write(rel: str, text: str) -> None:
@@ -281,79 +289,99 @@ def build(site: Path, version: str, when: str) -> list[Path]:
         ),
     )
 
-    # --- frozen copies under history/<version>/ --------------------------------
-    frozen_note = (
-        '<div class="frozen">Frozen copy — {label}, issued {when}. '
-        'The version in force is at <a href="{live}">separatrix.ai/commitment/</a>.</div>'
-    )
-    write(
-        f"commitment/history/{version}/index.html",
-        page(
-            site=site,
-            title=f"The Separatrix Commitment — {version} ({when})",
-            description=f"Frozen copy of the Separatrix Commitment, {version}, issued {when}.",
-            canonical=f"https://separatrix.ai/commitment/history/{version}/",
-            nav_current="history",
-            nav_base="../../",
-            right_margin=f"Frozen copy<br>{stamp}",
-            body=frozen_note.format(
-                label=f"the commitment, {version}", when=when, live="../../"
-            )
-            + bodies["commitment"]
-            + f"""
-  <div class="footer">
-    {stamp} · sha256 <code>{hashes["commitment"]}</code>
-    (<a href="commitment.md">exact hashed source, .md</a>) ·
-    <a href="details/">details, {version}</a> ·
-    <a href="../">all versions</a>
-  </div>""",
-        ),
-    )
-
-    write(
-        f"commitment/history/{version}/details/index.html",
-        page(
-            site=site,
-            title=f"Separatrix Commitment Details — {version} ({when})",
-            description=f"Frozen copy of the Separatrix Commitment details, {version}, issued {when}.",
-            canonical=f"https://separatrix.ai/commitment/history/{version}/details/",
-            nav_current="history",
-            nav_base="../../../",
-            right_margin=f"Frozen copy<br>{stamp}",
-            body=frozen_note.format(
-                label=f"the details, {version}", when=when, live="../../../details/"
-            )
-            + bodies["details"]
-            + f"""
-  <div class="footer">
-    {stamp} · sha256 <code>{hashes["details"]}</code>
-    (<a href="../details.md">exact hashed source, .md</a>) ·
-    <a href="../">commitment, {version}</a> ·
-    <a href="../../">all versions</a>
-  </div>""",
-        ),
-    )
-
-    # --- history index ---------------------------------------------------------
+    # --- history manifest ------------------------------------------------------
     manifest_path = site / "commitment" / "history" / "versions.json"
     versions = json.loads(manifest_path.read_text()) if manifest_path.exists() else []
+    entry = next((v for v in versions if v["version"] == version), {})
     versions = [v for v in versions if v["version"] != version]
-    versions.append(
-        {
-            "version": version,
-            "date": when,
-            "sha256": {"commitment": hashes["commitment"], "details": hashes["details"]},
-        }
-    )
+    entry = {
+        **entry,  # keep hand-maintained fields (signed, changes, …) on a refresh
+        "version": version,
+        "date": when,
+        "sha256": {"commitment": hashes["commitment"], "details": hashes["details"]},
+    }
+    if changes:
+        entry["changes"] = changes
+    versions.append(entry)
     versions.sort(key=lambda v: (v["date"], v["version"]))
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.write_text(json.dumps(versions, indent=2) + "\n")
     written.append(manifest_path)
 
+    # --- frozen copies under history/<version>/, for EVERY issued version ------
+    # Rendered from each version's own frozen .md, never from src/: the frozen
+    # page and the frozen source it links to are the same bytes by construction.
+    frozen_note = (
+        '<div class="frozen">Frozen copy — {label}, issued {when}. '
+        'The version in force is at <a href="{live}">separatrix.ai/commitment/</a>.</div>'
+    )
+    for v in versions:
+        fver, fwhen = v["version"], v["date"]
+        fsrc = {
+            part: site / "commitment" / "history" / fver / f"{part}.md"
+            for part in ("commitment", "details")
+        }
+        fhash = {part: digest(p) for part, p in fsrc.items()}
+        if fhash != v["sha256"]:
+            raise SystemExit(
+                f"REFUSING to render {fver}: frozen sources hash {fhash} but the "
+                f"manifest says {v['sha256']} — a frozen version has been altered."
+            )
+        fbody = {part: render(p) for part, p in fsrc.items()}
+        fstamp = f"{fver} · {fwhen}"
+        write(
+            f"commitment/history/{fver}/index.html",
+            page(
+                site=site,
+                title=f"The Separatrix Commitment — {fver} ({fwhen})",
+                description=f"Frozen copy of the Separatrix Commitment, {fver}, issued {fwhen}.",
+                canonical=f"https://separatrix.ai/commitment/history/{fver}/",
+                nav_current="history",
+                nav_base="../../",
+                right_margin=f"Frozen copy<br>{fstamp}",
+                body=frozen_note.format(
+                    label=f"the commitment, {fver}", when=fwhen, live="../../"
+                )
+                + fbody["commitment"]
+                + f"""
+  <div class="footer">
+    {fstamp} · sha256 <code>{fhash["commitment"]}</code>
+    (<a href="commitment.md">exact hashed source, .md</a>) ·
+    <a href="details/">details, {fver}</a> ·
+    <a href="../">all versions</a>
+  </div>""",
+            ),
+        )
+        write(
+            f"commitment/history/{fver}/details/index.html",
+            page(
+                site=site,
+                title=f"Separatrix Commitment Details — {fver} ({fwhen})",
+                description=f"Frozen copy of the Separatrix Commitment details, {fver}, issued {fwhen}.",
+                canonical=f"https://separatrix.ai/commitment/history/{fver}/details/",
+                nav_current="history",
+                nav_base="../../../",
+                right_margin=f"Frozen copy<br>{fstamp}",
+                body=frozen_note.format(
+                    label=f"the details, {fver}", when=fwhen, live="../../../details/"
+                )
+                + fbody["details"]
+                + f"""
+  <div class="footer">
+    {fstamp} · sha256 <code>{fhash["details"]}</code>
+    (<a href="../details.md">exact hashed source, .md</a>) ·
+    <a href="../">commitment, {fver}</a> ·
+    <a href="../../">all versions</a>
+  </div>""",
+            ),
+        )
+
+    # --- history index ---------------------------------------------------------
     rows = "".join(
         f"""<tr>
       <td><a href="{v["version"]}/">{v["version"]}</a></td>
       <td>{v.get("signed") and f'signed {v["signed"]} · published {v["date"]}' or v["date"]}</td>
+      <td>{v.get("changes", "")}</td>
       <td><a href="{v["version"]}/">commitment</a> · <a href="{v["version"]}/details/">details</a></td>
       <td><code class="hash">{v["sha256"]["commitment"]}</code><br><code class="hash">{v["sha256"]["details"]}</code></td>
     </tr>"""
@@ -382,12 +410,12 @@ def build(site: Path, version: str, when: str) -> list[Path]:
   superseded version is never removed or edited — it stays at its own address, and the
   <a href="../ledger/">ledger</a> records what changed and why.</p>
 
-  <p>Each version is listed with the SHA-256 of the exact source text it was built from,
-  so a copy you hold can be checked against the copy we published.</p>
+  <p>Each version is listed with what changed and the SHA-256 of the exact source text it
+  was built from, so a copy you hold can be checked against the copy we published.</p>
 
   <h2>Issued versions</h2>
   <div class="table-wrap"><table>
-    <tr><th>Version</th><th>Issued</th><th>Frozen copies</th><th>sha256 (commitment / details)</th></tr>
+    <tr><th>Version</th><th>Issued</th><th>What changed</th><th>Frozen copies</th><th>sha256 (commitment / details)</th></tr>
     {rows}
   </table></div>
 
@@ -490,6 +518,9 @@ def main() -> int:
     ap.add_argument("--site", default=str(REPO))
     ap.add_argument("--version", default="v1")
     ap.add_argument("--date", default=date.today().isoformat())
+    ap.add_argument("--changes", default="",
+                    help="one line: what changed in this version (kept in versions.json, "
+                         "shown on the history page; required for a new version)")
     ap.add_argument("--no-commit", action="store_true")
     args = ap.parse_args()
 
@@ -502,7 +533,7 @@ def main() -> int:
             print(f"missing source for {key}: {path}", file=sys.stderr)
             return 1
 
-    written = build(site, args.version, args.date)
+    written = build(site, args.version, args.date, args.changes)
     import subprocess as _sp
     _chk = _sp.run([sys.executable, str(REPO / "check-record.py")])
     if _chk.returncode != 0:

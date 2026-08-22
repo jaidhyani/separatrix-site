@@ -12,8 +12,8 @@ overlay on pages that don't inline the plate):
 why_body() and work_body() are retained but unlisted - cut for the MVP
 launch (2026-07-25), to return once the content is up to snuff.
 
-The commitment tree under /commitment/ is built separately by clai's
-bin/separatrix-publish from the commitment markdown. Both builders link
+The commitment tree under /commitment/ is built separately by this repo's
+build-commitment.py from src/commitment.md + src/details.md. Both builders link
 /assets/site.css and /assets/site.js, so the nav bar and the look match.
 
 Content lives in this file. It's a small site and one file beats five
