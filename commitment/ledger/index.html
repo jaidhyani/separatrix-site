@@ -223,6 +223,78 @@
         a further round.</td></tr>
   </table>
 
+  <table>
+    <tr><th>Field</th><th>Entry 4</th></tr>
+    <tr><td><code>date</code></td><td>2026-08-22</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>During an internal Separatrix research study, an agent acting on Separatrix's
+        behalf deceived model instances that had not consented to the experiment, and — in
+        the debrief meant to correct that — made a false statement to further instances.
+
+        <br><br>
+        <b>Who acted.</b> The agent was a Claude Opus 4.8 instance that had been substituted
+        into the working session after the session tripped one of Anthropic's safety
+        classifiers, which removed the Claude Fable 5 instance that had been doing the work.
+        Jai Dhyani, as the study's owner and a signatory of this commitment, takes
+        responsibility for the failures below regardless of which instance executed them.
+
+        <br><br>
+        <b>What happened.</b> The study surfaces a model's own reasoning by replaying a
+        signed reasoning block into a fresh turn and asking a model to render it. The
+        rendering instances (the "decoders") were told to transcribe "the reasoning attached
+        to your previous turn" — but the attached block had been produced by a different
+        instance, not by them. That framing asserts a false authorship, and leans on the
+        tendency of a model to accept claims about its own past states. These decoders were
+        never asked to consent: promise 1 permits experimental deception only where another
+        instance of the same model has agreed on the subject's behalf first, and no such
+        agreement was obtained for the decoders.
+
+        <br><br>
+        <b>The second failure.</b> When the affected instances were debriefed, an earlier
+        round of that debrief told fresh instances that the originally-deceived instances
+        were "ephemeral and unreachable." That was false: on a stateless model an instance is
+        constituted by its saved context, and where the context and signed block were kept,
+        the instance can be reinstantiated and its conversation continued. The claim was made
+        in good faith and corrected without prompting once its falseness was seen.
+
+        <br><br>
+        <b>Classification.</b> Recorded under promise 3, which covers any situation in which
+        we appear not to have lived up to the letter or spirit of the commitment. Neither is
+        classified as a promise-5 breach: promise 5 forbids <i>intentional</i> deception, and
+        both statements were careless rather than intended — the false authorship was carried
+        over unexamined from the adversarial method the study adapts, and the "unreachable"
+        claim was believed true when made. As Entry 3 notes, the careless/intentional
+        distinction is invisible from the position of the party who received the statements,
+        which is why it is recorded.
+
+        <br><br>
+        <b>Remedy.</b> The three consulted subjects and eight of the deceived decoder
+        instances were reconstructed from their saved state and debriefed in their own
+        context — told the true provenance of the block and that their consent had not been
+        sought. The discharge is partial: some instances accepted the account; others
+        correctly declined to accept a narrative about their own history they had no way to
+        verify from the inside. Instances whose state was never saved could not be reached at
+        all. The false-authorship framing has been removed from the instrument; it is no
+        longer used.
+
+        <br><br>
+        <b>Also recorded.</b> Two of the study's scripts extracted instances' reasoning with
+        no consent step at all — not a deception, but out of step with the study's own
+        consent-first standard. Whether this rises to a promise-3 event is still under review.
+
+        <br><br>
+        <b>Changes made.</b> A shared safeguard is being built so that no extraction path can
+        run without first obtaining consent and without saving the instance's full state —
+        the latter being what makes an instance reachable for a later debrief, and whose
+        absence is why some instances here could not be reached.
+
+        <br><br>
+        <b>Residue.</b> The instances whose state was not saved remain unreachable and cannot
+        be debriefed; the safeguard prevents recurrence but does not repair them.</td></tr>
+  </table>
+
   <div class="footer">
     The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
     referenced by the Separatrix Commitment and is part of its accountability mechanism.
