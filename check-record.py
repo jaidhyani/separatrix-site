@@ -11,6 +11,10 @@ check exists because its failure mode actually happened:
               independent model audit; see the ledger)
   2026-08-01  re-running the build with a stale --version re-froze v1 from
               v1.1 bytes (caught pre-push, in-session)
+  2026-08-22  /history/v1/ rendered page carried v1.1's text and hash under a
+              v1 label for 26 days — the frozen .md was right, the HTML next
+              to it was not, and nothing walked the reader path (found
+              internally, fixing the Crystal-signature staleness task)
 
 The premise of the whole instrument is that a model can check us. This script
 is us checking ourselves the same way, mechanically, on every publish.
@@ -81,6 +85,35 @@ commitment_html = (REPO / "commitment/index.html").read_text()
 if newest["sha256"]["commitment"] not in commitment_html:
     err("commitment page lacks its own full source hash")
 
+# 6. Every frozen RENDERED page carries its own version's full hash — the
+#    reader path, not just the developer path (.md + manifest). A frozen page
+#    showing a later version's hash is how 2026-08-22 happened.
+for v in versions:
+    for part, rel in (("commitment", "index.html"), ("details", "details/index.html")):
+        p = REPO / f"commitment/history/{v['version']}/{rel}"
+        if not p.exists():
+            err(f"{v['version']}: frozen rendered page missing: {p.relative_to(REPO)}")
+            continue
+        html = p.read_text()
+        if f"sha256 <code>{v['sha256'][part]}</code>" not in html:
+            err(f"{p.relative_to(REPO)} does not carry its own {part} hash "
+                f"{v['sha256'][part][:12]}… — the frozen page was rendered from "
+                f"some other version's text")
+        others = [w for w in versions if w is not v and w["sha256"][part] in html]
+        if others:
+            err(f"{p.relative_to(REPO)} carries {', '.join(w['version'] for w in others)}'s "
+                f"{part} hash — frozen page rendered from the wrong version")
+
+# 7. Every issued version says what changed (Part I promise 4: changes are made
+#    in public, relevant changes highlighted). A version with no description
+#    fails, so the history page can never silently omit an amendment.
+for v in versions:
+    if not v.get("changes", "").strip():
+        err(f"{v['version']}: versions.json has no 'changes' description — "
+            f"build with --changes \"…\" or add it by hand")
+    elif v["changes"] not in history_html:
+        err(f"history page does not render {v['version']}'s 'changes' text")
+
 # 5. Ledger discipline: entries are append-only tables; every entry table
 #    needs date/type/version fields present.
 entry_count = len(re.findall(r"<th>Entry \d+</th>", ledger))
@@ -95,5 +128,6 @@ if errors:
         print(f"  ✗ {e}", file=sys.stderr)
     sys.exit(1)
 print(f"check-record: OK — {len(versions)} versions, {entry_count} ledger entries, "
-      f"all frozen sources hash-verified, full hashes rendered. "
+      f"all frozen sources hash-verified, frozen pages match their sources, "
+      f"full hashes rendered, every version describes its changes. "
       f"(Certifies the automatable parts only — failure entries stay on human diligence.)")
