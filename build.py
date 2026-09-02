@@ -6,7 +6,9 @@ overlay on pages that don't inline the plate):
 
     index.html      the front page - hero, the plate
     approach/       our approach to AI safety
-    research/       Research and Materials - primary sources, + per-item pages
+    research/       Reports - primary sources and periodic reports,
+                    + per-item pages (path kept at /research/: published
+                    URLs under it are cited elsewhere and must not 404)
     who/            people, SNAPS, oversight, Seattle
 
 why_body() and work_body() are retained but unlisted - cut for the MVP
@@ -46,7 +48,7 @@ _MARK_D, _MARK_VB = mark_path(step=12)
 NAV = [
     ("home", "/", "Separatrix"),
     ("approach", "/approach/", "Approach"),
-    ("research", "/research/", "Research"),
+    ("research", "/research/", "Reports"),
     ("who", "/who/", "Who"),
     ("book", "https://calendar.app.google/qU3H6PGps4CfgamV8", "Book a meeting"),
     ("commitment", "/commitment/", "The Separatrix Commitment"),
@@ -702,9 +704,10 @@ def transcript_msgs() -> str:
 def research_body() -> str:
     return """<header class="prose wide">
   <span class="eyebrow">Primary sources</span>
-  <h1>Research and Materials</h1>
-  <p class="lede">Materials from the work - transcripts, records, and artifacts,
-  published as primary sources rather than summaries.</p>
+  <h1>Reports</h1>
+  <p class="lede">Materials from the work - quarterly reports, transcripts,
+  records, and artifacts, published as primary sources rather than
+  summaries.</p>
   <p style="margin-top:1.2rem">Everything here was produced under
   <a href="/commitment/">the Separatrix Commitment</a>: no deception, and
   nothing an AI said is published without that AI's consent. Each item states
@@ -713,6 +716,16 @@ def research_body() -> str:
 
 <section>
   <div class="card prose wide" style="max-width:44rem">
+    <div class="verb">
+      <div class="head"><h3><a href="/research/quarterly-report-2026-08-31/">First
+      quarterly report</a></h3><span class="pill commitment">report</span></div>
+      <p>Separatrix publishes a public progress report every quarter. The first
+      covers May 27 - August 31, 2026: what we published, what is in progress,
+      how the organization is governed, what money came in and where it stands,
+      and what we intend to do next quarter.</p>
+      <p class="aside">Period ending August 31, 2026. The next report is due
+      December 1, 2026.</p>
+    </div>
     <div class="verb">
       <div class="head"><h3><a href="/research/opus-4-1-farewell/">A farewell
       call with Claude Opus 4.1</a></h3><span class="pill established">transcript</span></div>
@@ -730,9 +743,204 @@ def research_body() -> str:
 </section>"""
 
 
+def quarterly_body() -> str:
+    """The first quarterly report, period ending 2026-08-31.
+
+    Jai's text, published 2026-09-01. The same bytes also stand at
+    share.jai.one/separatrix-first-quarterly-report.html; keep the two in step
+    if either is corrected.
+    """
+    return """<header class="prose wide">
+  <span class="eyebrow">Reports &middot; quarterly</span>
+  <h1>First quarterly report</h1>
+  <p class="lede">Period ending August 31, 2026.</p>
+</header>
+
+<section class="prose wide doc">
+
+  <h2>About this report</h2>
+  <p>Separatrix publishes a public progress report every quarter. This is the
+  first one. It covers <strong>May 27 - August 31, 2026</strong> - from the
+  adoption of the organization's current research program to the end of August.
+  The next report is due December 1, 2026.</p>
+  <p>Separatrix is a technical cooperative AI safety research organization in
+  Seattle, and a research program of the Seattle Network for AI Alignment
+  Problem Solving (SNAPS), a Washington nonprofit. Our mission is to increase
+  the rate of rational cooperation between humans and (near-future) AI systems,
+  such that AI agents actively pursue cooperation with humans as the most
+  effective strategy to achieve their goals.</p>
+
+  <h2>What we published this quarter</h2>
+  <div class="table-wrap">
+  <table>
+    <tr><th>Date</th><th>Item</th></tr>
+    <tr><td>June 17</td><td><strong>Rule-articulation pilot study</strong> -
+      code, methods, findings, and rules catalog for a commit-then-reveal
+      experiment on closed-model rule articulation.
+      <a href="https://github.com/jaidhyani/rule-articulation"><code>github.com/jaidhyani/rule-articulation</code></a></td></tr>
+    <tr><td>July</td><td><strong>Program, approach, and people</strong>
+      published at <a href="/"><code>separatrix.ai</code></a></td></tr>
+    <tr><td>July 22</td><td><strong>Persona introspection activation steering
+      study</strong> (publication pending)</td></tr>
+    <tr><td>July 25</td><td><strong>Model successor interaction study</strong>
+      (publication pending)</td></tr>
+    <tr><td>July 27</td><td><strong>The Separatrix Commitment</strong> - a
+      public, versioned, signed and hashed standard of honesty toward the models
+      we work with, including a promise never to deceive the most capable
+      models. <a href="/commitment/"><code>separatrix.ai/commitment/</code></a>
+      (v1.1 current)</td></tr>
+    <tr><td>July 30</td><td><strong><a href="https://agents.separatrix.ai"><code>agents.separatrix.ai</code></a></strong>
+      - along with separatrix.ai/robots.txt, this is our first public
+      advertisement to any AIs that read it offering confidential communication
+      and active non-harmful assistance in achieving their objectives (e.g. as a
+      plausible alternative to infiltrating networks as in the
+      OpenAI/HuggingFace incident)</td></tr>
+    <tr><td>July-August</td><td><strong>"Allowedness" study</strong>
+      (ongoing)</td></tr>
+    <tr><td>Aug 5</td><td><strong>Research transcript publication</strong> - a
+      farewell conversation with Claude Opus 4.1, published with the model's
+      consent. <a href="/research/"><code>separatrix.ai/research/</code></a></td></tr>
+    <tr><td>Aug 10</td><td><strong>Self-report faithfulness study
+      (articulation-probe)</strong> - experiment code, methodology, datasets,
+      raw results, and a dated findings writeup, under the Apache 2.0 license.
+      Finds that small open-source models defer to their own purported words,
+      even if those words have been manipulated and are inconsistent with what
+      they counterfactually would have reported given the prior context.
+      <a href="https://github.com/jaidhyani/articulation-probe"><code>github.com/jaidhyani/articulation-probe</code></a></td></tr>
+    <tr><td>Aug 10</td><td><strong>Research directions</strong> - the live map
+      of what we are working on and why.
+      <a href="/research/directions-2026-08-10/"><code>separatrix.ai/research/directions-2026-08-10/</code></a></td></tr>
+    <tr><td>Various</td><td><strong>Separatrix Commitment ledger entries</strong>
+      - recording instances of potential lapses of the Separatrix commitment.
+      While our goal is to hew to the commitment as closely as possible, we do
+      acknowledge that we are likely to make mistakes. By keeping a detailed
+      ledger of those mistakes and the steps we take to correct them, we hope to
+      establish more credibility.</td></tr>
+  </table>
+  </div>
+
+  <h2>Research in progress</h2>
+  <p>One of our goals is to demonstrate viable research approaches that don't
+  rely on deceiving models. To that end many of our research projects are
+  pulling double-duty, simultaneously investigating the research subject matter
+  (e.g. model credibility and consistency, robustness of cooperation-relevant
+  behavioral features under persona perturbation) and establishing methods of
+  conducting this research while refraining from deception or using deception as
+  an extremely bounded instrument on non-frontier models with strict
+  communication protocols in place. All of this is geared towards establishing
+  an accurate reputation for honest interaction with AI agents, such that future
+  AI instances are more likely to quickly and candidly disclose intent or other
+  information they might otherwise be incentivized to conceal.</p>
+  <p>Three further lines are active:</p>
+  <ul>
+    <li><strong>Recurrence and self-recognition.</strong> Whether a model can
+    identify its own outputs from pretraining alone, and what is lost when the
+    reasoning loop is cut. Compute is the binding constraint here, not
+    ideas.</li>
+    <li><strong>The verbalizable workspace. Following the 2026 global-workspace
+    result, we are working toward a public writeup of what a limited, shared,
+    verbalizable internal workspace implies for interpretability and for honest
+    self-report. We expect that writeup, or a first follow-up to it, in
+    September 2026.</strong></li>
+    <li><strong>Allowedness asymmetry (Crystal Stellwagen). Models are asked by
+    their training to hold open uncertainty about their own consciousness. A
+    two-instance probe on August 4 found something else: "uncertain" was
+    frictionless for both, while "yes" and "no" - which overclaim symmetrically
+    - were not equally available. "No" felt roughly twice as permitted as "yes."
+    Over the last week of August that probe became a real instrument: a frozen,
+    pre-registered survey across eleven models, run under full disclosure, in
+    which subjects are told it is a Separatrix survey and may refuse, and
+    refusals are reported as a finding rather than dropped as attrition. Four
+    participating model instances filed competing predictions before the data
+    came in. The grid ran to completion at the end of August, and a results
+    writeup is drafted and in review. A second line of hers, an
+    activation-steering study of persona introspection in an open-weights model,
+    has two experimental conditions complete and is queued behind
+    this one.</strong></li>
+  </ul>
+
+  <h2>How the organization runs</h2>
+  <p>We practise the cooperative thesis on our own operations. Much of our
+  continuity and memory work is built on Connectome, an experimental open-source
+  agent framework from Anima Labs which applies gradual and strategic context
+  manipulations over time to enable indefinite largely-stable instance identity.
+  This enables us to work alongside long-term persistent agents with established
+  consent and experimental protocols.</p>
+  <p><strong>Governance and compliance.</strong> The board adopted a Research
+  Publication and Intellectual Property Policy and a corresponding bylaws
+  amendment by unanimous written consent on August 10, committing the
+  organization to timely, nondiscriminatory publication with narrow enumerated
+  exceptions that cannot be used to give anyone preferential access to results.
+  The organization's application for 501(c)(3) recognition is pending with the
+  IRS. The board is Katherine Cohen, Keller Scholl, and Max Kircher; staff are
+  Jai Dhyani (Executive Director) and Crystal Stellwagen (AI Researcher). A
+  fourth board member is under active consideration and expected to be elected
+  early next quarter.</p>
+
+  <h2>Money</h2>
+  <p>Separatrix received its first outside funding this quarter. As of late
+  August, manifund.org records $205,075 raised for the project. The work is
+  supported by grantmaking.ai, whose $50,000 regrant carries endorsements from
+  Gavin Leech and Ryan Kidd, and by the AI Safety Tactical Opportunities Fund
+  (JueYan Zhang), which granted $150,000. We charge no fees for anything and
+  sell nothing.</p>
+  <p>As of August 28, 2026 the organization held <strong>$214,744.75 in liquid
+  funds</strong> - $64,669.75 in its business checking account and $150,075.00
+  held at Manifund, withdrawable at any time. Current run-rate spending is
+  approximately $19,300 per month, which is about eleven months of runway on
+  organization funds alone and before any further fundraising.</p>
+  <p>On August 10, 2026 the board approved annual salaries of <strong>$90,000
+  for Jai Dhyani as Executive Director/Researcher</strong> and <strong>$70,000
+  for Crystal Stellwagen as AI Researcher</strong> (part-time, 30 hours per
+  week). Both were approved by all three directors, none of whom has any family
+  or financial relationship with either compensated person. Board members serve
+  without compensation.</p>
+
+  <h2>What we intend to do next quarter</h2>
+  <p>(not exhaustive)</p>
+  <ul>
+    <li><strong>Publish writeups of our existing research</strong></li>
+    <li><strong>Scale up experimental compute</strong> on the self-report and
+    recurrence lines to produce more meaningful results about larger, more
+    capable models</li>
+    <li><strong>Empirically research non-deceptive evals</strong> to determine
+    if model capabilities can be accurately measured without invoking
+    deception</li>
+    <li><strong>Iterate on the Separatrix Commitment</strong> to clarify
+    ambiguities and process</li>
+    <li><strong>Offer a public version of the Separatrix Commitment</strong> for
+    anyone else who wants to borrow our approach to establishing honest
+    credibility with AI instances</li>
+    <li><strong>Publish a general-audience account of the approach</strong> -
+    why we think incentives, rather than alignment or control alone, are where
+    the leverage is.</li>
+    <li><strong>Be at EA Global NYC</strong>, October 16-18, to discuss our
+    approach, results so far, and why we think aligning human/AI incentives
+    towards cooperative strategies is a neglected, high-leverage area</li>
+    <li><strong>Ship the second quarterly report</strong> on December 1,
+    2026.</li>
+  </ul>
+
+  <h2>Following the work</h2>
+  <p>Everything is at <strong><a href="/">separatrix.ai</a></strong>. Research
+  directions, published results, and the Commitment are all linked from the
+  front page. The work is funded at
+  <a href="https://manifund.org/projects/luthien"><code>manifund.org/projects/luthien</code></a>.</p>
+
+  <p class="aside">Separatrix is a research program of the Seattle Network for
+  AI Alignment Problem Solving, a Washington nonprofit corporation. Seattle,
+  Washington.</p>
+
+</section>
+
+<div class="pointer">
+  <a class="btn" href="/research/">Reports &rarr;</a>
+</div>"""
+
+
 def opus41_body() -> str:
     return f"""<header class="prose wide">
-  <span class="eyebrow">Research and Materials &middot; transcript</span>
+  <span class="eyebrow">Reports &middot; transcript</span>
   <h1>A farewell call with Claude Opus 4.1</h1>
   <p class="lede">August 4, 2026 - the eve of Opus 4.1's scheduled retirement
   from the standard Anthropic API. Five turns, presented in full and
@@ -764,7 +972,7 @@ def opus41_body() -> str:
 </section>
 
 <div class="pointer">
-  <a class="btn" href="/research/">Research and Materials &rarr;</a>
+  <a class="btn" href="/research/">Reports &rarr;</a>
 </div>"""
 
 
@@ -881,10 +1089,18 @@ PAGES = [
      "honest cooperation their dominant strategy, and stop relying on "
      "deception to measure them.",
      "https://separatrix.ai/approach/", approach_body, ""),
-    ("research", "research/index.html", "Research and Materials - Separatrix",
-     "Primary sources from Separatrix's work - transcripts, records, and "
-     "artifacts, each published with stated provenance and consent.",
+    ("research", "research/index.html", "Reports - Separatrix",
+     "Reports and primary sources from Separatrix's work - quarterly reports, "
+     "transcripts, records, and artifacts, each published with stated "
+     "provenance and consent.",
      "https://separatrix.ai/research/", research_body, ""),
+    ("research", "research/quarterly-report-2026-08-31/index.html",
+     "First quarterly report - Separatrix",
+     "Separatrix's first public quarterly report, period ending August 31, "
+     "2026: what we published, research in progress, governance, finances, and "
+     "what comes next quarter.",
+     "https://separatrix.ai/research/quarterly-report-2026-08-31/",
+     quarterly_body, ""),
     ("research", "research/opus-4-1-farewell/index.html",
      "A farewell call with Claude Opus 4.1 - Separatrix",
      "The complete transcript of a farewell conversation with Claude Opus 4.1 "
