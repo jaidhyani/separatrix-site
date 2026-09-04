@@ -186,7 +186,10 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-DRAFT_MARKERS = ("RFC", "not yet signed", "circulating for comment", "2026-07-__")
+DRAFT_MARKERS = ("RFC", "not yet signed", "circulating for comment", "2026-07-__", "2026-09-__")
+# Hand-edited record files that carry the issue date by hand, scanned for the same markers
+# (an unset placeholder date in the ledger or manifest is as much a draft as one in src/).
+DRAFT_SCAN_EXTRA = ("commitment/history/versions.json", "commitment/ledger/index.html", "sitemap.xml")
 
 
 def draft_warnings() -> list[str]:
@@ -198,7 +201,11 @@ def draft_warnings() -> list[str]:
     reader this document is for.
     """
     out = []
-    for key, path in SRC.items():
+    targets = dict(SRC)
+    targets.update({rel: REPO / rel for rel in DRAFT_SCAN_EXTRA})
+    for key, path in targets.items():
+        if not path.exists():
+            continue
         text = path.read_text()
         hits = [m for m in DRAFT_MARKERS if m.lower() in text.lower()]
         if hits:

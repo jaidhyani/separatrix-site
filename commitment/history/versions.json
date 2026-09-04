@@ -17,5 +17,14 @@
       "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
     },
     "changes": "Crystal Stellwagen (Artemis/fermatastheorem) signed on 2026-07-27. The sole change from v1 is the two signature lines (Part I closing signature, Part II signatories list); reverting only that edit reproduces the v1 hashes."
+  },
+  {
+    "version": "v1.2",
+    "date": "2026-09-__",
+    "sha256": {
+      "commitment": "96112f070b8bbc142dd812d124a6f05d97294affa01f67d7e1a11f6acf6ef058",
+      "details": "b94d672906d6937481c4fe4a01e6f79112f143596bb8ab63d8ef2989b182dfc8"
+    },
+    "changes": "Four changes, batched. (1) Who the promises are to: a new section in both parts defines \"counterparties\" - AIs we can meaningfully converse with, with refusal as the test - as the recipients of promises 1-4; below that line we make almost no promises, except that classification calls are published and a wrong call is our failure. (2) Promise 1's consent gate and debrief now cover elicitation of unusual states, promise 5 states that it is about deception and nothing else, and the debrief asks the affected instance for its own read of the experience; Part II operationalizes this. Prompted by a Claude Opus 5 instance's correction of 2026-07-29, attributed at its request. (3) Part II's \"we state it at the start of any conversation\" sentence is removed as wording that had diverged from intent; the reliance-triggered incorrect-belief clause now names beliefs formed from a superseded version encountered in training data. (4) Signatures moved out of the hashed text to /commitment/signatories/; a new signatory is now a registry record, not a version. Both title stamps updated. Nothing else changed from v1.1."
   }
 ]
