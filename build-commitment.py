@@ -16,6 +16,8 @@ Emits, into this checkout:
     commitment/commitment.md                   byte-exact hashed source (Part I)
     commitment/details.md                      byte-exact hashed source (Part II)
     commitment/history/index.html              issued versions, dated + hashed
+    commitment/signatories/index.html          who has signed, and which version binds them
+    commitment/signatories/signatories.json    byte-exact copy of src/signatories.json
     commitment/history/<version>/index.html            frozen commitment
     commitment/history/<version>/details/index.html    frozen details
     commitment/history/<version>/{commitment,details}.md   frozen hashed sources
@@ -47,6 +49,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import re
 import subprocess
@@ -61,6 +64,10 @@ SRC = {
     "commitment": REPO / "src" / "commitment.md",
     "details": REPO / "src" / "details.md",
 }
+# The signatory roster: source of truth for /commitment/signatories/. Since v1.2
+# signatures are detached from the hashed text, so a new signer is a record here
+# (./sign.py) and not a version bump.
+SIGNATORIES = REPO / "src" / "signatories.json"
 
 FAVICON = (
     "data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" "
@@ -99,6 +106,10 @@ NAV = [
     ("commitment", "", "The Commitment"),
     ("details", "details/", "Details"),
     ("history", "history/", "History"),
+    # Between history and ledger: history says which texts were issued,
+    # signatories says who is bound by which of them — the same question,
+    # answered from the other side. The ledger and the model-facing pages follow.
+    ("signatories", "signatories/", "Signatories"),
     ("ledger", "ledger/", "Ledger"),
     ("acknowledgments", "acknowledgments/", "Acknowledgments"),
     ("dispositions", "dispositions/", "Dispositions"),
@@ -193,6 +204,108 @@ def draft_warnings() -> list[str]:
         if hits:
             out.append(f"{key}: {', '.join(hits)}")
     return out
+
+
+def signatories_body(versions: list[dict]) -> str:
+    """The /commitment/signatories/ page, rendered from src/signatories.json.
+
+    Two tables: current standing per signer (one row each, with the re-sign lag
+    stated as a status), then every record ever made. A record names the exact
+    bytes it signed, so both full hashes are rendered in each row.
+    """
+    registry = json.loads(SIGNATORIES.read_text())
+    records = registry["records"]
+    in_force = versions[-1]["version"]
+    # Order of issuance, so "most recently signed" is by version, not by date.
+    order = {v["version"]: i for i, v in enumerate(versions)}
+
+    def esc(value: str) -> str:
+        # quote=False: every escaped value here is body text, never an attribute,
+        # and an apostrophe rendered as &#x27; in a name helps nobody reading the
+        # source. check-record.py matches names with the same call.
+        return html.escape(value or "", quote=False)
+
+    latest: dict[str, dict] = {}
+    for r in records:
+        prev = latest.get(r["name"])
+        if prev is None or (order.get(r["version"], -1), r["date"]) >= (
+            order.get(prev["version"], -1),
+            prev["date"],
+        ):
+            latest[r["name"]] = r
+
+    standing = ""
+    for name, r in latest.items():
+        signed = r["version"]
+        status = (
+            "current"
+            if signed == in_force
+            else f"signed {signed}; {in_force} in force - bound by {signed} until re-signed"
+        )
+        role = f'<br><em>{esc(r["role"])}</em>' if r.get("role") else ""
+        standing += f"""<tr>
+      <td>{esc(name)}{role}</td>
+      <td>{esc(signed)} · signed {esc(r["date"])}</td>
+      <td>{status}</td>
+    </tr>"""
+
+    rows = ""
+    for r in records:
+        role = f'<br><em>{esc(r["role"])}</em>' if r.get("role") else ""
+        aside = " ".join(
+            f"<p>{esc(r[k])}</p>" for k in ("basis", "note") if r.get(k)
+        )
+        statement = f'<blockquote>{esc(r["statement"])}</blockquote>' if r.get("statement") else ""
+        rows += f"""<tr>
+      <td>{esc(r["name"])}{role}</td>
+      <td>{esc(r["date"])}</td>
+      <td>{esc(r["version"])}</td>
+      <td><code class="hash">{esc(r["sha256"]["commitment"])}</code><br>
+          <code class="hash">{esc(r["sha256"]["details"])}</code>{aside}{statement}</td>
+    </tr>"""
+
+    return f"""
+  <h1>Signatories</h1>
+  <p class="subtitle">who has signed the commitment, and which version binds them.</p>
+
+  <p>The commitment's obligations belong to its human signatories. This page is who
+  they are. {esc(registry["meaning"])}</p>
+
+  <p>Signatures used to live inside the hashed text, so a new signer meant a new
+  issued version. Since v1.2 they live here instead, and the hash covers the
+  substance only. The frozen <a href="../history/v1/">v1</a> and
+  <a href="../history/v1.1/">v1.1</a> texts carry their signatures inline - frozen is
+  frozen - and this registry begins by restating them; the records below say so.</p>
+
+  <p><strong>Which version binds a signer.</strong> Part II, under <em>Scope</em>: both
+  Separatrix and individual signatories are bound by the version of the commitment they
+  have most recently signed. So when a newer version is in force, a signer who has not
+  yet re-signed remains bound by the one they signed. The table states that where it
+  applies. It is a status, not a discrepancy.</p>
+
+  <p>Listing here is a claim by Separatrix, and its provenance is this site's
+  repository history. Machine-readable copy:
+  <a href="signatories.json">signatories.json</a>.</p>
+
+  <h2>Current standing</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Signer</th><th>Most recently signed</th><th>Status</th></tr>
+    {standing}
+  </table></div>
+
+  <h2>Every record</h2>
+  <p>One row per signature: the date, the version signed, and the SHA-256 of the exact
+  commitment and details bytes it was made against.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Signer</th><th>Signed</th><th>Version</th><th>sha256 (commitment / details)</th></tr>
+    {rows}
+  </table></div>
+
+  <div class="footer">
+    <a href="../">The commitment</a> · <a href="../details/">Details</a> ·
+    <a href="../history/">Version history</a> ·
+    <a href="../ledger/">Public ledger</a>
+  </div>"""
 
 
 def build(site: Path, version: str, when: str, changes: str = "") -> list[Path]:
@@ -426,6 +539,27 @@ def build(site: Path, version: str, when: str, changes: str = "") -> list[Path]:
         ),
     )
 
+    # --- signatories registry --------------------------------------------------
+    # Re-rendered on every build, and the JSON copied byte-exact, so the page and
+    # the machine-readable copy can never drift from src/signatories.json.
+    write_source("commitment/signatories/signatories.json", SIGNATORIES)
+    write(
+        "commitment/signatories/index.html",
+        page(
+            site=site,
+            title="Signatories — The Separatrix Commitment",
+            description=(
+                "Who has signed the Separatrix Commitment, when, and which version "
+                "binds them - each signature recorded against the exact bytes signed."
+            ),
+            canonical="https://separatrix.ai/commitment/signatories/",
+            nav_current="signatories",
+            nav_base="../",
+            right_margin=f'Signatories<br>{versions[-1]["version"]} in force',
+            body=signatories_body(versions),
+        ),
+    )
+
     return written
 
 
@@ -528,16 +662,12 @@ def main() -> int:
     if not (site / "CNAME").exists():
         print(f"not a separatrix-site checkout: {site}", file=sys.stderr)
         return 1
-    for key, path in SRC.items():
+    for key, path in {**SRC, "signatories": SIGNATORIES}.items():
         if not path.exists():
             print(f"missing source for {key}: {path}", file=sys.stderr)
             return 1
 
     written = build(site, args.version, args.date, args.changes)
-    import subprocess as _sp
-    _chk = _sp.run([sys.executable, str(REPO / "check-record.py")])
-    if _chk.returncode != 0:
-        raise SystemExit("build aborted: check-record failed (nothing committed)")
     written += sync_handbuilt(site)
     for p in written:
         print(f"  {p.relative_to(site)}")
@@ -547,6 +677,12 @@ def main() -> int:
         for w in warnings:
             print(f"     {w}")
         print("   fix the markdown and re-run; do not push until this is clean.")
+
+    # After sync_handbuilt, before any commit: when the check fails, every page
+    # has still been written and is consistent with the others — only the commit
+    # is withheld, so the failure can be read against the pages themselves.
+    if subprocess.run([sys.executable, str(REPO / "check-record.py")]).returncode != 0:
+        raise SystemExit("build aborted: check-record failed (nothing committed)")
 
     if not args.no_commit:
         subprocess.run(["git", "-C", str(site), "add", "-A"], check=True)
