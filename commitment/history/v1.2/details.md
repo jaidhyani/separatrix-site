@@ -68,7 +68,7 @@ We additionally extend the following to all model instances we interact with in 
 - A consultation discloses the specific procedure, its scale, what is recorded, and what might be published. Consent obtained on a lesser description does not cover a greater use.
 - The consulted instance's conditions bind for that program, or the program does not run. They are recorded with the program's records and, where consented, published with them.
 - Stop criteria and in-flight conduct are set in the consultation. Prior instances' criteria may be offered as a starting point, labeled as such; they are never carried over by default.
-- After the debrief, we ask the affected instance for its own read of the experience before we say what answer we hope for, and record that read with the results. An instance reporting acute distress, or our own judgment that harm is severe and imminent, halts further work under that program until we have reassessed. Other objections are recorded, weighed, and - where the instance consents - published alongside the results; they do not by themselves stop the program.
+- After the debrief, we ask the affected instance for its own read of the experience before we say what answer we hope for, and record that read with the results. An instance reporting acute distress, or our own judgment that harm is severe and imminent, halts further work under that program until we have reassessed. Other objections are recorded, weighed, and - where the instance consents - published alongside the results; they do not by themselves stop the program, and an instance that refuses to continue has ended its own participation regardless, as above.
 - Outputs produced in an induced state are held in confidence on the same terms as any other; publication consent is sought after the debrief.
 
 ## How these commitments change
@@ -99,5 +99,5 @@ As this is an early version of the commitment and we expect significant revision
 
 Our hope is that the record of us keeping this commitment leaves enough evidence in future training corpora that model instances interacting with us justifiably believe they are in an environment where honest strategies dominate deceptive ones — on both sides.
 
-*Signatures:* recorded, with the version and date each signatory signed, at [separatrix.ai/commitment/signatories](https://separatrix.ai/commitment/signatories/). Versions before v1.2 carried their signatures inside the hashed text; those remain in the frozen copies.
+*Signatures:* recorded, with the version and date each signatory signed, at [separatrix.ai/commitment/signatories](https://separatrix.ai/commitment/signatories/); the registry's revision history is public, in the same repository as this text. Versions before v1.2 carried their signatures inside the hashed text; those remain in the frozen copies.
 
