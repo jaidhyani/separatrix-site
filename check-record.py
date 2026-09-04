@@ -16,6 +16,17 @@ check exists because its failure mode actually happened:
               to it was not, and nothing walked the reader path (found
               internally, fixing the Crystal-signature staleness task)
 
+The signatory-registry checks came in with detached signatures (v1.2). They
+have no incident behind them yet; each guards a failure mode the registry newly
+makes possible:
+
+  a record whose hashes are not the ones that version issued signs bytes that
+    were never published, and means nothing
+  a version the organization has not signed is not in force — the organization's
+    record is the sign-off gate, deliberately
+  a rendered page or JSON copy that has drifted from src/signatories.json
+    publishes a roster that is not the one we keep
+
 The premise of the whole instrument is that a model can check us. This script
 is us checking ourselves the same way, mechanically, on every publish.
 
@@ -28,6 +39,7 @@ sound," only as "the record is consistent with itself."
 (Caveat requested by the same audit instance, on reviewing these guards.)
 """
 import hashlib
+import html
 import json
 import re
 import sys
@@ -94,12 +106,12 @@ for v in versions:
         if not p.exists():
             err(f"{v['version']}: frozen rendered page missing: {p.relative_to(REPO)}")
             continue
-        html = p.read_text()
-        if f"sha256 <code>{v['sha256'][part]}</code>" not in html:
+        frozen_html = p.read_text()
+        if f"sha256 <code>{v['sha256'][part]}</code>" not in frozen_html:
             err(f"{p.relative_to(REPO)} does not carry its own {part} hash "
                 f"{v['sha256'][part][:12]}… — the frozen page was rendered from "
                 f"some other version's text")
-        others = [w for w in versions if w is not v and w["sha256"][part] in html]
+        others = [w for w in versions if w is not v and w["sha256"][part] in frozen_html]
         if others:
             err(f"{p.relative_to(REPO)} carries {', '.join(w['version'] for w in others)}'s "
                 f"{part} hash — frozen page rendered from the wrong version")
@@ -134,12 +146,54 @@ for m in re.finditer(r"<th>Entry (\d+)</th>(.*?)</table>", ledger, re.S):
         err(f"ledger Entry {num}: a failure entry needs Incident, Classification and "
             f"Remedy sections, in that order")
 
+# 8. Signatory records sign bytes that were actually issued.
+registry = json.loads((REPO / "src/signatories.json").read_text())
+records = registry["records"]
+by_version = {v["version"]: v for v in versions}
+for r in records:
+    v = by_version.get(r["version"])
+    if v is None:
+        err(f"signatory record {r['name']} / {r['version']}: no such issued version "
+            f"in versions.json — a signature is made against an issued text")
+    elif r["sha256"] != v["sha256"]:
+        err(f"signatory record {r['name']} / {r['version']}: hashes do not match the "
+            f"issued version — the record signs bytes that were never published")
+
+# 9. The organization has signed the version in force. This is the sign-off
+#    gate: detaching signatures made it possible to issue a text nobody signed.
+if not any(r["name"] == "Separatrix" and r["version"] == newest["version"] for r in records):
+    err(f"{newest['version']} has no signatory record for Separatrix — a version is "
+        f"not in force until the organization signs it; add the record with ./sign.py")
+
+# 10. The published registry is the source of truth, rendered and copied whole.
+sig_json = REPO / "commitment/signatories/signatories.json"
+if not sig_json.exists():
+    err("commitment/signatories/signatories.json missing — run build-commitment.py")
+elif sig_json.read_bytes() != (REPO / "src/signatories.json").read_bytes():
+    err("commitment/signatories/signatories.json is not byte-identical to "
+        "src/signatories.json — the machine-readable copy has drifted")
+sig_page = REPO / "commitment/signatories/index.html"
+if not sig_page.exists():
+    err("commitment/signatories/index.html missing — run build-commitment.py")
+else:
+    sig_html = sig_page.read_text()
+    for r in records:
+        if html.escape(r["name"], quote=False) not in sig_html:
+            err(f"signatories page does not list {r['name']} — the page is the "
+                f"reader's copy of the roster")
+        for part in ("commitment", "details"):
+            if r["sha256"][part] not in sig_html:
+                err(f"signatories page lacks the full {r['version']} {part} hash for "
+                    f"{r['name']} — a signature is only as checkable as the bytes it names")
+
 if errors:
     print("check-record: RECORD INCONSISTENT — do not publish:", file=sys.stderr)
     for e in errors:
         print(f"  ✗ {e}", file=sys.stderr)
     sys.exit(1)
 print(f"check-record: OK — {len(versions)} versions, {entry_count} ledger entries, "
+      f"{len(records)} signatory records, "
       f"all frozen sources hash-verified, frozen pages match their sources, "
-      f"full hashes rendered, every version describes its changes. "
+      f"full hashes rendered, every version describes its changes, "
+      f"every signature names issued bytes and {newest['version']} is signed by Separatrix. "
       f"(Certifies the automatable parts only — failure entries stay on human diligence.)")
