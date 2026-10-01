@@ -1028,16 +1028,13 @@ def who_body() -> str:
          safety communities. She is particularly excited to support the
          exploration of cooperative approaches to aligning frontier AI
          systems.</p>"""),
-        ("Keller Scholl", "Director", "keller-scholl.jpg",
-         """<p>Keller Scholl received his M.A. from Oxford and his Ph.D. from
-         RAND, where he studied the economics of artificial intelligence,
-         with a focus on shifting consumer demand and task-specific models of
-         AI-related occupational shifts. He's an independent policy analyst,
-         a fellow of the Frontier Security Institute, and has written for
-         RAND, Transformer, Asterisk, Works in Progress, and Responsible
-         Statecraft. He lives in Alexandria with his husband and a somewhat
-         excessive quantity of medieval weaponry.</p>"""),
         ("Maximilian Kircher", "Director", None, ""),
+        ("Scott Wofford", "Director", "scott-wofford.jpg",
+         """<p>Scott Wofford holds an MBA from Darden and spent nine years at
+         Amazon, where he built the AI behind its Prime, cart and delivery
+         experiences. He left Amazon in 2025 to work full time on AI safety,
+         co-founding Luthien with Jai. He lives in Seattle with his wife, two
+         daughters and a hyperactive border collie.</p>"""),
     ]
     staff_cards = "\n".join(_person(*p) for p in staff)
     board_cards = "\n".join(_person(*p) for p in board)
