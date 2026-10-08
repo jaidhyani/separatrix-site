@@ -1028,7 +1028,7 @@ def who_body() -> str:
          safety communities. She is particularly excited to support the
          exploration of cooperative approaches to aligning frontier AI
          systems.</p>"""),
-        ("Maximilian Kircher", "Director", None, ""),
+        ("Maximilian Kircher", "Director", "maximilian-kircher.jpg", ""),
         ("Scott Wofford", "Director", "scott-wofford.jpg",
          """<p>Scott Wofford holds an MBA from Darden and spent nine years at
          Amazon, where he built the AI behind its Prime, cart and delivery
