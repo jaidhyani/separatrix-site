@@ -188,5 +188,5 @@ print(f"check-record: OK — {len(versions)} versions, {entry_count} ledger entr
       f"{len(records)} signatory records, "
       f"all frozen sources hash-verified, frozen pages match their sources, "
       f"full hashes rendered, every version describes its changes, "
-      f"every signature names issued bytes and {newest['version']} is signed by Separatrix. "
+      f"every signature names an issued version and {newest['version']} is signed by Separatrix. "
       f"(Certifies the automatable parts only — failure entries stay on human diligence.)")
