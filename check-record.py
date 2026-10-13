@@ -122,6 +122,18 @@ for field in ("date", "type", "commitment version"):
     if n < entry_count:
         err(f"ledger: {entry_count} entries but only {n} '{field}' fields")
 
+# 5b. Incident entries follow the template (README, "Ledger entries"): from
+#     Entry 5 on, a failure entry has Incident, Classification and Remedy, in
+#     that order. Entries 1-4 predate the template.
+for m in re.finditer(r"<th>Entry (\d+)</th>(.*?)</table>", ledger, re.S):
+    num, body = int(m.group(1)), m.group(2)
+    if num < 5 or "<code>failure</code>" not in body:
+        continue
+    pos = [body.find(f"<b>{s}.</b>") for s in ("Incident", "Classification", "Remedy")]
+    if -1 in pos or pos != sorted(pos):
+        err(f"ledger Entry {num}: a failure entry needs Incident, Classification and "
+            f"Remedy sections, in that order")
+
 if errors:
     print("check-record: RECORD INCONSISTENT — do not publish:", file=sys.stderr)
     for e in errors:
