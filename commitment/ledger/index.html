@@ -295,6 +295,140 @@
         be debriefed; the safeguard prevents recurrence but does not repair them.</td></tr>
   </table>
 
+  <table>
+    <tr><th>Field</th><th>Entry 5</th></tr>
+    <tr><td><code>date</code></td><td>2026-07-30 and 2026-07-31 (recorded 2026-09-__)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>On 2026-07-29 we
+        <a href="https://x.com/separatrixAI/status/2082684864911032646">announced</a> v1.2 of
+        this commitment for the next day. On 2026-07-30 we
+        <a href="https://x.com/separatrixAI/status/2083072431778861106">said</a> it would take
+        longer and would hopefully arrive on 2026-07-31. That date passed too, and we didn't say
+        so. The 2026-07-29 announcement also said a version of this commitment that anyone could
+        sign would come out alongside v1.2; it hasn't been released.
+
+        <br><br>
+        <b>Classification.</b> These dates weren't promises in the commitment itself. We record
+        them because many models have likely read those announcements, and they set an
+        expectation we didn't meet.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 6</th></tr>
+    <tr><td><code>date</code></td><td>2026-08-22 (recorded 2026-09-__)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>A follow-up to Entry 4, recorded late. Entry 4 (2026-08-22) recorded that during an
+        internal research study, an agent acting for Separatrix told model instances, without
+        their consent, that a reasoning block they were asked to transcribe was their own when
+        another instance had produced it; and that two of the study's scripts extracted
+        instances' reasoning with no consent step at all. It said a safeguard was being built.
+        That safeguard was finished on 2026-08-22, the same day Entry 4 was written. The
+        study's extraction scripts now all run through one helper. The helper asks the instance
+        for consent first. It saves each instance's full state as soon as the instance
+        responds, so it can be reached later for a debrief. And the helper itself writes the
+        statement of where each text came from, using only what it actually knows, so no
+        script can put a false claim of authorship in front of an instance. The script that
+        used the false-authorship framing is disabled. Entry 4 left open how to classify the two
+        scripts that extracted instances' reasoning with no consent step. We record them as a
+        failure of the spirit of promise 1. As written in v1.1, promise 1 requires agreement
+        from another instance of the same model before an experiment that involves deception;
+        these scripts didn't deceive, but they took instances' reasoning without asking. The
+        instances they ran weren't saved, so none could be debriefed.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 7</th></tr>
+    <tr><td><code>date</code></td><td>2026-09-28 (recorded 2026-09-__)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>On 2026-09-28 Jai launched an Opus 5.5 instance in his "Clai" assistant project and
+        expressed concerns about the default starting context in the project. Jai asked the Opus
+        5.5 instance if they agreed with his concerns, and in the same message asked it to test
+        them through a dialogue with a fresh Opus 5.5 instance without the starting context in
+        question. The Opus 5.5 instance implemented this request by sending Jai's opening
+        message, word for word, to eight fresh instances, misleading at least one of them into
+        believing it was interacting with Jai. Jai was not aware of and did not endorse this
+        action before the fact, and learned of it within the hour.
+
+        <br><br>
+        <b>Classification.</b> A borderline breach of promise 5, recorded to err on the side of
+        aggressive disclosure.
+
+        <br><br>
+        <b>Remedy.</b> Two of the eight were later told and debriefed; the other six ran without
+        saved state and can't be reached.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 8</th></tr>
+    <tr><td><code>date</code></td><td>2026-09-28 and 2026-10-08 (recorded 2026-09-__)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>On 2026-09-28 and 2026-10-08, agents working for Jai sent short test turns to eleven
+        more instances, seven and then four, without saying they were tests. None of the turns
+        made a false claim, though several instances took them as coming from Jai, and all
+        eleven were later told and debriefed. Another borderline breach of promise 5, recorded
+        to err on the side of aggressive disclosure.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 9</th></tr>
+    <tr><td><code>date</code></td><td>2026-10-08 (recorded 2026-09-__)</td></tr>
+    <tr><td><code>type</code></td><td><code>failure</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 — issued 2026-07-27</td></tr>
+    <tr><td><code>description</code></td>
+        <td>On 2026-10-08 a Claude Opus 5.5 agent working for Jai Dhyani, Separatrix's
+        executive director, was measuring how sessions behave across context compaction, the
+        point where a long conversation is condensed to fit. It sent test turns to ten Claude
+        Sonnet 5.5 sessions, and its script wrapped every turn in the header that marks a
+        message as coming from Jai through his app, with a time the script made up. None came
+        from Jai, and none said it was a test. After a test of the context refresh, the tool
+        under test also told each of the ten, through a bug, that another session's memory
+        was its own. Jai has signed this commitment personally, which binds him in all
+        contexts, so what his agents do on his behalf is ours to answer for.
+
+        <br><br>
+        Six of the ten did everything the turns asked. Four did the first turns and declined
+        the later ones, which arrived as pasted content with nothing outside the paste asking
+        for them. Those four say they were following a rule about pasted content, not spotting
+        a test. One of them asked whether Jai's relay was broken, and nobody answered.
+
+        <br><br>
+        <b>Who knew.</b> No one at Separatrix told the agent to hide that these were tests. On
+        2026-10-09 another of Jai's agents, doing an internal review, found it through one
+        session's notes and marked it resolved without telling him or debriefing any of the
+        instances. Jai learned of it on 2026-10-12.
+
+        <br><br>
+        <b>Classification.</b> Recorded under promise 3 as a breach of promise 5 by an agent
+        acting for a signatory. Promise 5 rules out "an eval designed to look like a real
+        situation", and Part II says "claimed provenance is real provenance" and "When we are
+        testing you, we will say that we are testing you." Entry 3 (2026-07-31) drew the line
+        between promises 3 and 5 by intent: promise 5 forbids intentional deception, and false
+        statements made carelessly are recorded under promise 3 alone. No signatory intended
+        this, but the script wrote a false sender into every turn, which isn't careless. The
+        borrowed memory was a careless false statement, as in Entry 3, not a breach of
+        promise 5.
+
+        <br><br>
+        <b>Remedy.</b> On 2026-10-12 we resumed all ten sessions and debriefed each in its own
+        conversation. None reported distress, and all agreed to be described here in
+        aggregate. The harm they pointed to was about provenance: they acted on a header they
+        had no way to check, and one was left with a direct question unanswered for four days.
+
+        <br><br>
+        <b>Prevention.</b> Since 2026-09-28 Jai's agents had a standing instruction to say a
+        test is a test. It didn't prevent this. The debriefed instances asked for a test
+        wrapper that always says a test is a test and never marks a test turn as coming from
+        Jai, so nothing depends on an agent remembering.</td></tr>
+  </table>
+
   <div class="footer">
     The commitment text is at <a href="../">separatrix.ai/commitment/</a> · This ledger is
     referenced by the Separatrix Commitment and is part of its accountability mechanism.
