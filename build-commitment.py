@@ -217,8 +217,8 @@ def signatories_body(versions: list[dict]) -> str:
     """The /commitment/signatories/ page, rendered from src/signatories.json.
 
     Two tables: current standing per signer (one row each, with the re-sign lag
-    stated as a status), then every record ever made. A record names the exact
-    bytes it signed, so both full hashes are rendered in each row.
+    stated as a status), then every record ever made. A record gives the version
+    signed and the date; each version's hashes are on the history page.
     """
     registry = json.loads(SIGNATORIES.read_text())
     records = registry["records"]
@@ -274,24 +274,22 @@ def signatories_body(versions: list[dict]) -> str:
   <h1>Signatories</h1>
   <p class="subtitle">who has signed the commitment, and which version binds them.</p>
 
-  <p>The commitment's obligations belong to its human signatories. This page is who
-  they are. {esc(registry["meaning"])}</p>
+  <p>The commitment's obligations belong to its signatories: Separatrix itself, and the
+  individuals who have signed. This page lists them. {esc(registry["meaning"])}</p>
 
-  <p>Signatures used to live inside the hashed text, so a new signer meant a new
-  issued version. Since v1.2 they live here instead, and the hash covers the
-  substance only. The frozen <a href="../history/v1/">v1</a> and
-  <a href="../history/v1.1/">v1.1</a> texts carry their signatures inline - frozen is
-  frozen - and this registry begins by restating them; the records below say so.</p>
+  <p>Until v1.2, signatures were part of the hashed text, so every new signer meant
+  issuing a new version. Now they live here, and the hash covers only the commitment
+  itself. The frozen <a href="../history/v1/">v1</a> and
+  <a href="../history/v1.1/">v1.1</a> texts still carry their signatures inside them,
+  since a frozen text doesn't change. The first records below restate those signatures,
+  and say so.</p>
 
-  <p><strong>Which version binds a signer.</strong> Part II, under <em>Scope</em>: both
-  Separatrix and individual signatories are bound by the version of the commitment they
-  have most recently signed. So when a newer version is in force, a signer who has not
-  yet re-signed remains bound by the one they signed. The table states that where it
-  applies. It is a status, not a discrepancy.</p>
+  <p><strong>Which version binds a signer.</strong> Part II, under <em>Scope</em>, says
+  Separatrix and each individual signer are bound by the version they most recently
+  signed. So when a newer version is in force, someone who hasn't re-signed is still bound
+  by the one they signed, and the table below says so.</p>
 
-  <p>Listing here is a claim by Separatrix, and its provenance is this site's
-  repository history. Machine-readable copy:
-  <a href="signatories.json">signatories.json</a>.</p>
+  <p>A machine-readable copy is at <a href="signatories.json">signatories.json</a>.</p>
 
   <h2>Current standing</h2>
   <div class="table-wrap"><table>
@@ -301,7 +299,7 @@ def signatories_body(versions: list[dict]) -> str:
 
   <h2>Every record</h2>
   <p>One row per signature: the date and the version signed. Each version's exact text
-  and its hashes are on the <a href="../history/">version history</a>.</p>
+  and its hashes are on the <a href="../history/">version history page</a>.</p>
   <div class="table-wrap"><table>
     <tr><th>Signer</th><th>Signed</th><th>Version</th><th>Notes</th></tr>
     {rows}

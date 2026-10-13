@@ -1,6 +1,6 @@
 {
   "registry": "separatrix",
-  "meaning": "Listed here means Separatrix vouches that this person signed the commitment on the date given and is bound by the version they most recently signed; the provenance of every record is this repository's history.",
+  "meaning": "Being listed here means Separatrix vouches that the signatory signed on the date given and is bound by the version they most recently signed. Each record's history is public in this site's repository.",
   "records": [
     {
       "name": "Separatrix",
