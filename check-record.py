@@ -146,7 +146,7 @@ for m in re.finditer(r"<th>Entry (\d+)</th>(.*?)</table>", ledger, re.S):
         err(f"ledger Entry {num}: a failure entry needs Incident, Classification and "
             f"Remedy sections, in that order")
 
-# 8. Signatory records sign bytes that were actually issued.
+# 8. Signatory records name versions that were actually issued.
 registry = json.loads((REPO / "src/signatories.json").read_text())
 records = registry["records"]
 by_version = {v["version"]: v for v in versions}
@@ -155,15 +155,12 @@ for r in records:
     if v is None:
         err(f"signatory record {r['name']} / {r['version']}: no such issued version "
             f"in versions.json — a signature is made against an issued text")
-    elif r["sha256"] != v["sha256"]:
-        err(f"signatory record {r['name']} / {r['version']}: hashes do not match the "
-            f"issued version — the record signs bytes that were never published")
 
 # 9. The organization has signed the version in force. This is the sign-off
 #    gate: detaching signatures made it possible to issue a text nobody signed.
 if not any(r["name"] == "Separatrix" and r["version"] == newest["version"] for r in records):
     err(f"{newest['version']} has no signatory record for Separatrix — a version is "
-        f"not in force until the organization signs it; add the record with ./sign.py")
+        f"not in force until the organization signs it; add its record to src/signatories.json")
 
 # 10. The published registry is the source of truth, rendered and copied whole.
 sig_json = REPO / "commitment/signatories/signatories.json"
@@ -181,10 +178,6 @@ else:
         if html.escape(r["name"], quote=False) not in sig_html:
             err(f"signatories page does not list {r['name']} — the page is the "
                 f"reader's copy of the roster")
-        for part in ("commitment", "details"):
-            if r["sha256"][part] not in sig_html:
-                err(f"signatories page lacks the full {r['version']} {part} hash for "
-                    f"{r['name']} — a signature is only as checkable as the bytes it names")
 
 if errors:
     print("check-record: RECORD INCONSISTENT — do not publish:", file=sys.stderr)

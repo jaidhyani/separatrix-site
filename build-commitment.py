@@ -66,7 +66,7 @@ SRC = {
 }
 # The signatory roster: source of truth for /commitment/signatories/. Since v1.2
 # signatures are detached from the hashed text, so a new signer is a record here
-# (./sign.py) and not a version bump.
+# and not a version bump.
 SIGNATORIES = REPO / "src" / "signatories.json"
 
 FAVICON = (
@@ -267,8 +267,7 @@ def signatories_body(versions: list[dict]) -> str:
       <td>{esc(r["name"])}{role}</td>
       <td>{esc(r["date"])}</td>
       <td>{esc(r["version"])}</td>
-      <td><code class="hash">{esc(r["sha256"]["commitment"])}</code><br>
-          <code class="hash">{esc(r["sha256"]["details"])}</code>{aside}{statement}</td>
+      <td>{aside}{statement}</td>
     </tr>"""
 
     return f"""
@@ -301,10 +300,10 @@ def signatories_body(versions: list[dict]) -> str:
   </table></div>
 
   <h2>Every record</h2>
-  <p>One row per signature: the date, the version signed, and the SHA-256 of the exact
-  commitment and details bytes it was made against.</p>
+  <p>One row per signature: the date and the version signed. Each version's exact text
+  and its hashes are on the <a href="../history/">version history</a>.</p>
   <div class="table-wrap"><table>
-    <tr><th>Signer</th><th>Signed</th><th>Version</th><th>sha256 (commitment / details)</th></tr>
+    <tr><th>Signer</th><th>Signed</th><th>Version</th><th>Notes</th></tr>
     {rows}
   </table></div>
 

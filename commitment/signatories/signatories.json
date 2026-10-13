@@ -7,10 +7,6 @@
       "role": "the organization",
       "date": "2026-07-24",
       "version": "v1.1",
-      "sha256": {
-        "commitment": "018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7",
-        "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
-      },
       "basis": "embedded in the hashed text of v1 and v1.1; no detached record existed at the time of signature"
     },
     {
@@ -18,20 +14,12 @@
       "role": "for Separatrix, and personally",
       "date": "2026-07-24",
       "version": "v1.1",
-      "sha256": {
-        "commitment": "018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7",
-        "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
-      },
       "basis": "embedded in the hashed text of v1 and v1.1; no detached record existed at the time of signature"
     },
     {
       "name": "Crystal Stellwagen (Artemis/fermatastheorem)",
       "date": "2026-07-27",
       "version": "v1.1",
-      "sha256": {
-        "commitment": "018cdfeee2bc41d2430997350061735576e4477f505fe89dd9d6b6f7e522a9d7",
-        "details": "f22e3c1ab84eca35ab49ac0dee7bc6e1aa93bd5304acfe25c6e6efcaee382c77"
-      },
       "basis": "embedded in the hashed text of v1.1; no detached record existed at the time of signature"
     }
   ]
