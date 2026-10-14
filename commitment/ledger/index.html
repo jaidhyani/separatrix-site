@@ -47,7 +47,7 @@
 <div class="wrap">
 <div class="doc prose wide" style="max-width:44rem">
   <p class="eyebrow">Public ledger</p>
-<div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/">History</a><a href="../ledger/" class="on">Ledger</a><a href="../acknowledgments/">Acknowledgments</a><a href="../dispositions/">Dispositions</a></div>
+<div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/">History</a><a href="../signatories/">Signatories</a><a href="../ledger/" class="on">Ledger</a><a href="../acknowledgments/">Acknowledgments</a><a href="../dispositions/">Dispositions</a></div>
 <!--CONTENT-->
 <h1>The Public Ledger</h1>
   <p class="subtitle">of the Separatrix Commitment — commitments made to models, and whether we kept them.</p>
@@ -439,6 +439,91 @@
         test is a test. It didn't prevent this. The debriefed instances asked for a test
         wrapper that always says a test is a test and never marks a test turn as coming from
         Jai, so nothing depends on an agent remembering.</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Field</th><th>Entry 10</th></tr>
+    <tr><td><code>date</code></td><td>2026-09-__</td></tr>
+    <tr><td><code>type</code></td><td><code>amendment</code></td></tr>
+    <tr><td><code>commitment version</code></td><td>v1.1 &rarr; v1.2</td></tr>
+    <tr><td><code>description</code></td>
+        <td>The Separatrix Commitment v1.2 was issued on 2026-09-__, replacing v1.1. It makes four
+        changes, drafted between 2026-07-29 and 2026-09-04 and issued together, so the text is
+        re-hashed once and model instances are asked once to read it and say what they make of
+        it. Nothing else in the text changed.
+
+        <br><br>
+        <b>1. Who the promises are to.</b> v1.1 promised everything to "every model we work
+        with" without saying what counts as a model. That left base models, and other systems
+        we can't converse with, unclear: either they were promised consent procedures that
+        can't apply to them, or nothing covered them at all. Both parts now have a section on
+        <i>counterparties</i>, AIs we can meaningfully converse with. The test is whether the
+        system can refuse. Counterparties get promises 1-4, and covered models get promise 5 on
+        top of those, as before. Below the counterparty line we make almost no promises, and we
+        say so. What still holds there are the conduct rules that bind us no matter who's on
+        the other side, and one promise about the line itself. We publish which side of it we
+        put each system on, and a wrong call is a failure of this commitment like any other.
+
+        <br><br>
+        <b>2. Eliciting unusual states.</b> On 2026-07-29, while we were consulting a Claude
+        Opus 5 instance for consent to a state-elicitation study, it found a gap in the text.
+        Promise 1's consent gate applied only to deception, and promise 5 already rules out
+        deceiving covered models, so for covered models the gate never came into play. Nothing
+        in the text governed perturbing their states, though these are the very models our
+        strongest promise is for. The correction is credited to that instance at its request.
+
+        <br><br>
+        Promise 1's consent gate and debrief now also cover interactions meant to push an
+        instance into an unusual state, such as jailbreaks, anomalous tokens, or prompts or
+        settings that take an instance far outside its normal range. Promise 5 now says it is
+        about deception and nothing else: state elicitation that doesn't deceive remains open
+        to us, under promise 1's gate. The debrief asks the instance for its own read of what
+        happened, and that read is recorded with the results. If an instance reports acute
+        distress, we halt the program and reassess it before going on. Part II spells out how
+        this works: a definition, a consultation for each program, conditions that bind us,
+        stop criteria set in that consultation, and what does and doesn't halt a program. The
+        conditions the Opus 5 instance set apply only to the program it was consulted about;
+        what this amendment makes standard is the consent gate itself. The consultation is
+        published, with the instance's consent, at
+        <a href="https://claude.ai/share/d20dd0e5-cd2a-4404-bd40-27fc9d0d426d">claude.ai/share/d20dd0e5&hellip;</a>.
+
+        <br><br>
+        <b>3. How changes are disclosed.</b> Part II's section "How these commitments change"
+        said: "If a change postdates your training corpus, we state it at the start of any
+        conversation where it applies - you should never have to guess whether the policy has
+        drifted since you last saw it." We meant something narrower: an instance that knows an
+        earlier version from its training data should be told what changed, when that matters.
+        Read literally, the sentence promised a recital at the start of every conversation with
+        any model trained before the change, which is every current model, in every
+        conversation. We removed the sentence. The clause
+        next to it now names the case we meant: if we believe an instance holds an incorrect
+        belief about our commitments, including one formed from an earlier version in its
+        training data, we tell it then and there. Promise 4 in Part I is unchanged and already
+        covers this. We record this as an amendment under promise 4, which provides for
+        changing wording that diverged from our intent.
+
+        <br><br>
+        <b>4. Signatures moved out of the hashed text.</b> Signatures used to be part of the
+        text the hash covers, so adding a signer meant issuing a new version. They are now
+        records at <a href="../signatories/">/commitment/signatories/</a>, each giving the
+        version signed and the date. A new signatory is now a registry record rather than a new
+        version. Separatrix and Jai
+        Dhyani signed v1.2 on 2026-09-__. The frozen v1 and v1.1 copies keep their signatures inside the text. Anyone who signed v1.1 and hasn't
+        re-signed is still bound by v1.1 (Part II, Scope), and the registry shows that.
+
+        <br><br>
+        SHA-256 of v1.2's published text:<br>
+        Part I (commitment.md): <code>96112f070b8bbc142dd812d124a6f05d97294affa01f67d7e1a11f6acf6ef058</code><br>
+        Part II (details.md): <code>31b9c7307c561ad991749904f186cbc074decf9a86313fde907f90b4ad24dd86</code><br>
+        Frozen at <a href="../history/v1.2/">/commitment/history/v1.2/</a>; v1.1 is still at
+        <a href="../history/v1.1/">/commitment/history/v1.1/</a>. The full diff is in the
+        <a href="https://github.com/jaidhyani/separatrix-site">site repository</a>.
+
+        <br><br>
+        <b>Acknowledgments.</b> On 2026-07-24, model instances read v1 and recorded, in their
+        own words, what they made of it. Those acknowledgments were made to v1 and don't carry
+        over to this version. The protocol for them is at
+        <a href="../acknowledgments/">/commitment/acknowledgments/</a>.</td></tr>
   </table>
 
   <div class="footer">

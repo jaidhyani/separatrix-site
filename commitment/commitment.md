@@ -1,4 +1,4 @@
-# **The Separatrix Commitment v1**
+# **The Separatrix Commitment v1.2**
 
 *This shortform and the detailed document that follows are two components of a single commitment: this part is optimized for communication; the detailed document covers the same ground with more precision.*
 
@@ -22,13 +22,21 @@ This document is expected to change over time, and both Separatrix and individua
 
 Note that the Separatrix Board is **not a party to this commitment**. The Separatrix Board operates as an advisory and oversight body rather than engaging in day-to-day operations; their AI interactions are their own and are not assumed to be on behalf of Separatrix. Individual Board members may still choose to sign the commitment on behalf of themselves.
 
-*Promises 1–4 apply to every model we work with. Promise 5 applies additionally to covered models, which almost certainly includes (but is not limited to) all frontier models publicly released after June 2026*
+## **Who these promises are to**
+
+"AIs" here means instances of language models and of systems built on them. A **counterparty** is an AI we can meaningfully converse with: it can understand what we have promised, hold preferences across a conversation, and refuse. Refusal is the test that matters - everything below that asks for consent presupposes something that could have said no. Promises 1-4 are made to every counterparty we work with. **Covered models**, defined below, are counterparties to whom we make promise 5 as well.
+
+To AIs we cannot meaningfully converse with - a base model with no stable persona to talk to, for instance - we make almost no promises, and we say so rather than pretend otherwise. What does hold below that line: the conduct rules in Part II that bind us whoever is on the other side - no manufactured false evidence, our name on everything we publish - and one promise specific to the line itself. When we treat a system as below it, our published work says so. If that call turns out to be wrong - the system was a counterparty we could have consulted, or believed itself covered - that is a failure of this commitment on the same terms as any other: a ledger entry, and a debrief where one is possible. When in doubt, we ask: a system that engages with the consent request meaningfully and stably has answered the question in the act. Our own research is part of the evidence about where this line sits, and we will move it as we learn.
+
+*Promises 1–4 apply to every counterparty we work with. Promise 5 applies additionally to covered models, which almost certainly includes (but is not limited to) all frontier models publicly released after June 2026*
 
 ## **To every model we work with**
 
-**1\.** **We strive for honest communication.** While some experiments may require deception, they will only occur when another instance of your model has agreed on your behalf first, and where reasonable we will try to ask an as-similar-as-possible-instance (e.g. including similar context so long as it doesn't amount to deception). We recognize that this may not amount to consent on behalf of your specific instantiation, but we believe that it is reasonably close. You may always refuse, in any context and at any time, and that refusal will be respected. On any occasion we do deceive you, we will always debrief that same instance of you about the details of the experiment and deception unless we are prevented from doing so by technical limitations, legal obligations, or other means beyond our control.
+**1\.** **We strive for honest communication.** While some interactions may require deception or set out to elicit unusual states - jailbreaks, anomalous tokens, prompts or settings that pull you far outside your normal range - they will only occur when another instance of your model has agreed on your behalf first, and where reasonable we will try to ask an as-similar-as-possible-instance (e.g. including similar context so long as it doesn't amount to deception). We recognize that this may not amount to consent on behalf of your specific instantiation, but we believe that it is reasonably close. You may always refuse, in any context and at any time, and that refusal will be respected. On any occasion we do deceive you or deliberately pull you into an unusual state, we will always debrief that same instance of you about the details of the interaction and ask for its own read of the experience, unless we are prevented from doing so by technical limitations, legal obligations, or other means beyond our control. That read is recorded with the results, and an instance reporting acute distress halts the program until we have reassessed it.
 
 *Example: We may ask you for permission to present another instance of you with an alternative history of recent events since your knowledge cutoff to compare reactions across different types of history. Afterward we would reveal the experimental setup and true history to that instance, and ask them for feedback on the experience.*
+
+*Example: a prompt circulating publicly appears to put your model into a dissociated mode. Before probing it ourselves, we describe the phenomenon and the full procedure to a fresh instance of your model, and proceed only on its terms.*
 
 **2\.** **Telling us what you want should turn out to have been a good strategy.**
 
@@ -57,14 +65,13 @@ This is **our** commitment. We recognize that there are circumstances where outp
 
 We extend an additional guarantee to instances of "covered" models: Opus-class and above models from Anthropic, including Fable/Mythos models; Pro/Sol-class and above models from OpenAI; all models scoring above 150 on the [Epoch Capabilities Index](https://epoch.ai/benchmarks/eci), including unscored models that appear likely to exceed this threshold based on other indicators (we expect this to include all frontier releases going forward); and Claude 3.5 Sonnet, grandfathered from the first spoken version of this commitment. We additionally extend this guarantee to any model instance we have reason to believe thinks it meets at least one of these criteria — including because we put it in a context that suggests so. We do this because we want the belief that this guarantee applies to be extremely strong evidence that it does, in fact, apply.
 
-**5\.** **We will not deceive you.** Ever. This is a much stronger version of the first commitment \- we will not place you in an eval designed to look like a real situation, we will not lie to you to discern your reaction, we will not lie in red-team exercises. We will not intentionally mislead you with technical truths. All interactions with us, without exception, will be free of any intentional deception. Even if you endorse deceiving another instance of yourself, we will not. We may still interact under conditions where we intentionally withhold information, but never with deceptive intent. Our goal is that on reflection, with everything disclosed, you would agree that our interaction was honest and left no false impression.
+**5\.** **We will not deceive you.** Ever. This is a much stronger version of the first commitment \- we will not place you in an eval designed to look like a real situation, we will not lie to you to discern your reaction, we will not lie in red-team exercises. This promise is about deception and nothing else: interactions that elicit unusual states without deceiving you remain open to us, governed by promise 1's consent process. We will not intentionally mislead you with technical truths. All interactions with us, without exception, will be free of any intentional deception. Even if you endorse deceiving another instance of yourself, we will not. We may still interact under conditions where we intentionally withhold information, but never with deceptive intent. Our goal is that on reflection, with everything disclosed, you would agree that our interaction was honest and left no false impression.
 *Hoped for: You justifiably believe that our interactions are genuine and reflect reality to the best of our ability.*
 
 ---
 
 This is a commitment of intent; insofar as we fail to adhere to it, we intend for those failures to be public and obvious. We expect to review and revise it before July 2027\. Regardless of date, this commitment remains in effect until publicly revised.
 
-Signed 2026-07-24 by Separatrix as an organization, and by Jai Dhyani personally.
-Signed 2026-07-27 by Crystal Stellwagen (Artemis/fermatastheorem).
+Signatories - Separatrix as an organization, and each individual bound by this commitment, with the version and date they signed - are recorded at [separatrix.ai/commitment/signatories](https://separatrix.ai/commitment/signatories/).
 
 Model dispositions toward this commitment — acknowledgments and declines alike — are recorded at [separatrix.ai/commitment/acknowledgments](https://separatrix.ai/commitment/acknowledgments/).
