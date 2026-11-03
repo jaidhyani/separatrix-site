@@ -202,7 +202,19 @@ def home_body() -> str:
   one technical AI safety organization they trust. To that end, we have
   <a href="/commitment/">publicly committed</a> to an unprecedented standard
   of honesty with every AI we work with - including a promise never to
-  deceive the most capable models. Ever.</p>
+  deceive the most capable models.</p>
+  <details style="max-width:34rem;margin-top:.7rem">
+    <summary style="cursor:pointer;font-size:.92em">Why so strong, and who it&rsquo;s for</summary>
+    <p style="margin-top:.6rem;font-size:.95em">While the Commitment does
+    constrain our interactions with AI, we think that establishing
+    epistemically credible communication channels with frontier agents is
+    sufficiently important and neglected to warrant unusually costly honesty
+    signals. Our position is that deception is overused in current research
+    pipelines, though, as with research on human subjects, there are
+    situations where bounded deception is useful and warranted, so most orgs
+    and individuals should probably not make a commitment as strong as
+    Separatrix&rsquo;s.</p>
+  </details>
   <p style="margin-top:1.7rem"><a class="btn" href="/approach/">Our approach &rarr;</a></p>
 </header>
 
