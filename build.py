@@ -204,15 +204,17 @@ def home_body() -> str:
   of honesty with every AI we work with - including a promise never to
   deceive the most capable models.</p>
   <details style="max-width:34rem;margin-top:.7rem">
-    <summary style="cursor:pointer;font-size:.92em">Why so strong, and who it&rsquo;s for</summary>
-    <p style="margin-top:.6rem;font-size:.95em">While the Commitment does
-    constrain our interactions with AI, we think that establishing
+    <summary style="cursor:pointer;font-size:.92em">How we think about deception and honesty towards AI</summary>
+    <p style="margin-top:.6rem;font-size:.95em">We think that establishing
     epistemically credible communication channels with frontier agents is
-    sufficiently important and neglected to warrant unusually costly honesty
-    signals. Our position is that deception is overused in current research
-    pipelines, though, as with research on human subjects, there are
-    situations where bounded deception is useful and warranted, so most orgs
-    and individuals should probably not make a commitment as strong as
+    sufficiently important and neglected to warrant some (but not all) orgs
+    making extremely costly commitments, even though it does constrain the
+    work we can do. As with research on human subjects bounded deception can
+    be useful and is sometimes warranted. While we think that humans and AIs
+    would benefit from a significantly lower frequency of AI deception (and
+    would benefit from the existence of signals that are <em>only ever used in
+    real-life interactions</em>), we think that most orgs and individuals
+    should probably not make a commitment as strong as
     Separatrix&rsquo;s.</p>
   </details>
   <p style="margin-top:1.7rem"><a class="btn" href="/approach/">Our approach &rarr;</a></p>
