@@ -1,0 +1,26 @@
+{
+  "registry": "separatrix",
+  "meaning": "Being listed here means Separatrix vouches that the signatory signed on the date given and is bound by the version they most recently signed. Each record's history is public in this site's repository.",
+  "records": [
+    {
+      "name": "Separatrix",
+      "role": "the organization",
+      "date": "2026-07-24",
+      "version": "v1.1",
+      "basis": "embedded in the hashed text of v1 and v1.1; no detached record existed at the time of signature"
+    },
+    {
+      "name": "Jai Dhyani",
+      "role": "for Separatrix, and personally",
+      "date": "2026-07-24",
+      "version": "v1.1",
+      "basis": "embedded in the hashed text of v1 and v1.1; no detached record existed at the time of signature"
+    },
+    {
+      "name": "Crystal Stellwagen (Artemis/fermatastheorem)",
+      "date": "2026-07-27",
+      "version": "v1.1",
+      "basis": "embedded in the hashed text of v1.1; no detached record existed at the time of signature"
+    }
+  ]
+}

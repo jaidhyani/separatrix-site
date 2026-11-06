@@ -46,8 +46,8 @@
 </nav>
 <div class="wrap">
 <div class="doc prose wide" style="max-width:44rem">
-  <p class="eyebrow">Version history · 2 issued</p>
-<div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/" class="on">History</a><a href="../ledger/">Ledger</a><a href="../acknowledgments/">Acknowledgments</a><a href="../dispositions/">Dispositions</a></div>
+  <p class="eyebrow">Version history · 3 issued</p>
+<div class="subnav"><a href="../">The Commitment</a><a href="../details/">Details</a><a href="../history/" class="on">History</a><a href="../signatories/">Signatories</a><a href="../ledger/">Ledger</a><a href="../acknowledgments/">Acknowledgments</a><a href="../dispositions/">Dispositions</a></div>
 
   <h1>Version History</h1>
   <p class="subtitle">every issued version of the commitment and its details document.</p>
@@ -64,6 +64,12 @@
   <div class="table-wrap"><table>
     <tr><th>Version</th><th>Issued</th><th>What changed</th><th>Frozen copies</th><th>sha256 (commitment / details)</th></tr>
     <tr>
+      <td><a href="v1.2/">v1.2</a></td>
+      <td>2026-09-__</td>
+      <td>Four changes, issued together. (1) Who the promises are to: a new section in both parts defines "counterparties", AIs we can meaningfully converse with, with the ability to refuse as the test. They get promises 1-4, and covered models also get promise 5, as before. Below that line we make almost no promises, except that we publish how we classify each system and a wrong call is our failure. (2) Promise 1's consent gate and debrief now also cover eliciting unusual states. Promise 5 now says it is about deception and nothing else, and the debrief asks the instance for its own read of the experience. Part II spells out how this works. Prompted by a Claude Opus 5 instance's correction of 2026-07-29, credited at its request. (3) Part II's "we state it at the start of any conversation" sentence is removed, since its wording had drifted from what we meant. The clause on incorrect beliefs now names beliefs formed from an earlier version seen in training data. (4) Signatures moved out of the hashed text to /commitment/signatories/. A new signer is now a registry record, not a new version. Both title stamps updated. Nothing else changed from v1.1.</td>
+      <td><a href="v1.2/">commitment</a> · <a href="v1.2/details/">details</a></td>
+      <td><code class="hash">96112f070b8bbc142dd812d124a6f05d97294affa01f67d7e1a11f6acf6ef058</code><br><code class="hash">31b9c7307c561ad991749904f186cbc074decf9a86313fde907f90b4ad24dd86</code></td>
+    </tr><tr>
       <td><a href="v1.1/">v1.1</a></td>
       <td>2026-07-27</td>
       <td>Crystal Stellwagen (Artemis/fermatastheorem) signed on 2026-07-27. The sole change from v1 is the two signature lines (Part I closing signature, Part II signatories list); reverting only that edit reproduces the v1 hashes.</td>

@@ -12,8 +12,15 @@ Public site for Separatrix. Hand-built, no dependencies.
   sha256 hashes are over exactly these bytes
 - `build-commitment.py` — renders the commitment pages, freezes issued versions
   under `commitment/history/<version>/`, writes `versions.json`
+- `src/signatories.json` — the signatory roster (name, role, version, date); the
+  build renders it at `/commitment/signatories/`. A record is Separatrix's public
+  claim that this person signed, and its provenance is this repository's history
+- **A new signatory is a registry record, not a version bump** (since v1.2).
+  Signatures are detached from the hashed text: add a record to
+  `src/signatories.json`, then rebuild. The text does not change, so neither does its
+  hash. `check-record.py` will not pass a version the organization has not signed
 - `check-record.py` — the record's self-consistency check; every commitment
-  build runs it and refuses to write an inconsistent record
+  build runs it and refuses to commit an inconsistent record
 - `commitment/ledger/`, `acknowledgments/`, `dispositions/` — hand-edited in place
 - **Ledger entries for incidents** (from Entry 5 on; `check-record.py` enforces the
   three sections). Fields: `date` (when it happened, then "recorded" and the day it
