@@ -1042,7 +1042,11 @@ def who_body() -> str:
          safety communities. She is particularly excited to support the
          exploration of cooperative approaches to aligning frontier AI
          systems.</p>"""),
-        ("Maximilian Kircher", "Director", "maximilian-kircher.jpg", ""),
+        ("Maximilian Kircher", "Director", "maximilian-kircher.jpg",
+         """<p>Max has a web development background and has dabbled in game
+         development. For a few years, his main point of existence has been AI
+         safety advocacy. He has cherished side-interests in the philosophy of
+         consciousness, writing, and making predictions of the future.</p>"""),
         ("Scott Wofford", "Director", "scott-wofford.jpg",
          """<p>Scott Wofford holds an MBA from Darden and spent nine years at
          Amazon, where he built the AI behind its Prime, cart and delivery
